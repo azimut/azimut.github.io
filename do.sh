@@ -1,13 +1,20 @@
-#!/bin/sh -exu
+#!/bin/bash -xeu
 
 mkdir -p public
 rm -vf ./public/*
 
-find . -name '*.org' -exec awk 'NR == 1 && /TITLE/ { print FILENAME }' {} \; |
+realname() {
+	[[ $1 == *self.org ]] &&
+		echo "$(basename "$(dirname $1)").html" ||
+		echo "$(basename "$1" .org).html"
+}
+
+echo "<html><body><ul>" >>public/index.html
+find . -name '*.org' \
+	-exec awk 'NR == 1 && /TITLE/ { print FILENAME }' {} \; |
 	while read -r file; do
 		emacs --batch --eval "(require 'org)" "${file}" --funcall org-html-export-to-html
-		case "$file" in
-		*self.org) mv -v "${file%.*}.html" "public/$(basename "$(dirname $file)").html" ;;
-		*) mv -v "${file%.*}.html" public/ ;;
-		esac
+		echo "<li><a href='$(realname $file)'>$(head -n1 "${file}" | cut -f2- -d' ')</a></li>" >>public/index.html
+		omv -v "${file%.*}.html" "public/$(realname "${file}")"
 	done
+echo "</ul></body></html>" >>public/index.html
