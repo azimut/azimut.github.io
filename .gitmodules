@@ -1,3 +1,6 @@
 [submodule "programming-notes"]
 	path = programming-notes
 	url = git@github.com:azimut/programming-notes.git
+[submodule "sysadmin-notes"]
+	path = sysadmin-notes
+	url = git@github.com:azimut/sysadmin-notes.git
