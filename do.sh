@@ -10,7 +10,7 @@ realname() {
 }
 
 echo "<html><body><ul>" >>public/index.html
-find . -name '*.org' \
+find -L . -name '*.org' \
 	-exec awk 'NR == 1 && /TITLE/ { print FILENAME }' {} \; |
 	while read -r file; do
 		emacs --batch --eval "(require 'org)" "${file}" --funcall org-html-export-to-html
