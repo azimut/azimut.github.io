@@ -1,4 +1,9 @@
 name: CI build
+on:
+  push:
+    paths-ignore:
+      - 'LICENSE'
+      - 'README.md'
 jobs:
   build:
     runs-on: ubuntu-latest
