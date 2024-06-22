@@ -32,7 +32,7 @@ jobs:
           submodules: true
       - uses: purcell/setup-emacs@master
         with:
-          version: 24.5
+          version: 29.3
 
       - run: ./do.sh
 
