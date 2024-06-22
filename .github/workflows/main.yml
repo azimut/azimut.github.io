@@ -36,7 +36,7 @@ jobs:
 
       - run: git clone https://github.com/azimut/programming-notes/
       - run: git clone https://github.com/azimut/sysadmin-notes/
-      - run: ./do.sh
+      - run: ./build.sh
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
