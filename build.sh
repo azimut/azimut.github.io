@@ -2,14 +2,14 @@
 
 set -exuo pipefail
 
-rm -vrf ./public ./content
-mkdir -p public content
-
 realname() {
 	[[ $1 == *self.org ]] &&
 		echo "$(basename "$(dirname $1)").org" ||
 		basename $1
 }
+
+rm -vrf ./public ./content
+mkdir -p public content
 
 find -L . -name '*.org' -exec awk 'NR == 1 && /TITLE/ { print FILENAME }' {} \; |
 	grep -v content/ |
@@ -17,4 +17,5 @@ find -L . -name '*.org' -exec awk 'NR == 1 && /TITLE/ { print FILENAME }' {} \; 
 		cp "${file}" "content/$(realname ${file})"
 	done
 
+cp style.css public/
 emacs -Q --script build.el
