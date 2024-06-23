@@ -32,7 +32,7 @@
          :sitemap-format-entry
          ,(lambda (entry style project)
             (format "%s [[file:%s][%s]]"
-                    (format-time-string "%y/%m" (org-publish-find-date entry project))
+                    (format-time-string "%m/%y" (org-publish-find-date entry project))
                     entry
                     (org-publish-find-title entry project)))
          :sitemap-function
