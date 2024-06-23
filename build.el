@@ -38,7 +38,7 @@
          ,(lambda (title list)
             (concat (format "#+TITLE: %s\n" title)
                     "#+OPTIONS: html-postamble:nil html-preamble:nil\n"
-                    (org-list-to-org (print list))))
+                    (org-list-to-org list)))
          :sitemap-filename "index.org"
          :sitemap-title "Notes"
          :sitemap-sort-files anti-chronologically
