@@ -15,8 +15,9 @@
 (setq org-html-postamble t)
 (setq org-html-postamble-format
       `(("en" ,(concat "<hr/>"
-                       "<p>Date: %d</p>"
-                       "<p>Last Modified: %C</p>"))))
+                       "<p class=\"date\">Date: %d</p>"
+                       "<p class=\"date\">Last Modified: %C</p>"
+                       "<a href=\"./index.html\">Back</a>"))))
 (setf org-html-metadata-timestamp-format "%Y-%m-%d")
 (setq org-html-validation-link nil) ;; rm Validate link
 (setq org-html-head-include-scripts nil)
