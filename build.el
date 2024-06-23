@@ -14,7 +14,8 @@
 
 (setq org-html-postamble t)
 (setq org-html-postamble-format
-      `(("en" ,(concat "<p>Date: %d</p>"
+      `(("en" ,(concat "<hr/>"
+                       "<p>Date: %d</p>"
                        "<p>Last Modified: %C</p>"))))
 (setf org-html-metadata-timestamp-format "%Y-%m-%d")
 (setq org-html-validation-link nil) ;; rm Validate link
