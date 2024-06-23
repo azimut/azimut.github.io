@@ -41,7 +41,7 @@
          :sitemap-filename "index.org"
          :sitemap-title "Notes"
          :sitemap-sort-files anti-chronologically
-         :with-date nil
+         :with-date t
          :recursive t
          :base-directory "./content" ;; .org
          :publishing-directory "./public" ;; created
