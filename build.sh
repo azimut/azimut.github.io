@@ -14,8 +14,8 @@ mkdir -p public content
 find -L . -name '*.org' -exec awk 'NR == 1 && /TITLE/ { print FILENAME }' {} \; |
 	grep -v content/ |
 	while read -r file; do
-		cp "${file}" "content/$(realname ${file})"
+		cp -p "${file}" "content/$(realname ${file})"
 	done
 
-cp style.css public/
+cp -p style.css public/
 emacs -Q --script build.el
