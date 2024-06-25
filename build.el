@@ -52,6 +52,7 @@
          :with-title t
          :with-date t
          :with-toc t
+         :with-sub-superscript nil
          :section-numbers t)))
 
 (org-publish-all t) ; t for NO cache
