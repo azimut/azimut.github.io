@@ -7,6 +7,7 @@
 (unless package-archive-contents
   (package-refresh-contents))
 
+(package-install 'dash)
 (package-install 'htmlize)
 
 ;;----------------------------------------
