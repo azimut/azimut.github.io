@@ -135,7 +135,7 @@ made unique when necessary."
          :html-postamble t
          :html-postamble-format
          (("en" ,(concat "<hr/>"
-                         "<p class=\"date\">Date: %d</p>"
+                         "<p class=\"date\">Creation Date: %d</p>"
                          "<p class=\"date\">Last Modified: %C</p>"
                          "<a href=\"./index.html\">Back</a>")))
          :html-doctype "html5"
