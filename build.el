@@ -106,6 +106,20 @@ made unique when necessary."
 (unpackaged/org-export-html-with-useful-ids-mode 1)
 
 ;;----------------------------------------
+;; Source: http://alhassy.com/emacs.d/#Clickable-Headlines
+(defun my-org-html-format-headline-function (todo todo-type priority text tags info)
+  "Format a headline with a link to itself."
+  (let* ((headline (get-text-property 0 :parent text))
+         (id (or (org-element-property :CUSTOM_ID headline)
+                 (ignore-errors (org-export-get-reference headline info))
+                 (org-element-property :ID headline)))
+         (link (if id
+                   (format "<a href=\"#%s\">🔗</a> %s"
+                           id
+                           text)
+                 text)))
+    (org-html-format-headline-default-function todo todo-type priority link tags info)))
+
 
 (setf org-html-metadata-timestamp-format "%Y-%m-%d")
 (setq org-html-head-include-scripts nil)
@@ -113,6 +127,7 @@ made unique when necessary."
 
 (setq org-publish-project-alist
       `(("Notes" ; unique
+         :html-format-headline-function my-org-html-format-headline-function
          :auto-sitemap t
          :sitemap-format-entry
          ,(lambda (entry style project)
@@ -148,7 +163,7 @@ made unique when necessary."
          :with-date t
          :with-toc t
          :with-sub-superscript nil
-         :section-numbers t)))
+         :section-numbers nil)))
 
 (org-publish-all t) ; t for NO cache
 

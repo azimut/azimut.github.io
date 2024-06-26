@@ -16,3 +16,24 @@ li p {
 #postamble p {
   margin: 0;
 }
+
+h2,
+h3,
+h4 {
+  transform: translate(-1.6rem, 0);
+}
+
+h2 a,
+h3 a,
+h4 a {
+  visibility: hidden;
+  vertical-align: middle;
+  font-size: 0.8rem;
+  text-decoration: none;
+}
+
+h2:hover a,
+h3:hover a,
+h4:hover a {
+  visibility: visible;
+}
