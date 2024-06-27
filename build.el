@@ -119,14 +119,30 @@ made unique when necessary."
                            text)
                  text)))
     (org-html-format-headline-default-function todo todo-type priority link tags info)))
-
+;;--------------------------------------------------
 
 (setf org-html-metadata-timestamp-format "%Y-%m-%d")
 (setq org-html-head-include-scripts nil)
 (setq org-html-head-include-default-style nil)
 
 (setq org-publish-project-alist
-      `(("Notes" ; unique
+      `(("index"
+         :with-toc nil
+         :with-sub-superscript nil
+         :section-numbers nil
+         :html-postamble nil
+         :html-doctype "html5"
+         :html-html5-fancy t
+         :html-head
+         ,(concat
+           ;;"<link rel=\"stylesheet\" href=\"https://cdn.simplecss.org/simple.min.css\"/>\n"
+           "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\"/>\n")
+         :recursive nil
+         :include ("index.org")
+         :base-directory "./org"
+         :publishing-directory "./public"
+         :publishing-function org-html-publish-to-html)
+        ("blog" ; unique
          :html-format-headline-function my-org-html-format-headline-function
          :auto-sitemap t
          :sitemap-format-entry
@@ -138,32 +154,35 @@ made unique when necessary."
          :sitemap-function
          ,(lambda (title list)
             (concat (format "#+TITLE: %s\n" title)
-                    "#+HTML_HEAD_EXTRA: <style>body { grid-template-columns: 1fr min(40rem, 90%) 1fr; }</style>\n"
+                    ;;"#+HTML_HEAD_EXTRA: <style>body { grid-template-columns: 1fr min(40rem, 90%) 1fr; }</style>\n"
                     "#+OPTIONS: html-postamble:nil html-preamble:nil\n"
                     (org-list-to-org list)))
-         :sitemap-filename "index.org"
-         :sitemap-title "Notes"
+         :sitemap-filename "sitemap.org"
+         :sitemap-title "Blog"
          :sitemap-sort-files anti-chronologically
          :recursive t
          :html-head
-         ,(concat "<link rel=\"stylesheet\" href=\"https://cdn.simplecss.org/simple.min.css\"/>\n"
-                  "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\"/>\n")
+         ,(concat
+           ;;"<link rel=\"stylesheet\" href=\"https://cdn.simplecss.org/simple.min.css\"/>\n"
+           "<link rel=\"stylesheet\" type=\"text/css\" href=\"../style.css\"/>\n")
          :html-postamble t
          :html-postamble-format
          (("en" ,(concat "<hr/>"
                          "<p class=\"date\">Creation Date: %d</p>"
                          "<p class=\"date\">Last Modified: %C</p>"
-                         "<a href=\"./index.html\">Back</a>")))
+                         "<a href=\"../index.html\">Back</a>")))
          :html-doctype "html5"
          :html-html5-fancy t
-         :base-directory "./content" ;; .org
-         :publishing-directory "./public" ;; created
+         :base-directory "./org/blog" ;; .org
+         :publishing-directory "./public/blog" ;; created
          :publishing-function org-html-publish-to-html
          :with-title t
          :with-date t
          :with-toc t
          :with-sub-superscript nil
-         :section-numbers nil)))
+         :section-numbers nil)
+        ("azimut.github.io"
+         :components ("blog" "index"))))
 
 (org-publish-all t) ; t for NO cache
 

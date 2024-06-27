@@ -1,0 +1,27 @@
+#+TITLE: Nicolas C. Marguglio
+
+#+begin_nav
+[[./index.org][Resume]]
+[[mailto:nicolas.marguglio@gmail.com][Email]]
+[[https://github.com/azimut][GitHub]]
+#+end_nav
+
+* About me
+
+#+begin_profile
+#+ATTR_HTML: :align right :title glitchart generated with sox :alt glitch art portrait
+[[./profile.jpg]]
+#+end_profile
+
+I have 6 years of professional experience working as a /system administrator/. I managed fleets of hundreds of servers running with strict SLAs. I managed a shared web hosting platform based on *LAMP*, a shared email platform based on qmail. Troubleshooted customer support escalations. And single-handedly migrating operative systems to *Red Hat* using *Ansible*.
+
+For the past years I tried different programming languages to learn different ways to solve problems and the pain points of the development process that can be solved with a better infrastructure. Including bits of *Erlang*, where I got reminded of the challenges of distributed systems, of which I got a taste while working with *Kubernetes*. Also did some *Common Lisp* where I learned to be conscious of the performance of my code while doing some gamedev.
+
+* projects
+
+- [[https://github.com/azimut/scripts][scripts]] collection of quality-of-life scripts
+- [[https://azimut.github.io/newspod/][newspod]] web full text search of over seven thousand podcast episodes
+- [[https://github.com/azimut/cli-view][cli-view]] TUI tree view of comment sections of different websites
+
+* blog
+#+INCLUDE: "./blog/sitemap.org" :lines "3-"
