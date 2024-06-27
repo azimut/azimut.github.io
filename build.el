@@ -133,10 +133,7 @@ made unique when necessary."
          :html-postamble nil
          :html-doctype "html5"
          :html-html5-fancy t
-         :html-head
-         ,(concat
-           ;;"<link rel=\"stylesheet\" href=\"https://cdn.simplecss.org/simple.min.css\"/>\n"
-           "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\"/>\n")
+         :html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\"/>\n"
          :recursive nil
          :include ("index.org")
          :base-directory "./org"
@@ -154,17 +151,13 @@ made unique when necessary."
          :sitemap-function
          ,(lambda (title list)
             (concat (format "#+TITLE: %s\n" title)
-                    ;;"#+HTML_HEAD_EXTRA: <style>body { grid-template-columns: 1fr min(40rem, 90%) 1fr; }</style>\n"
                     "#+OPTIONS: html-postamble:nil html-preamble:nil\n"
                     (org-list-to-org list)))
          :sitemap-filename "index.org"
          :sitemap-title "Blog"
          :sitemap-sort-files anti-chronologically
          :recursive t
-         :html-head
-         ,(concat
-           ;;"<link rel=\"stylesheet\" href=\"https://cdn.simplecss.org/simple.min.css\"/>\n"
-           "<link rel=\"stylesheet\" type=\"text/css\" href=\"../style.css\"/>\n")
+         :html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"../style.css\"/>\n"
          :html-postamble t
          :html-postamble-format
          (("en" ,(concat "<hr/>"
