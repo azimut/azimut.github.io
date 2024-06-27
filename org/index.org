@@ -1,4 +1,4 @@
-#+TITLE: Nicolas C. Marguglio
+#+TITLE: azimut's web page
 
 #+begin_nav
 [[./index.org][Resume]]
