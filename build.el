@@ -157,7 +157,7 @@ made unique when necessary."
                     ;;"#+HTML_HEAD_EXTRA: <style>body { grid-template-columns: 1fr min(40rem, 90%) 1fr; }</style>\n"
                     "#+OPTIONS: html-postamble:nil html-preamble:nil\n"
                     (org-list-to-org list)))
-         :sitemap-filename "sitemap.org"
+         :sitemap-filename "index.org"
          :sitemap-title "Blog"
          :sitemap-sort-files anti-chronologically
          :recursive t

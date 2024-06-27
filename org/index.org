@@ -24,4 +24,4 @@ For the past years I tried different programming languages to learn different wa
 - [[https://github.com/azimut/cli-view][cli-view]] TUI tree view of comment sections of different websites
 
 * blog
-#+INCLUDE: "./blog/sitemap.org" :lines "3-"
+#+INCLUDE: "./blog/index.org" :lines "3-"
