@@ -2,7 +2,7 @@
 
 #+begin_nav
 [[./index.org][Resume]]
-[[mailto:nicolas.marguglio@gmail.com][Email]]
+[[mailto:azimut.github@protonmail.com][Email]]
 [[https://github.com/azimut][GitHub]]
 #+end_nav
 
