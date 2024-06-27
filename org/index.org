@@ -1,7 +1,7 @@
 #+TITLE: azimut's web page
 
 #+begin_nav
-[[./index.org][Resume]]
+[[https://azimut.github.io/CV/Nicolas-Marguglio-Resume.pdf][Resume]]
 [[mailto:azimut.github@protonmail.com][Email]]
 [[https://github.com/azimut][GitHub]]
 #+end_nav
