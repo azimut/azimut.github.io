@@ -23,7 +23,7 @@ h1 {
   margin: 0 auto;
 }
 
-/* article nav */
+/* article nav aka toc */
 nav#table-of-contents {
   margin: 0 0 2em 0;
 }
@@ -42,8 +42,17 @@ nav p a {
   margin: 0 0.5em;
 }
 
+img {
+  max-width: 100%;
+}
+
 .profile img {
   margin: 0 0 0 1em;
+}
+
+figcaption {
+  font-size: 0.9em;
+  font-style: italic;
 }
 
 pre {
