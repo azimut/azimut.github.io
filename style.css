@@ -1,6 +1,7 @@
 :root {
   --text-color: white;
   --background-color: black;
+  --heading-color: turquoise;
   font-size: calc(0.7em + 1vw);
   background-color: var(--background-color);
 }
@@ -27,21 +28,22 @@ h1 {
 h2,
 h3,
 h4 {
-  margin: 1.5em 0em;
+  margin: 1.2em 0em;
+  color: var(--heading-color);
 }
 
 h2 a,
 h3 a,
 h4 a {
-  color: turquoise;
+  color: var(--heading-color);
   text-decoration: none;
 }
 
 h2 a:hover,
 h3 a:hover,
 h4 a:hover {
+  color: var(--heading-color);
   background-color: var(--background-color);
-  color: turquoise;
   text-decoration: underline;
 }
 
