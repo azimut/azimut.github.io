@@ -114,9 +114,7 @@ made unique when necessary."
                  (ignore-errors (org-export-get-reference headline info))
                  (org-element-property :ID headline)))
          (link (if id
-                   (format "<a href=\"#%s\">🔗</a> %s"
-                           id
-                           text)
+                   (format "<a href=\"#%s\">%s</a>" id text)
                  text)))
     (org-html-format-headline-default-function todo todo-type priority link tags info)))
 ;;--------------------------------------------------

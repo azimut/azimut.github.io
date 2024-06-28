@@ -1,7 +1,8 @@
 :root {
-  --text-color: rgb(232, 230, 227);
+  --text-color: white;
+  --background-color: black;
   font-size: calc(0.7em + 1vw);
-  background-color: black;
+  background-color: var(--background-color);
 }
 @media (min-width: 1200px) {
   :root {
@@ -10,7 +11,7 @@
 }
 
 body {
-  padding: 1em 2.4em;
+  padding: 1em 1em;
   margin: 0 auto;
   max-width: 960px;
   color: var(--text-color);
@@ -20,26 +21,45 @@ body {
 h1 {
   text-align: center;
   font-size: 3em;
-  margin: 0 auto;
+  margin: 0.3em auto 0;
 }
 
-/* article nav aka toc */
+h2,
+h3,
+h4 {
+  margin: 1.5em 0em;
+}
+
+h2 a,
+h3 a,
+h4 a {
+  color: turquoise;
+  text-decoration: none;
+}
+
+h2 a:hover,
+h3 a:hover,
+h4 a:hover {
+  background-color: var(--background-color);
+  color: turquoise;
+  text-decoration: underline;
+}
+
+/* article nav aka TOC */
 nav#table-of-contents {
-  margin: 0 0 2em 0;
+  margin: 0 0 1.5em 0;
 }
 
 /* profile nav */
 nav p {
   display: flex;
   justify-content: center;
+  gap: 1em;
+  margin: 0;
 }
 
 ul {
   margin: 0;
-}
-
-nav p a {
-  margin: 0 0.5em;
 }
 
 img {
@@ -47,7 +67,7 @@ img {
 }
 
 .profile img {
-  margin: 0 0 0 1em;
+  margin: 0 0 0 0.7em;
 }
 
 figcaption {
@@ -55,6 +75,7 @@ figcaption {
   font-style: italic;
 }
 
+/* code block */
 pre {
   padding: 0.5em;
   font-size: 1.1em;
@@ -71,13 +92,9 @@ td {
   padding: 0.3em 0.5em;
 }
 
+/* for items that have a code block */
 li p {
   margin: 0;
-}
-
-#postamble p {
-  margin: 0;
-  font-size: 0.9em;
 }
 
 a {
@@ -85,28 +102,12 @@ a {
 }
 
 a:hover {
-  background: white;
-  color: black;
+  background: var(--text-color);
+  color: var(--background-color);
   text-decoration: none;
 }
 
-h2,
-h3,
-h4 {
-  transform: translate(-1.6rem, 0);
-}
-
-h2 a,
-h3 a,
-h4 a {
-  visibility: hidden;
-  vertical-align: middle;
-  font-size: 0.8rem;
-  text-decoration: none;
-}
-
-h2:hover a,
-h3:hover a,
-h4:hover a {
-  visibility: visible;
+#postamble p {
+  margin: 0;
+  font-size: 0.9em;
 }
