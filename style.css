@@ -68,8 +68,22 @@ img {
   max-width: 100%;
 }
 
-.profile img {
-  margin: 0 0 0 0.7em;
+.portrait img {
+  margin: 0 auto;
+  display: block;
+}
+
+@media (min-width: 600px) {
+  .portrait {
+    float: right;
+    width: 40%;
+  }
+}
+
+.outline-text-2:after {
+  clear: both;
+  content: "";
+  display: block;
 }
 
 figcaption {
