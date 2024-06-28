@@ -67,8 +67,8 @@ table {
 }
 
 td {
-  border: 1px solid var(--text-color);
-  padding: 0.1em;
+  border: 1px solid #222;
+  padding: 0.3em 0.5em;
 }
 
 li p {
