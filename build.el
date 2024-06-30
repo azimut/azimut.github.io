@@ -140,6 +140,7 @@ made unique when necessary."
         ("blog" ; unique
          :html-format-headline-function my-org-html-format-headline-function
          :auto-sitemap t
+         :headline-levels 4 ; aka h5 - default = 3
          :sitemap-format-entry
          ,(lambda (entry style project)
             (format "%s [[file:%s][%s]]"
