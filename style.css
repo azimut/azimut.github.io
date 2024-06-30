@@ -109,6 +109,11 @@ li p {
   margin: 0;
 }
 
+/* org's =text= */
+code {
+  color: orange;
+}
+
 a {
   color: var(--text-color);
 }
