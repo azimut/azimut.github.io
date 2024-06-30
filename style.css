@@ -119,6 +119,10 @@ a:hover {
   text-decoration: none;
 }
 
+a[href^="http"] {
+  text-decoration-style: dotted;
+}
+
 #postamble p {
   margin: 0;
   font-size: 0.9em;
