@@ -34,8 +34,8 @@ jobs:
         with:
           version: 29.3
 
-      - run: git clone https://github.com/azimut/programming-notes/
-      - run: git clone https://github.com/azimut/sysadmin-notes/
+      - run: git clone --depth=1 https://github.com/azimut/programming-notes/
+      - run: git clone --depth=1 https://github.com/azimut/sysadmin-notes/
       - run: ./build.sh
 
       - uses: actions/configure-pages@v5
