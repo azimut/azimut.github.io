@@ -118,7 +118,19 @@ made unique when necessary."
                  text)))
     (org-html-format-headline-default-function todo todo-type priority link tags info)))
 ;;--------------------------------------------------
+;; Doc: https://ogp.me/
+(defun meta-content (pair)
+  (format "<meta %s content=\"%s\"/>" (car pair) (cdr pair)))
 
+(defun meta (title url)
+  (mapconcat
+   #'meta-content
+   `(("name=\"robots\""       . "index,follow")
+     ("property=\"og:title\"" . ,title)
+     ("property=\"og:type\""  . "article")
+     ("property=\"og:image\"" . "https://azimut.github.io/profile.jpg")
+     ("property=\"og:url\""   . ,url))))
+;;--------------------------------------------------
 (setf org-html-metadata-timestamp-format "%Y-%m-%d")
 (setq org-html-head-include-scripts nil)
 (setq org-html-head-include-default-style nil)
