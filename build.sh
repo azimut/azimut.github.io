@@ -16,14 +16,14 @@ restore_timestamp() {
 	cd -
 }
 
-rm -vrf ./public ./org/blog
-mkdir -p public org/blog
+rm -vrf ./public ./org/notes
+mkdir -p public org/notes
 
 find -L . -name '*.org' -exec awk 'NR == 1 && /TITLE/ { print FILENAME }' {} \; |
 	grep -v org/ |
 	while read -r file; do
 		restore_timestamp "${file}"
-		cp -p "${file}" "org/blog/$(realname ${file})"
+		cp -p "${file}" "org/notes/$(realname ${file})"
 	done
 
 cp style.css public/

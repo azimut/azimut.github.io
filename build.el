@@ -135,6 +135,44 @@ made unique when necessary."
 (setq org-html-head-include-scripts nil)
 (setq org-html-head-include-default-style nil)
 
+(defun make-section (section-name)
+  `(,section-name ; unique
+    :html-format-headline-function my-org-html-format-headline-function
+    :auto-sitemap t
+    :headline-levels 4 ; aka h5 - default = 3
+    :sitemap-format-entry
+    ,(lambda (entry style project)
+       (format "%s [[file:%s][%s]]"
+               (format-time-string "%m/%y" (org-publish-find-date entry project))
+               entry
+               (org-publish-find-title entry project)))
+    :sitemap-function
+    ,(lambda (title list)
+       (concat (format "#+TITLE: %s\n" title)
+               "#+OPTIONS: html-postamble:nil html-preamble:nil\n"
+               (org-list-to-org list)))
+    :sitemap-filename "index.org"
+    :sitemap-title ,(upcase section-name)
+    :sitemap-sort-files anti-chronologically
+    :recursive t
+    :html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"../style.css\"/>\n"
+    :html-postamble t
+    :html-postamble-format
+    (("en" ,(concat "<hr/>"
+                    "<p class=\"date\">Creation Date: %d</p>"
+                    "<p class=\"date\">Last Modified: %C</p>"
+                    "<a href=\"../index.html\">Back</a>")))
+    :html-doctype "html5"
+    :html-html5-fancy t
+    :base-directory ,(format "./org/%s" section-name) ;; .org
+    :publishing-directory ,(format "./public/%s" section-name) ;; created
+    :publishing-function org-html-publish-to-html
+    :with-title t
+    :with-date t
+    :with-toc t
+    :with-sub-superscript nil
+    :section-numbers nil))
+
 (setq org-publish-project-alist
       `(("index"
          :with-toc nil
@@ -149,44 +187,10 @@ made unique when necessary."
          :base-directory "./org"
          :publishing-directory "./public"
          :publishing-function org-html-publish-to-html)
-        ("blog" ; unique
-         :html-format-headline-function my-org-html-format-headline-function
-         :auto-sitemap t
-         :headline-levels 4 ; aka h5 - default = 3
-         :sitemap-format-entry
-         ,(lambda (entry style project)
-            (format "%s [[file:%s][%s]]"
-                    (format-time-string "%m/%y" (org-publish-find-date entry project))
-                    entry
-                    (org-publish-find-title entry project)))
-         :sitemap-function
-         ,(lambda (title list)
-            (concat (format "#+TITLE: %s\n" title)
-                    "#+OPTIONS: html-postamble:nil html-preamble:nil\n"
-                    (org-list-to-org list)))
-         :sitemap-filename "index.org"
-         :sitemap-title "Blog"
-         :sitemap-sort-files anti-chronologically
-         :recursive t
-         :html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"../style.css\"/>\n"
-         :html-postamble t
-         :html-postamble-format
-         (("en" ,(concat "<hr/>"
-                         "<p class=\"date\">Creation Date: %d</p>"
-                         "<p class=\"date\">Last Modified: %C</p>"
-                         "<a href=\"../index.html\">Back</a>")))
-         :html-doctype "html5"
-         :html-html5-fancy t
-         :base-directory "./org/blog" ;; .org
-         :publishing-directory "./public/blog" ;; created
-         :publishing-function org-html-publish-to-html
-         :with-title t
-         :with-date t
-         :with-toc t
-         :with-sub-superscript nil
-         :section-numbers nil)
+        ,(make-section "blog")
+        ,(make-section "notes")
         ("azimut.github.io"
-         :components ("blog" "index"))))
+         :components ("blog" "notes" "index"))))
 
 (org-publish-all t) ; t for NO cache
 

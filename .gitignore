@@ -1,4 +1,5 @@
-/org/*/
+/org/notes/
+/org/blog/index.org
 /.packages
 /content
 /public

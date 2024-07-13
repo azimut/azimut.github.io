@@ -27,3 +27,6 @@ For the past years I tried different programming languages to learn different wa
 
 * blog
 #+INCLUDE: "./blog/index.org" :lines "3-"
+
+* notes
+#+INCLUDE: "./notes/index.org" :lines "3-"
