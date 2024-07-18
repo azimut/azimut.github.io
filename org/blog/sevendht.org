@@ -1,0 +1,30 @@
+#+TITLE: Using a SDA2131 and a DHT11 with Arduino
+#+DATE: <2024-07-18 Thu>
+#+OPTIONS: toc:nil
+
+[[./20240716_185524.small.jpg]]
+
+Digging through old projects I took a stab to try to make 2 different things work together.
+
+1) A two digit seven-segment display controled by an =SDA2131= display driver. Found in an old pc.
+2) A =DHT11= temperature and humidity sensor. That I bought a while back, when I was turning on and off leds with an arduino.
+
+* Implementation
+
+Thanks to its [[https://arwill.hu/forras/termek/felvezetok/ic-k/analog/sda2131-integralt-aramkor-604654.pdf][datasheet]] and someones [[https://github.com/fernando-inf/SIEMENS-SDA2131-Display_7_Segments][arduino code]] to control it I was able to understand how make it work.
+
+For 1) basically you just send *16 bits* of DATA representing if a segment should be on or off at a given CLOCK time.
+
+[[https://raw.githubusercontent.com/fernando-inf/SIEMENS-SDA2131-Display_7_Segments/main/Display_7_Segments_2_Digits_SIEMENS-SDA2131/Other/datasheet.png]]
+
+For 2) is simpler from the Arduino point of view since there is a library already for it. But it's a similar protocol (albeit more a synchronous and time based protocol) thanks to an embedded microcontroller *inside* the sensor.
+
+[[https://i0.wp.com/tomalmy.com/wp-content/uploads/2021/04/DHTCommand.png?resize=512%2C244&ssl=1]]
+
+** Gotchas
+
+There was one, and that was converting from a binary representation of a number from DHT11 to a list of bits of segments. Decomposing the number in his digits and then mapping with an array of predefined bits was enough for this (see WriteNum()).
+
+** Code
+
+#+INCLUDE: "./sevendht.ino" src arduino
