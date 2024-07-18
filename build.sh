@@ -26,7 +26,9 @@ find -L . -name '*.org' -exec awk 'NR == 1 && /TITLE/ { print FILENAME }' {} \; 
 		cp -p "${file}" "org/notes/$(realname ${file})"
 	done
 
-cp style.css public/
-cp org/profile.jpg public/
-
 emacs -Q --script build.el
+
+cp style.css public/
+find org -type f -not -name '*.org' | while read -r file; do
+	cp "${file}" public/"${file:3}"
+done

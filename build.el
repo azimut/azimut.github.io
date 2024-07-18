@@ -131,6 +131,7 @@ made unique when necessary."
      ("property=\"og:image\"" . "https://azimut.github.io/profile.jpg")
      ("property=\"og:url\""   . ,url))))
 ;;--------------------------------------------------
+
 (setf org-html-metadata-timestamp-format "%Y-%m-%d")
 (setq org-html-head-include-scripts nil)
 (setq org-html-head-include-default-style nil)
