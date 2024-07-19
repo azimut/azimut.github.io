@@ -1,5 +1,5 @@
 #+TITLE: Using a SDA2131 and a DHT11 with Arduino
-#+DATE: <2024-07-18 Thu>
+#+DATE: <2024-07-16 Thu>
 #+OPTIONS: toc:nil
 
 [[./20240716_185524.small.jpg]]
@@ -15,7 +15,8 @@ Thanks to its [[https://arwill.hu/forras/termek/felvezetok/ic-k/analog/sda2131-i
 
 For 1) basically you just send *16 bits* of DATA representing if a segment should be on or off at a given CLOCK time.
 
-[[https://raw.githubusercontent.com/fernando-inf/SIEMENS-SDA2131-Display_7_Segments/main/Display_7_Segments_2_Digits_SIEMENS-SDA2131/Other/datasheet.png]]
+#+ATTR_ORG: :width 600
+[[./SDA2131proto.jpg]]
 
 For 2) is simpler from the Arduino point of view since there is a library already for it. But it's a similar protocol (albeit more a synchronous and time based protocol) thanks to an embedded microcontroller *inside* the sensor.
 
