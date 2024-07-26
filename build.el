@@ -160,8 +160,8 @@ made unique when necessary."
     :html-postamble t
     :html-postamble-format
     (("en" ,(concat "<hr/>"
-                    "<p class=\"date\">Creation Date: %d</p>"
-                    "<p class=\"date\">Last Modified: %C</p>"
+                    "<p class=\"date\">Created: %d</p>"
+                    "<p class=\"date\">Updated: %C</p>"
                     "<a href=\"../index.html\">Back</a>")))
     :html-doctype "html5"
     :html-html5-fancy t
