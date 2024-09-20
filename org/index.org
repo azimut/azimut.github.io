@@ -14,16 +14,16 @@
 #+end_portrait
 
 #+begin_bio
-I have 6 years of professional experience working as a /system administrator/. I managed fleets of hundreds of servers running with strict SLAs. On a shared web hosting platform based on *LAMP*, and a shared email platform based on *qmail*. Troubleshooted customer support escalations. And single-handedly migrating operative systems to *Red Hat* using *Ansible*.
+I have 6 years of professional experience working as a /system administrator/. I managed fleets of +100's of servers running with strict SLAs. On a shared web hosting platform based on *LAMP*, and a shared email platform based on *qmail*. Troubleshooted customer support escalations. And single-handedly migrating operative systems to *Red Hat* using *Ansible*.
 
 For the past years I tried different programming languages to learn different ways to solve problems and the pain points of the development process that can be solved with a better infrastructure. Including bits of *Erlang*, where I got reminded of the challenges of distributed systems, of which I got a taste while working with *Kubernetes*. Also did some *Common Lisp* where I learned to be conscious of the performance of my code while doing some gamedev.
 #+end_bio
 
 * projects
 
-- [[https://github.com/azimut/scripts][scripts]] collection of quality-of-life scripts
-- [[https://azimut.github.io/newspod/][newspod]] web full text search of over seven thousand podcast episodes
-- [[https://github.com/azimut/cli-view][cli-view]] TUI tree view of comment sections of different websites
+- [[https://github.com/azimut/scripts][scripts]] collection of quality-of-life scripts, including /ffmpeg/ wrappers
+- [[https://azimut.github.io/newspod/][newspod]] a webapp for full text search over +17.000 podcast episodes titles and descriptions
+- [[https://github.com/azimut/cli-view][cli-view]] a TUI for a tree view of comment sections for different sites
 
 * blog
 #+INCLUDE: "./blog/index.org" :lines "3-"
