@@ -9,6 +9,7 @@
 
 (package-install 'dash)
 (package-install 'htmlize)
+(package-install 'gleam-ts-mode)
 
 ;;----------------------------------------
 ;; Source: https://github.com/alphapapa/unpackaged.el#export-to-html-with-useful-anchors
@@ -16,6 +17,9 @@
 (require 'ox-publish)
 (require 'easy-mmode)
 (require 'dash)
+(require 'gleam-ts-mode)
+
+(gleam-ts-install-grammar)
 
 (defun unpackaged/org-export-get-reference (datum info)
   "Like `org-export-get-reference', except uses heading titles instead of random numbers."
