@@ -10,6 +10,7 @@
 (package-install 'dash)
 (package-install 'htmlize)
 (package-install 'gleam-ts-mode)
+(package-install 'elm-mode)
 
 ;;----------------------------------------
 ;; Source: https://github.com/alphapapa/unpackaged.el#export-to-html-with-useful-anchors
@@ -18,6 +19,7 @@
 (require 'easy-mmode)
 (require 'dash)
 (require 'gleam-ts-mode)
+(require 'elm-mode)
 
 (gleam-ts-install-grammar)
 
