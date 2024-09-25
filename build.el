@@ -11,6 +11,7 @@
 (package-install 'htmlize)
 (package-install 'gleam-ts-mode)
 (package-install 'elm-mode)
+(package-install 'tuareg)
 
 ;;----------------------------------------
 ;; Source: https://github.com/alphapapa/unpackaged.el#export-to-html-with-useful-anchors
@@ -20,6 +21,7 @@
 (require 'dash)
 (require 'gleam-ts-mode)
 (require 'elm-mode)
+(require 'tuareg)
 
 (gleam-ts-install-grammar)
 
