@@ -12,6 +12,9 @@
 (package-install 'gleam-ts-mode)
 (package-install 'elm-mode)
 (package-install 'tuareg)
+(package-install 'haskell-mode)
+(package-install 'rust-mode)
+
 
 ;;----------------------------------------
 ;; Source: https://github.com/alphapapa/unpackaged.el#export-to-html-with-useful-anchors
@@ -22,6 +25,8 @@
 (require 'gleam-ts-mode)
 (require 'elm-mode)
 (require 'tuareg)
+(require 'haskell-mode)
+(require 'rust-mode)
 
 (gleam-ts-install-grammar)
 
