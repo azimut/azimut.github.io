@@ -169,7 +169,10 @@ made unique when necessary."
     :sitemap-title ,(upcase section-name)
     :sitemap-sort-files anti-chronologically
     :recursive t
-    :html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"../style.css\"/>\n"
+    :html-head
+    ,(concat "<link rel=\"stylesheet\" type=\"text/css\" href=\"../style.css\"/>\n"
+             "<link rel=\"icon\" href=\"favicon.ico\" type=\"image/x-icon\" />\n"
+             "<link rel=\"apple-touch-icon\" href=\"apple-touch-icon.png\" />\n")
     :html-postamble t
     :html-postamble-format
     (("en" ,(concat "<hr/>"
@@ -195,7 +198,10 @@ made unique when necessary."
          :html-postamble nil
          :html-doctype "html5"
          :html-html5-fancy t
-         :html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\"/>\n"
+         :html-head
+         ,(concat "<link rel=\"stylesheet\" type=\"text/css\" href=\"../style.css\"/>\n"
+                  "<link rel=\"icon\" href=\"favicon.ico\" type=\"image/x-icon\" />\n"
+                  "<link rel=\"apple-touch-icon\" href=\"apple-touch-icon.png\" />\n")
          :recursive nil
          :include ("index.org")
          :base-directory "./org"
