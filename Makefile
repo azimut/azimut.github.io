@@ -12,3 +12,6 @@ $(ICONS):
 		\( -clone 0 -resize 180x180 -write org/apple-touch-icon.png \) \
 		\( -clone 0 -define icon:auto-resize=64,48,32,16 -write org/favicon.ico \) \
 		null:
+
+.PHONY: dev
+dev:; npm run dev

@@ -38,6 +38,10 @@ jobs:
       - run: git clone --depth=1 https://github.com/azimut/sysadmin-notes/
       - run: ./build.sh
 
+      - uses: actions/setup-node@v4
+      - run: npm install
+      - run: npm run release
+
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
