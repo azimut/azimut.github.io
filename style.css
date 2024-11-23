@@ -49,7 +49,11 @@ h4 a:hover {
 
 /* article nav aka TOC */
 nav#table-of-contents {
-  margin: 0 0 1.5em 0;
+  border-bottom: 1px solid grey;
+  margin-bottom: 1.2em;
+  a {
+    text-decoration: none;
+  }
 }
 
 /* profile nav */
