@@ -175,10 +175,13 @@ made unique when necessary."
              "<link rel=\"apple-touch-icon\" href=\"/apple-touch-icon.png\" />\n")
     :html-postamble t
     :html-postamble-format
-    (("en" ,(concat "<hr/>"
-                    "<p class=\"date\">Created: %d</p>"
-                    "<p class=\"date\">Updated: %C</p>"
-                    "<a href=\"../index.html\">Back</a>")))
+    (("en" ,(concat
+             "<hr/>"
+             "<p class=\"date\">Created: %d</p>"
+             "<a href=\"../index.html\">Back</a>"
+             "<!-- Cloudflare Web Analytics -->"
+             "<script defer src=\"https://static.cloudflareinsights.com/beacon.min.js\" -cf-beacon='{\"token\": \"a6847e40b42c4009813b1f275831b258\"}' ></script>"
+             "<!-- End Cloudflare Web Analytics -->")))
     :html-doctype "html5"
     :html-html5-fancy t
     :base-directory ,(format "./org/%s" section-name) ;; .org
@@ -195,7 +198,12 @@ made unique when necessary."
          :with-toc nil
          :with-sub-superscript nil
          :section-numbers nil
-         :html-postamble nil
+         :html-postamble t
+         :html-postamble-format
+         (("en" ,(concat
+                  "<!-- Cloudflare Web Analytics -->"
+                  "<script defer src=\"https://static.cloudflareinsights.com/beacon.min.js\" -cf-beacon='{\"token\": \"a6847e40b42c4009813b1f275831b258\"}' ></script>"
+                  "<!-- End Cloudflare Web Analytics -->")))
          :html-doctype "html5"
          :html-html5-fancy t
          :html-head
