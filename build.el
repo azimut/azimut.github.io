@@ -149,6 +149,9 @@ made unique when necessary."
 (setq org-html-head-include-scripts nil)
 (setq org-html-head-include-default-style nil)
 
+(defun unlines (&rest rest)
+  (string-join rest "\n"))
+
 (defun make-section (section-name)
   `(,section-name ; unique
     :html-format-headline-function my-org-html-format-headline-function
@@ -162,20 +165,20 @@ made unique when necessary."
                (org-publish-find-title entry project)))
     :sitemap-function
     ,(lambda (title list)
-       (concat (format "#+TITLE: %s\n" title)
-               "#+OPTIONS: html-postamble:nil html-preamble:nil\n"
-               (org-list-to-org list)))
+       (unlines (format "#+TITLE: %s" title)
+                "#+OPTIONS: html-postamble:nil html-preamble:nil"
+                (org-list-to-org list)))
     :sitemap-filename "index.org"
     :sitemap-title ,(upcase section-name)
     :sitemap-sort-files anti-chronologically
     :recursive t
     :html-head
-    ,(concat "<link rel=\"stylesheet\" type=\"text/css\" href=\"/style.css\"/>\n"
-             "<link rel=\"icon\" href=\"/favicon.ico\" type=\"image/x-icon\" />\n"
-             "<link rel=\"apple-touch-icon\" href=\"/apple-touch-icon.png\" />\n")
+    ,(unlines "<link rel=\"stylesheet\" type=\"text/css\" href=\"/style.css\"/>"
+              "<link rel=\"icon\" href=\"/favicon.ico\" type=\"image/x-icon\" />"
+              "<link rel=\"apple-touch-icon\" href=\"/apple-touch-icon.png\" />")
     :html-postamble t
     :html-postamble-format
-    (("en" ,(concat
+    (("en" ,(unlines
              "<hr/>"
              "<p class=\"date\">Created: %d</p>"
              "<a href=\"../index.html\">Back</a>"
@@ -200,16 +203,17 @@ made unique when necessary."
          :section-numbers nil
          :html-postamble t
          :html-postamble-format
-         (("en" ,(concat
+         (("en" ,(unlines
                   "<!-- Cloudflare Web Analytics -->"
                   "<script defer src=\"https://static.cloudflareinsights.com/beacon.min.js\" -cf-beacon='{\"token\": \"a6847e40b42c4009813b1f275831b258\"}' ></script>"
                   "<!-- End Cloudflare Web Analytics -->")))
          :html-doctype "html5"
          :html-html5-fancy t
          :html-head
-         ,(concat "<link rel=\"stylesheet\" type=\"text/css\" href=\"/style.css\"/>\n"
-                  "<link rel=\"icon\" href=\"/favicon.ico\" type=\"image/x-icon\" />\n"
-                  "<link rel=\"apple-touch-icon\" href=\"/apple-touch-icon.png\" />\n")
+         ,(unlines
+           "<link rel=\"stylesheet\" type=\"text/css\" href=\"/style.css\"/>"
+           "<link rel=\"icon\" href=\"/favicon.ico\" type=\"image/x-icon\" />"
+           "<link rel=\"apple-touch-icon\" href=\"/apple-touch-icon.png\" />")
          :recursive nil
          :include ("index.org")
          :base-directory "./org"
