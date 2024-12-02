@@ -22,8 +22,9 @@ For the past years I tried different programming languages to learn different wa
 * projects
 
 - [[https://github.com/azimut/scripts][scripts]] collection of quality-of-life scripts, including /ffmpeg/ wrappers
-- [[https://azimut.github.io/newspod/][newspod]] a webapp for full text search over +17.000 podcast episodes titles and descriptions
+- [[https://azimut.github.io/newspod/][newspod]] an Elm webapp for full text search over +17.000 podcast episodes titles and descriptions
 - [[https://github.com/azimut/cli-view][cli-view]] a TUI for a tree view of comment sections for different sites
+- [[https://azimut.github.io/zoom2srt/][zoom2srt]] a Vanilla Javascript webapp to convert exported chats of Zoom meetings into timed subtitles
 
 * blog
 #+INCLUDE: "./blog/index.org" :lines "3-"
