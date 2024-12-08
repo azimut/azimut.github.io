@@ -33,3 +33,11 @@ Here “Bad” are things that will cause bugs on your code. And “Ugly” are 
   #+begin_src awk
     mapping["seeds"][2]["distance"] = 42
   #+end_src
+
+* Conclusion
+
+It fits well when you want to enjoy the mental model for parsing that AWK gives you; and also give it some new structure or meaning to your data.
+
+There are clever tricks you can pull with maps/arrays and regex.
+
+But, if you have more than 3? things to keep track of, it's probably better to look for another programming language.
