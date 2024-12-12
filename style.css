@@ -109,8 +109,8 @@ td {
 }
 
 @media (max-width: 600px) {
-  body {
-    padding: 1em 0.6em;
+  ol.org-ol {
+    padding-left: 1em;
   }
   ul.org-ul {
     padding-left: 1em;
