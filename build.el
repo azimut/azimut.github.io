@@ -183,7 +183,7 @@ made unique when necessary."
              "<p class=\"date\">Created: %d</p>"
              "<a href=\"../index.html\">Back</a>"
              "<!-- Cloudflare Web Analytics -->"
-             "<script defer src=\"https://static.cloudflareinsights.com/beacon.min.js\" -cf-beacon='{\"token\": \"a6847e40b42c4009813b1f275831b258\"}' ></script>"
+             "<script defer src=\"https://static.cloudflareinsights.com/beacon.min.js\" data-cf-beacon='{\"token\": \"a6847e40b42c4009813b1f275831b258\"}' ></script>"
              "<!-- End Cloudflare Web Analytics -->")))
     :html-doctype "html5"
     :html-html5-fancy t
@@ -205,7 +205,7 @@ made unique when necessary."
          :html-postamble-format
          (("en" ,(unlines
                   "<!-- Cloudflare Web Analytics -->"
-                  "<script defer src=\"https://static.cloudflareinsights.com/beacon.min.js\" -cf-beacon='{\"token\": \"a6847e40b42c4009813b1f275831b258\"}' ></script>"
+                  "<script defer src=\"https://static.cloudflareinsights.com/beacon.min.js\" data-cf-beacon='{\"token\": \"a6847e40b42c4009813b1f275831b258\"}' ></script>"
                   "<!-- End Cloudflare Web Analytics -->")))
          :html-doctype "html5"
          :html-html5-fancy t
