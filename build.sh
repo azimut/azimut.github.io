@@ -33,7 +33,7 @@ find -L . -name '*.org' -exec awk 'NR == 1 && /TITLE/ { print FILENAME }' {} \; 
 emacs -Q --script build.el
 
 # public/ - Copy media from org/
-find org -type f -not -name '*.org' |
+find org/ -type f -not -name '*.org' |
     while read -r file; do
-        cp "${file}" public/"${file:3}"
+        cp "${file}" "public/${file:4}"
     done
