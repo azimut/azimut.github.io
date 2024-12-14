@@ -28,7 +28,7 @@ find -L . -name '*.org' -exec awk 'NR == 1 && /TITLE/ { print FILENAME }' {} \; 
     while read -r file; do
         restore_timestamp "${file}"
         cp -vp "${file}" "org/notes/$(realname "${file}")"
-        cp -vp "$(dirname "${file}")/*.@(jpg|png|jpeg|gif)" org/notes/ || true
+        cp -vp "$(dirname "${file}")/"*.@(jpg|png|jpeg|gif) org/notes/ || true
     done
 
 emacs -Q --script build.el
