@@ -9,6 +9,7 @@
 
 (package-install 'dash)
 (package-install 'htmlize)
+(package-install 'lua-mode)
 (package-install 'gleam-ts-mode)
 (package-install 'elm-mode)
 (package-install 'tuareg)
@@ -27,6 +28,7 @@
 (require 'tuareg)
 (require 'haskell-mode)
 (require 'rust-mode)
+(require 'lua-mode)
 
 (gleam-ts-install-grammar)
 
