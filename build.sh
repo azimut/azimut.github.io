@@ -21,15 +21,18 @@ restore_timestamp() {
 rm -vrf ./public ./org/notes
 mkdir -p public org/notes
 
+# org/notes/ - Copy .org files and media
 find -L . -name '*.org' -exec awk 'NR == 1 && /TITLE/ { print FILENAME }' {} \; |
     grep -v org/ |
     while read -r file; do
         restore_timestamp "${file}"
-        cp -p "${file}" "org/notes/$(realname "${file}")"
+        cp -vp "${file}" "org/notes/$(realname "${file}")"
+        cp -vp "$(dirname "${file}")/*.{jpg,png,jpeg,gif}" org/notes/ || true
     done
 
 emacs -Q --script build.el
 
+# public/ - Copy media from org/
 find org -type f -not -name '*.org' |
     while read -r file; do
         cp "${file}" public/"${file:3}"
