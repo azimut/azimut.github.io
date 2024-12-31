@@ -168,7 +168,7 @@ made unique when necessary."
     :sitemap-function
     ,(lambda (title list)
        (unlines (format "#+TITLE: %s" title)
-                "#+OPTIONS: html-postamble:nil html-preamble:nil"
+                "#+OPTIONS: title:t html-postamble:nil html-preamble:nil"
                 (org-list-to-org list)))
     :sitemap-filename "index.org"
     :sitemap-title ,(upcase section-name)
