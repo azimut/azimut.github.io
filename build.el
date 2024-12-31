@@ -154,6 +154,12 @@ made unique when necessary."
 (defun unlines (&rest rest)
   (string-join rest "\n"))
 
+(defvar cloudflare-script
+  (unlines
+   "<!-- Cloudflare Web Analytics -->"
+   "<script defer src=\"https://static.cloudflareinsights.com/beacon.min.js\" data-cf-beacon='{\"token\": \"a6847e40b42c4009813b1f275831b258\"}' ></script>"
+   "<!-- End Cloudflare Web Analytics -->"))
+
 (defun make-section (section-name)
   `(,section-name ; unique
     :html-format-headline-function my-org-html-format-headline-function
@@ -168,7 +174,7 @@ made unique when necessary."
     :sitemap-function
     ,(lambda (title list)
        (unlines (format "#+TITLE: %s" title)
-                "#+OPTIONS: title:t html-postamble:t html-preamble:nil"
+                "#+OPTIONS: title:t html-preamble:nil html-postamble:t"
                 (org-list-to-org list)))
     :sitemap-filename "index.org"
     :sitemap-title ,(upcase section-name)
@@ -192,9 +198,7 @@ made unique when necessary."
              "<li><a href=\"#\" onclick=\"history.back()\">⬅ Back</a></li>"
              "<li><a href=\"#\" onclick=\"window.scrollTo(0,0)\">⬆ Top</a></li>"
              "</ul>"
-             "<!-- Cloudflare Web Analytics -->"
-             "<script defer src=\"https://static.cloudflareinsights.com/beacon.min.js\" data-cf-beacon='{\"token\": \"a6847e40b42c4009813b1f275831b258\"}' ></script>"
-             "<!-- End Cloudflare Web Analytics -->")))
+             cloudflare-script)))
     :html-doctype "html5"
     :html-html5-fancy t
     :base-directory ,(format "./org/%s" section-name) ;; .org
@@ -213,10 +217,7 @@ made unique when necessary."
          :section-numbers nil
          :html-postamble t
          :html-postamble-format
-         (("en" ,(unlines
-                  "<!-- Cloudflare Web Analytics -->"
-                  "<script defer src=\"https://static.cloudflareinsights.com/beacon.min.js\" data-cf-beacon='{\"token\": \"a6847e40b42c4009813b1f275831b258\"}' ></script>"
-                  "<!-- End Cloudflare Web Analytics -->")))
+         (("en" ,cloudflare-script))
          :html-doctype "html5"
          :html-html5-fancy t
          :html-head
