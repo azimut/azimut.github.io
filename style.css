@@ -96,6 +96,12 @@ pre {
 
 table {
   border-collapse: collapse;
+  tbody:nth-last-child(n + 2) {
+    border-bottom: 4px double #222;
+  }
+  th {
+    text-transform: uppercase;
+  }
   td {
     border: 1px solid #222;
     padding: 0.3em 0.5em;
