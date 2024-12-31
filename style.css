@@ -30,26 +30,21 @@ h3,
 h4 {
   margin: 1.2em 0em;
   color: var(--heading-color);
-}
-
-h2 a,
-h3 a,
-h4 a {
-  color: var(--heading-color);
-  text-decoration: none;
-}
-
-h2 a:hover,
-h3 a:hover,
-h4 a:hover {
-  color: var(--heading-color);
-  background-color: var(--background-color);
-  text-decoration: underline;
+  a {
+    color: var(--heading-color);
+    text-decoration: none;
+  }
+  a:hover {
+    color: var(--heading-color);
+    background-color: var(--background-color);
+    text-decoration: underline;
+  }
 }
 
 /* article nav aka TOC */
 nav#table-of-contents {
   border-bottom: 1px solid grey;
+  padding-bottom: 0.5em;
   margin-bottom: 1.2em;
   a {
     text-decoration: none;
@@ -101,11 +96,19 @@ pre {
 
 table {
   border-collapse: collapse;
-}
-
-td {
-  border: 1px solid #222;
-  padding: 0.3em 0.5em;
+  td {
+    border: 1px solid #222;
+    padding: 0.3em 0.5em;
+  }
+  td.org-left {
+    text-align: left;
+  }
+  td.org-right {
+    text-align: right;
+  }
+  td.org-center {
+    text-align: center;
+  }
 }
 
 @media (max-width: 600px) {
