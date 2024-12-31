@@ -168,7 +168,7 @@ made unique when necessary."
     :sitemap-function
     ,(lambda (title list)
        (unlines (format "#+TITLE: %s" title)
-                "#+OPTIONS: title:t html-postamble:nil html-preamble:nil"
+                "#+OPTIONS: title:t html-postamble:t html-preamble:nil"
                 (org-list-to-org list)))
     :sitemap-filename "index.org"
     :sitemap-title ,(upcase section-name)
@@ -189,7 +189,7 @@ made unique when necessary."
     (("en" ,(unlines
              "<hr/>"
              "<ul>"
-             "<li><a href=\"../index.html\">⬅ Back</a></li>"
+             "<li><a href=\"#\" onclick=\"history.back()\">⬅ Back</a></li>"
              "<li><a href=\"#\" onclick=\"window.scrollTo(0,0)\">⬆ Top</a></li>"
              "</ul>"
              "<!-- Cloudflare Web Analytics -->"
