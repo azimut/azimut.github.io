@@ -19,7 +19,7 @@ restore_timestamp() {
     cd -
 }
 
-rm -vrf ./public ./org/notes
+rm -vrf ./public/* ./org/notes
 mkdir -p public org/notes
 
 # org/notes/ - Copy .org files and media
@@ -38,3 +38,5 @@ find org/ -type f -not -name '*.org' |
     while read -r file; do
         cp "${file}" "public/${file:4}"
     done
+
+touch style.css

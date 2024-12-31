@@ -178,12 +178,20 @@ made unique when necessary."
     ,(unlines "<link rel=\"stylesheet\" type=\"text/css\" href=\"/style.css\"/>"
               "<link rel=\"icon\" href=\"/favicon.ico\" type=\"image/x-icon\" />"
               "<link rel=\"apple-touch-icon\" href=\"/apple-touch-icon.png\" />")
+    :html-preamble t
+    :html-preamble-format
+    (("en" ,(unlines
+             "<h1>%t</h1>"
+             "<div class=\"created\">Created: %d</div>"
+             "<div class=\"updated\">Updated: %C</div>")))
     :html-postamble t
     :html-postamble-format
     (("en" ,(unlines
              "<hr/>"
-             "<p class=\"date\">Created: %d</p>"
-             "<a href=\"../index.html\">Back</a>"
+             "<ul>"
+             "<li><a href=\"../index.html\">⬅ Back</a></li>"
+             "<li><a href=\"#\" onclick=\"window.scrollTo(0,0)\">⬆ Top</a></li>"
+             "</ul>"
              "<!-- Cloudflare Web Analytics -->"
              "<script defer src=\"https://static.cloudflareinsights.com/beacon.min.js\" data-cf-beacon='{\"token\": \"a6847e40b42c4009813b1f275831b258\"}' ></script>"
              "<!-- End Cloudflare Web Analytics -->")))
@@ -192,7 +200,7 @@ made unique when necessary."
     :base-directory ,(format "./org/%s" section-name) ;; .org
     :publishing-directory ,(format "./public/%s" section-name) ;; created
     :publishing-function org-html-publish-to-html
-    :with-title t
+    :with-title nil
     :with-date t
     :with-toc t
     :with-sub-superscript nil
