@@ -64,14 +64,13 @@ figure {
   flex-direction: column;
   align-items: center;
   gap: 0.2em;
+  img {
+    max-width: 100%;
+  }
   figcaption {
     font-size: 0.7em;
     font-style: italic;
   }
-}
-
-img {
-  max-width: 100%;
 }
 
 .portrait img {
@@ -92,11 +91,14 @@ img {
   display: block;
 }
 
-/* code block */
-pre {
+pre.src,
+pre.example {
+  max-width: fit-content;
   padding: 0.5em;
   font-size: 1.1em;
   background: #111;
+  background: radial-gradient(circle, #000 0%, #111 100%);
+  border-radius: 10px;
   overflow: auto;
 }
 
