@@ -160,6 +160,8 @@ made unique when necessary."
    "<script defer src=\"https://static.cloudflareinsights.com/beacon.min.js\" data-cf-beacon='{\"token\": \"a6847e40b42c4009813b1f275831b258\"}' ></script>"
    "<!-- End Cloudflare Web Analytics -->"))
 
+(setq org-html-metadata-timestamp-format "%d %b %Y")
+
 (defun make-section (section-name)
   `(,section-name ; unique
     :html-format-headline-function my-org-html-format-headline-function
