@@ -147,7 +147,7 @@ made unique when necessary."
      ("property=\"og:url\""   . ,url))))
 ;;--------------------------------------------------
 
-(setf org-html-metadata-timestamp-format "%Y-%m-%d")
+(setq org-html-metadata-timestamp-format "%d %b %Y")
 (setq org-html-head-include-scripts nil)
 (setq org-html-head-include-default-style nil)
 
@@ -159,8 +159,6 @@ made unique when necessary."
    "<!-- Cloudflare Web Analytics -->"
    "<script defer src=\"https://static.cloudflareinsights.com/beacon.min.js\" data-cf-beacon='{\"token\": \"a6847e40b42c4009813b1f275831b258\"}' ></script>"
    "<!-- End Cloudflare Web Analytics -->"))
-
-(setq org-html-metadata-timestamp-format "%d %b %Y")
 
 (defun make-section (section-name)
   `(,section-name ; unique
@@ -175,7 +173,7 @@ made unique when necessary."
                (org-publish-find-title entry project)))
     :sitemap-function
     ,(lambda (title list)
-       (unlines (format "#+TITLE: %s" title)
+       (unlines (concat "#+TITLE: " title)
                 "#+OPTIONS: title:t html-preamble:nil html-postamble:t"
                 (org-list-to-org list)))
     :sitemap-filename "index.org"
@@ -183,9 +181,10 @@ made unique when necessary."
     :sitemap-sort-files anti-chronologically
     :recursive t
     :html-head
-    ,(unlines "<link rel=\"stylesheet\" type=\"text/css\" href=\"/style.css\"/>"
-              "<link rel=\"icon\" href=\"/favicon.ico\" type=\"image/x-icon\" />"
-              "<link rel=\"apple-touch-icon\" href=\"/apple-touch-icon.png\" />")
+    ,(unlines
+      "<link rel=\"stylesheet\" type=\"text/css\" href=\"/style.css\"/>"
+      "<link rel=\"icon\" href=\"/favicon.ico\" type=\"image/x-icon\" />"
+      "<link rel=\"apple-touch-icon\" href=\"/apple-touch-icon.png\" />")
     :html-preamble t
     :html-preamble-format
     (("en" ,(unlines
@@ -198,13 +197,14 @@ made unique when necessary."
              "<hr/>"
              "<ul>"
              "<li><a href=\"#\" onclick=\"history.back()\">⬅ Back</a></li>"
+             "<li><a href=\"../../\">⌂ Home</a></li>"
              "<li><a href=\"#\" onclick=\"window.scrollTo(0,0)\">⬆ Top</a></li>"
              "</ul>"
              cloudflare-script)))
     :html-doctype "html5"
     :html-html5-fancy t
-    :base-directory ,(format "./org/%s" section-name) ;; .org
-    :publishing-directory ,(format "./public/%s" section-name) ;; created
+    :base-directory ,(concat "./org/" section-name) ;; .org
+    :publishing-directory ,(concat "./public/" section-name) ;; created
     :publishing-function org-html-publish-to-html
     :with-title nil
     :with-date t

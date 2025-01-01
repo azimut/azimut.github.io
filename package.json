@@ -1,7 +1,7 @@
 {
   "scripts": {
     "release": "postcss style.css -o public/style.css",
-    "dev": "concurrently \"live-server public/\" \"postcss style.css -u postcss-nested -w -o public/style.css\""
+    "dev": "concurrently \"live-server public/\" \"postcss style.css -w -o public/style.css\""
   },
   "devDependencies": {
     "concurrently": "^9.1.0",
