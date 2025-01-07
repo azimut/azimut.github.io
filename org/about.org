@@ -1,0 +1,14 @@
+#+TITLE: azimut's web page
+
+* About me
+
+#+begin_portrait
+#+ATTR_HTML: :title glitchart generated with sox :alt glitch art portrait
+[[./profile.jpg]]
+#+end_portrait
+
+#+begin_bio
+I have 6 years of professional experience working as a /system administrator/. I managed fleets of +100's of servers running with strict SLAs. On a shared web hosting platform based on *LAMP*, and a shared email platform based on *qmail*. Troubleshooted customer support escalations. And single-handedly migrating operative systems to *Red Hat* using *Ansible*.
+
+For the past years I tried different programming languages to learn different ways to solve problems and the pain points of the development process that can be solved with a better infrastructure. Including bits of *Erlang*, where I got reminded of the challenges of distributed systems, of which I got a taste while working with *Kubernetes*. Also did some *Common Lisp* where I learned to be conscious of the performance of my code while doing some gamedev.
+#+end_bio
