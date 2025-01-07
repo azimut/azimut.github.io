@@ -94,6 +94,31 @@ figure {
   display: block;
 }
 
+#text-notes {
+  ul {
+    display: flex;
+    gap: 0.9em;
+    flex-flow: row wrap;
+    li {
+      display: inline;
+      span {
+        display: none;
+      }
+      a {
+        padding: 0.2em;
+        background: var(--text-color);
+        color: var(--background-color);
+        text-decoration: none;
+      }
+      a:hover {
+        background: var(--background-color);
+        color: var(--text-color);
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
 pre.src,
 pre.example {
   max-width: fit-content;

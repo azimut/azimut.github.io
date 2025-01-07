@@ -168,7 +168,7 @@ made unique when necessary."
     :sitemap-format-entry
     ,(lambda (entry style project)
        (format "%s [[file:%s][%s]]"
-               (format-time-string "%m/%y" (org-publish-find-date entry project))
+               (format-time-string "[%Y-%m-%d %a]" (org-publish-find-date entry project))
                entry
                (org-publish-find-title entry project)))
     :sitemap-function
@@ -182,6 +182,7 @@ made unique when necessary."
     :recursive t
     :html-head
     ,(unlines
+      "<script type=\"text/javascript\" src=\"/script.js\"></script>"
       "<link rel=\"stylesheet\" type=\"text/css\" href=\"/style.css\"/>"
       "<link rel=\"icon\" href=\"/favicon.ico\" type=\"image/x-icon\" />"
       "<link rel=\"apple-touch-icon\" href=\"/apple-touch-icon.png\" />")
@@ -224,6 +225,7 @@ made unique when necessary."
          :html-html5-fancy t
          :html-head
          ,(unlines
+           "<script type=\"text/javascript\" src=\"/script.js\"></script>"
            "<link rel=\"stylesheet\" type=\"text/css\" href=\"/style.css\"/>"
            "<link rel=\"icon\" href=\"/favicon.ico\" type=\"image/x-icon\" />"
            "<link rel=\"apple-touch-icon\" href=\"/apple-touch-icon.png\" />")
