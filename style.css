@@ -3,7 +3,8 @@
   --background-color: black;
   --heading-color: turquoise;
   font-size: calc(0.7em + 1vw);
-  background-color: var(--background-color);
+  background: var(--background-color);
+  background: linear-gradient(#000, #111);
 }
 @media (min-width: 1200px) {
   :root {
@@ -126,8 +127,8 @@ pre.example {
   padding: 0.5em;
   font-size: 1.1em;
   background: #111;
-  background: radial-gradient(circle, #000 0%, #111 100%);
-  border-radius: 10px;
+  border: 1px solid #333;
+  border-radius: 5px;
   overflow: auto;
 }
 
