@@ -107,11 +107,12 @@ figure {
       a {
         padding: 0.2em;
         background: var(--text-color);
+        border-radius: 5px;
         color: var(--background-color);
         text-decoration: none;
       }
       a:hover {
-        background: var(--background-color);
+        background: rgba(255, 255, 255, 0);
         color: var(--text-color);
         text-decoration: underline;
       }
