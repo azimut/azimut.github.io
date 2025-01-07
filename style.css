@@ -94,7 +94,16 @@ figure {
   content: "";
   display: block;
 }
-
+#text-blog {
+  ul {
+    list-style: none;
+    margin: 0;
+    span.timestamp {
+      color: #555;
+      font-size: 0.8em;
+    }
+  }
+}
 #text-notes {
   ul {
     display: flex;
