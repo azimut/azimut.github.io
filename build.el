@@ -154,6 +154,13 @@ made unique when necessary."
 (defun unlines (&rest rest)
   (string-join rest "\n"))
 
+(defvar html-head
+  (unlines
+   "<script type=\"text/javascript\" src=\"/script.js\"></script>"
+   "<link rel=\"stylesheet\" type=\"text/css\" href=\"/style.css\"/>"
+   "<link rel=\"icon\" href=\"/favicon.ico\" type=\"image/x-icon\" />"
+   "<link rel=\"apple-touch-icon\" href=\"/apple-touch-icon.png\" />")  )
+
 (defvar cloudflare-script
   (unlines
    "<!-- Cloudflare Web Analytics -->"
@@ -180,12 +187,7 @@ made unique when necessary."
     :sitemap-title ,(upcase section-name)
     :sitemap-sort-files anti-chronologically
     :recursive t
-    :html-head
-    ,(unlines
-      "<script type=\"text/javascript\" src=\"/script.js\"></script>"
-      "<link rel=\"stylesheet\" type=\"text/css\" href=\"/style.css\"/>"
-      "<link rel=\"icon\" href=\"/favicon.ico\" type=\"image/x-icon\" />"
-      "<link rel=\"apple-touch-icon\" href=\"/apple-touch-icon.png\" />")
+    :html-head ,html-head
     :html-preamble t
     :html-preamble-format
     (("en" ,(unlines
@@ -223,12 +225,7 @@ made unique when necessary."
          (("en" ,cloudflare-script))
          :html-doctype "html5"
          :html-html5-fancy t
-         :html-head
-         ,(unlines
-           "<script type=\"text/javascript\" src=\"/script.js\"></script>"
-           "<link rel=\"stylesheet\" type=\"text/css\" href=\"/style.css\"/>"
-           "<link rel=\"icon\" href=\"/favicon.ico\" type=\"image/x-icon\" />"
-           "<link rel=\"apple-touch-icon\" href=\"/apple-touch-icon.png\" />")
+         :html-head ,html-head
          :recursive nil
          :include ("index.org")
          :base-directory "./org"
