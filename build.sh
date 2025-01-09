@@ -28,6 +28,7 @@ notes=(
     ./programming-notes/terminal/languages/sed/self.org
     ./programming-notes/terminal/languages/jq/jq.org
     ./programming-notes/languages/sql/sqlite/self.org
+    ./programming-notes/languages/c/makefile/self.org
 )
 for note in "${notes[@]}"; do
     restore_timestamp "${note}"
