@@ -13,8 +13,8 @@ realname() {
 
 restore_timestamp() {
     local file
-    file="$(echo "$1" | cut -f3- -d/)"
-    cd "$(echo "$1" | cut -f2 -d/)"
+    file="$(cut -f3- -d/ <<<"$1")"
+    cd "$(cut -f2 -d/ <<<"$1")"
     touch -d "$(git log -1 --format='%aI' "${file}")" "${file}"
     cd -
 }
