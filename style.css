@@ -153,6 +153,11 @@ pre.example {
 table {
   margin: 0 auto;
   border-collapse: collapse;
+  caption {
+    color: #ccc;
+    margin: 0.2em auto;
+    font-size: 0.8em;
+  }
   tbody:nth-last-child(n + 2) {
     border-bottom: 4px double #222;
   }
