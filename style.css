@@ -45,6 +45,20 @@ h4 {
   }
 }
 
+ul {
+  margin: 0.2em 0;
+  padding: 0 2em;
+}
+div {
+  > ul {
+    margin: 1em;
+    padding: 0;
+    li {
+      margin: 0.1em;
+    }
+  }
+}
+
 /* article nav aka TOC */
 nav#table-of-contents {
   border-bottom: 1px solid grey;
@@ -162,8 +176,11 @@ pre.example {
   overflow: auto;
 }
 
+li > table {
+  margin: 0.4em 0;
+}
+
 table {
-  margin: 0 auto;
   border-collapse: collapse;
   caption {
     color: #ccc;
