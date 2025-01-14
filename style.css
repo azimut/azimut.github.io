@@ -95,7 +95,16 @@ figure {
   display: block;
 }
 
-#text-blog {
+#outline-container-projects {
+  h2 {
+    text-align: center;
+  }
+  table {
+    margin: 0 auto;
+  }
+}
+
+#outline-container-blog {
   text-align: center;
   ul {
     display: inline-block;
@@ -111,7 +120,10 @@ figure {
     }
   }
 }
-#text-notes {
+#outline-container-notes {
+  h2 {
+    text-align: center;
+  }
   ul {
     display: flex;
     gap: 0.9em;
