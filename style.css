@@ -40,7 +40,7 @@ h4 {
   }
   a:hover {
     color: var(--heading-color);
-    background-color: var(--background-color);
+    background-color: transparent;
     text-decoration: underline;
   }
 }
