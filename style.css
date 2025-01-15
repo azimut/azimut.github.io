@@ -28,7 +28,9 @@ h1 {
   text-align: center;
   font-size: 3em;
 }
-
+h2 {
+  text-transform: capitalize;
+}
 h2,
 h3,
 h4 {
@@ -64,6 +66,12 @@ nav#table-of-contents {
   border-bottom: 1px solid grey;
   padding-bottom: 0.5em;
   margin-bottom: 1.2em;
+  ul {
+    text-transform: none;
+  }
+  > div > ul {
+    text-transform: capitalize;
+  }
   a {
     text-decoration: none;
   }
@@ -112,6 +120,7 @@ figure {
 #outline-container-projects {
   h2 {
     text-align: center;
+    text-transform: none;
   }
   table {
     margin: 0 auto;
@@ -120,6 +129,9 @@ figure {
 
 #outline-container-blog {
   text-align: center;
+  h2 {
+    text-transform: none;
+  }
   ul {
     display: inline-block;
     text-align: left;
@@ -137,6 +149,7 @@ figure {
 #outline-container-notes {
   h2 {
     text-align: center;
+    text-transform: none;
   }
   ul {
     display: flex;
