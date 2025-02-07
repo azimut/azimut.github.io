@@ -1,4 +1,4 @@
-#+TITLE: Using a SDA2131 and a DHT11 with Arduino
+#+TITLE: Arduino: Using a SDA2131 and a DHT11
 #+DATE: <2024-07-16 Thu>
 #+OPTIONS: toc:nil
 
