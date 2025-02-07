@@ -14,9 +14,10 @@ realname() {
 restore_timestamp() {
     local file
     file="$(cut -f3- -d/ <<<"$1")"
-    cd "$(cut -f2 -d/ <<<"$1")"
-    touch -d "$(git log -1 --format='%aI' "${file}")" "${file}"
-    cd -
+    touch -md "$(
+        cd "$(cut -f2 -d/ <<<"$1")"
+        git log -1 --format='%aI' "${file}"
+    )" "${2}"
 }
 
 rm -vrf ./public/* ./org/notes
@@ -32,8 +33,9 @@ notes=(
     ./programming-notes/languages/c/makefile/self.org
 )
 for note in "${notes[@]}"; do
-    restore_timestamp "${note}"
-    cp -vp "${note}" "org/notes/$(realname "${note}")"
+    newnote="org/notes/$(realname "${note}")"
+    cp -vp "${note}" "${newnote}"
+    restore_timestamp "${note}" "${newnote}"
     cp -vp "$(dirname "${note}")/"*.@(jpg|png|jpeg|gif) org/notes/ || true
 done
 
