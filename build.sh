@@ -16,7 +16,7 @@ restore_timestamp() {
     file="$(cut -f3- -d/ <<<"$1")"
     touch -md "$(
         cd "$(cut -f2 -d/ <<<"$1")"
-        git log -1 --format='%aI' "${file}"
+        git log -1 --format='%cI' "${file}"
     )" "${2}"
 }
 
