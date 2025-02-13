@@ -137,14 +137,8 @@ made unique when necessary."
 (defun meta-content (pair)
   (format "<meta %s content=\"%s\"/>" (car pair) (cdr pair)))
 
-(defun meta (title url)
-  (mapconcat
-   #'meta-content
-   `(("name=\"robots\""       . "index,follow")
-     ("property=\"og:title\"" . ,title)
-     ("property=\"og:type\""  . "article")
-     ("property=\"og:image\"" . "https://azimut.github.io/profile.jpg")
-     ("property=\"og:url\""   . ,url))))
+(defun meta-og (type content)
+  (meta-content (cons (format "property=\"og:%s\"" type) content)))
 ;;--------------------------------------------------
 
 (setq org-html-metadata-timestamp-format "%d %b %Y")
@@ -153,6 +147,15 @@ made unique when necessary."
 
 (defun unlines (&rest rest)
   (string-join rest "\n"))
+
+(defvar html-head-extra-index
+  (unlines
+   (meta-content (cons "name=\"robots\"" "index,follow"))
+   (meta-og "title"     "azimut's webpage")
+   (meta-og "site_name" "azimut's webpage")
+   (meta-og "type"      "website")
+   (meta-og "url"       "https://azimut.github.io/")
+   (meta-og "image"     "https://azimut.github.io/apple-touch-icon.png")))
 
 (defvar html-head
   (unlines
@@ -226,6 +229,7 @@ made unique when necessary."
          :html-doctype "html5"
          :html-html5-fancy t
          :html-head ,html-head
+         :html-head-extra ,html-head-extra-index
          :recursive nil
          :include ("index.org")
          :base-directory "./org"
