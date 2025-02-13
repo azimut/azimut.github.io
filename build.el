@@ -134,11 +134,14 @@ made unique when necessary."
     (org-html-format-headline-default-function todo todo-type priority link tags info)))
 ;;--------------------------------------------------
 ;; Doc: https://ogp.me/
-(defun meta-content (pair)
-  (format "<meta %s content=\"%s\"/>" (car pair) (cdr pair)))
+(defun meta-name (name content)
+  (format "<meta name=\"%s\" content=\"%s\"/>" name content))
+
+(defun meta-twitter (type content)
+  (meta-name (format "twitter:%s" type) content))
 
 (defun meta-og (type content)
-  (meta-content (cons (format "property=\"og:%s\"" type) content)))
+  (format "<meta property=\"og:%s\" content=\"%s\"/>" type content))
 ;;--------------------------------------------------
 
 (setq org-html-metadata-timestamp-format "%d %b %Y")
@@ -148,14 +151,31 @@ made unique when necessary."
 (defun unlines (&rest rest)
   (string-join rest "\n"))
 
+(defvar html-head-extra-article ; needs dynamic for og:title and og:url og:description
+  (unlines
+   (meta-name "author" "azimut")
+   (meta-og "type"      "article")
+   (meta-og "locale"    "en_US")
+   (meta-og "site_name" "azimut's webpage")
+   (meta-og "image"     "https://azimut.github.io/apple-touch-icon.png")
+   (meta-twitter "card"         "summary")
+   (meta-twitter "image"        "https://azimut.github.io/apple-touch-icon.png")
+   (meta-twitter "image:width"  "180")
+   (meta-twitter "image:height" "180")))
+
 (defvar html-head-extra-index
   (unlines
-   (meta-content (cons "name=\"robots\"" "index,follow"))
-   (meta-og "title"     "azimut's webpage")
-   (meta-og "site_name" "azimut's webpage")
-   (meta-og "type"      "website")
-   (meta-og "url"       "https://azimut.github.io/")
-   (meta-og "image"     "https://azimut.github.io/apple-touch-icon.png")))
+   (meta-name    "robots"       "index,follow")
+   (meta-og      "title"        "azimut's webpage")
+   (meta-og      "site_name"    "azimut's webpage")
+   (meta-og      "type"         "website")
+   (meta-og      "url"          "https://azimut.github.io/")
+   (meta-og      "image"        "https://azimut.github.io/apple-touch-icon.png")
+   (meta-twitter "card"         "summary")
+   (meta-twitter "title"        "azimut's webpage")
+   (meta-twitter "image"        "https://azimut.github.io/apple-touch-icon.png")
+   (meta-twitter "image:width"  "180")
+   (meta-twitter "image:height" "180")))
 
 (defvar html-head
   (unlines
@@ -191,6 +211,7 @@ made unique when necessary."
     :sitemap-sort-files anti-chronologically
     :recursive t
     :html-head ,html-head
+    :html-head-extra ,html-head-extra-article
     :html-preamble t
     :html-preamble-format
     (("en" ,(unlines
