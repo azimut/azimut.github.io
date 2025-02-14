@@ -153,13 +153,13 @@ made unique when necessary."
 
 (defvar html-head-extra-article ; needs dynamic for og:title and og:url og:description
   (unlines
-   (meta-name "author" "azimut")
-   (meta-og "type"      "article")
-   (meta-og "locale"    "en_US")
-   (meta-og "site_name" "azimut's webpage")
-   (meta-og "image"     "https://azimut.github.io/apple-touch-icon.png")
-   (meta-twitter "card"         "summary")
+   (meta-name    "author"       "azimut")
+   (meta-og      "type"         "article")
+   (meta-og      "locale"       "en_US")
+   (meta-og      "site_name"    "azimut's webpage")
+   (meta-og      "image"        "https://azimut.github.io/apple-touch-icon.png")
    (meta-twitter "image"        "https://azimut.github.io/apple-touch-icon.png")
+   (meta-twitter "card"         "summary")
    (meta-twitter "image:width"  "180")
    (meta-twitter "image:height" "180")))
 
@@ -171,9 +171,9 @@ made unique when necessary."
    (meta-og      "type"         "website")
    (meta-og      "url"          "https://azimut.github.io/")
    (meta-og      "image"        "https://azimut.github.io/apple-touch-icon.png")
+   (meta-twitter "image"        "https://azimut.github.io/apple-touch-icon.png")
    (meta-twitter "card"         "summary")
    (meta-twitter "title"        "azimut's webpage")
-   (meta-twitter "image"        "https://azimut.github.io/apple-touch-icon.png")
    (meta-twitter "image:width"  "180")
    (meta-twitter "image:height" "180")))
 
