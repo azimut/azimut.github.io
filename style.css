@@ -31,6 +31,10 @@ h1 {
 h2 {
   text-transform: capitalize;
 }
+h3,
+h4 {
+  text-transform: lowercase;
+}
 h2,
 h3 {
   margin: 1.2em 0em;
