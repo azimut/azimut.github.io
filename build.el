@@ -166,6 +166,8 @@ made unique when necessary."
 (defvar html-head-extra-index
   (unlines
    (meta-name    "robots"       "index,follow")
+   (meta-name    "description"  "azimut's personal website")
+   (meta-og      "description"  "azimut's personal website")
    (meta-og      "title"        "azimut's webpage")
    (meta-og      "site_name"    "azimut's webpage")
    (meta-og      "type"         "website")
