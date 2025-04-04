@@ -9,13 +9,12 @@
 
 * projects
 
-|----------+---------------------------------------------------------------|
-|      <r> |                                                               |
-|  [[https://azimut.github.io/newspod/][newspod]] | Elm webapp for full text search over +23.000 podcast episodes |
-| [[https://github.com/azimut/cli-view][cli-view]] | a TUI for a tree view of comment sections for different sites |
-| [[https://azimut.github.io/zoom2srt/][zoom2srt]] | webapp to convert exported Zoom chats into timed subtitles    |
-|  [[https://github.com/azimut/scripts][scripts]] | collection QoL scripts, including /ffmpeg/ wrappers           |
-|----------+---------------------------------------------------------------|
+|----------+-----------------------------------------------------------------------------|
+|      <r> |                                                                             |
+|  [[https://azimut.github.io/newspod/][newspod]] | Elm webapp for full text search over +23.000 podcast episodes               |
+| [[https://github.com/azimut/cli-view][cli-view]] | a TUI for a tree view of comment sections of different sites, written in Go |
+|  [[https://github.com/azimut/scripts][scripts]] | collection QoL scripts, written in different scripting languages            |
+|----------+-----------------------------------------------------------------------------|
 
 * blog
 #+INCLUDE: "./blog/index.org" :lines "3-"
