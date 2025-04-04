@@ -15,6 +15,7 @@
 (package-install 'tuareg)
 (package-install 'haskell-mode)
 (package-install 'rust-mode)
+(package-install 'arduino-mode)
 
 
 ;;----------------------------------------
@@ -29,6 +30,7 @@
 (require 'haskell-mode)
 (require 'rust-mode)
 (require 'lua-mode)
+(require 'arduino-mode)
 
 (gleam-ts-install-grammar)
 
