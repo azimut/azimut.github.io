@@ -70,6 +70,9 @@ nav#table-of-contents {
   border-bottom: 1px solid grey;
   padding-bottom: 0.5em;
   margin-bottom: 1.2em;
+  h2 {
+    text-align: left;
+  }
   ul {
     text-transform: none;
   }
@@ -121,7 +124,7 @@ figure {
   display: block;
 }
 
-#outline-container-projects {
+.projects {
   h2 {
     text-align: center;
     text-transform: none;
@@ -131,7 +134,7 @@ figure {
   }
 }
 
-#outline-container-blog {
+.blog {
   text-align: center;
   h2 {
     text-transform: none;
@@ -152,7 +155,8 @@ figure {
     }
   }
 }
-#outline-container-notes {
+
+.notes {
   h2 {
     text-align: center;
     text-transform: none;

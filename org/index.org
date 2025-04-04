@@ -7,17 +7,22 @@
 [[./about.org][About Me]]
 #+end_nav
 
-* projects
-
+#+BEGIN_projects
+#+HTML: <h2>projects</h2>
 |----------+-----------------------------------------------------------------------------|
 |      <r> |                                                                             |
 |  [[https://azimut.github.io/newspod/][newspod]] | Elm webapp for full text search over +23.000 podcast episodes               |
 | [[https://github.com/azimut/cli-view][cli-view]] | a TUI for a tree view of comment sections of different sites, written in Go |
 |  [[https://github.com/azimut/scripts][scripts]] | collection QoL scripts, written in different scripting languages            |
 |----------+-----------------------------------------------------------------------------|
+#+END_projects
 
-* blog
+#+BEGIN_blog
+#+HTML: <h2><a href="blog/">blog</a></h2>
 #+INCLUDE: "./blog/index.org" :lines "3-"
+#+END_blog
 
-* notes
+#+BEGIN_notes
+#+HTML: <h2><a href="notes/">notes</a></h2>
 #+INCLUDE: "./notes/index.org" :lines "3-"
+#+END_notes
