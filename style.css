@@ -142,9 +142,11 @@ figure {
     margin: 0;
     padding: 0;
     li {
-      span.timestamp {
+      b {
         color: #555;
         font-size: 0.8em;
+        display: inline;
+        margin: 0 1em 0 0;
       }
     }
   }
@@ -162,7 +164,7 @@ figure {
     padding: 0;
     li {
       display: inline;
-      span {
+      b {
         display: none;
       }
       a {
