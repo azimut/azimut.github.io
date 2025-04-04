@@ -29,7 +29,8 @@ h1 {
   font-size: 3em;
 }
 h2 {
-  text-transform: capitalize;
+  text-align: center;
+  text-decoration: underline;
 }
 h3,
 h4 {
