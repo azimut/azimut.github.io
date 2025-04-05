@@ -209,9 +209,10 @@ made unique when necessary."
     ,(lambda (title list)
        (unlines (concat "#+TITLE: " title)
                 "#+OPTIONS: title:t html-preamble:nil html-postamble:t"
+                "#+HTML_HEAD_EXTRA: <link rel=\"stylesheet\" type=\"text/css\" href=\"/sitemap.css\" />"
                 (org-list-to-org list)))
     :sitemap-filename "index.org"
-    :sitemap-title ,(upcase section-name)
+    :sitemap-title ,(capitalize section-name)
     :sitemap-sort-files anti-chronologically
     :recursive t
     :html-head ,html-head

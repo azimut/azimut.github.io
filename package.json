@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "release": "postcss style.css -o public/style.css",
-    "dev": "concurrently \"live-server public/\" \"postcss style.css -w -o public/style.css\""
+    "release": "postcss *.css --dir public/",
+    "dev": "concurrently \"live-server public/\" \"postcss *.css -w --dir public/\""
   },
   "devDependencies": {
     "concurrently": "^9.1.0",
