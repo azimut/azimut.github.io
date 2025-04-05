@@ -194,6 +194,15 @@ made unique when necessary."
    "<script defer src=\"https://static.cloudflareinsights.com/beacon.min.js\" data-cf-beacon='{\"token\": \"a6847e40b42c4009813b1f275831b258\"}' ></script>"
    "<!-- End Cloudflare Web Analytics -->"))
 
+(defvar navigation-html
+  (unlines
+   "<hr/>"
+   "<ul>"
+   "<li><a href=\"#\" onclick=\"history.back()\">⬅ Back</a></li>"
+   "<li><a href=\"../../\">⌂ Home</a></li>"
+   "<li><a href=\"#\" onclick=\"window.scrollTo(0,0)\">⬆ Top</a></li>"
+   "</ul>"))
+
 (defun make-section (section-name)
   `(,section-name ; unique
     :html-format-headline-function my-org-html-format-headline-function
@@ -225,14 +234,7 @@ made unique when necessary."
              "<div class=\"updated\">Updated: %C</div>")))
     :html-postamble t
     :html-postamble-format
-    (("en" ,(unlines
-             "<hr/>"
-             "<ul>"
-             "<li><a href=\"#\" onclick=\"history.back()\">⬅ Back</a></li>"
-             "<li><a href=\"../../\">⌂ Home</a></li>"
-             "<li><a href=\"#\" onclick=\"window.scrollTo(0,0)\">⬆ Top</a></li>"
-             "</ul>"
-             cloudflare-script)))
+    (("en" ,(unlines navigation-html cloudflare-script)))
     :html-doctype "html5"
     :html-html5-fancy t
     :base-directory ,(concat "./org/" section-name) ;; .org
@@ -244,27 +246,35 @@ made unique when necessary."
     :with-sub-superscript nil
     :section-numbers nil))
 
+(defun make-base (name &optional navigation-p)
+  `(,name
+    :with-toc nil
+    :with-sub-superscript nil
+    :section-numbers nil
+    :html-postamble t
+    :html-postamble-format
+    (("en" ,(if navigation-p
+                (concat navigation-html cloudflare-script)
+              cloudflare-script)))
+    :html-doctype "html5"
+    :html-html5-fancy t
+    :html-head ,html-head
+    :html-head-extra ,html-head-extra-index
+    :recursive nil
+    :base-extension "xyz"  ; non existent extension, then whitelist
+    :include (,(concat name ".org"))
+    :base-directory "./org"
+    :publishing-directory "./public"
+    :publishing-function org-html-publish-to-html))
+
 (setq org-publish-project-alist
-      `(("index"
-         :with-toc nil
-         :with-sub-superscript nil
-         :section-numbers nil
-         :html-postamble t
-         :html-postamble-format
-         (("en" ,cloudflare-script))
-         :html-doctype "html5"
-         :html-html5-fancy t
-         :html-head ,html-head
-         :html-head-extra ,html-head-extra-index
-         :recursive nil
-         :include ("index.org")
-         :base-directory "./org"
-         :publishing-directory "./public"
-         :publishing-function org-html-publish-to-html)
+      `(,(make-base "index")
+        ,(make-base "about" t)
+        ,(make-base "404" t)
         ,(make-section "blog")
         ,(make-section "notes")
         ("azimut.github.io"
-         :components ("blog" "notes" "index"))))
+         :components ("blog" "notes" "index" "about" "404"))))
 
 (org-publish-all t) ; t for NO cache
 
