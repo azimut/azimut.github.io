@@ -49,3 +49,4 @@ find org/ -type f -not -name '*.org' |
     done
 
 touch style.css
+touch sitemap.css
