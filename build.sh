@@ -48,5 +48,4 @@ find org/ -type f -not -name '*.org' |
         cp "${file}" "public/${file:4}"
     done
 
-touch style.css
-touch sitemap.css
+touch ./*.css # force .css regeneration after nuking everything
