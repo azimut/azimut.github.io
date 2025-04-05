@@ -1,0 +1,7 @@
+.content {
+  margin: auto;
+  img {
+    filter: drop-shadow(3px 3px 10px rgba(30, 30, 30, 0.7));
+    max-height: 70vh;
+  }
+}
