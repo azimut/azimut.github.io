@@ -1,4 +1,2 @@
 #+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="/404.css" />
-#+begin_pjw
-[[/pjw.svg]]
-#+end_pjw
+#+HTML: <img src="/pjw.svg" alt="Peter J. Weinberger's face" />
