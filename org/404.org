@@ -1,4 +1,4 @@
 #+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="/404.css" />
 #+begin_pjw
-[[./pjw.svg]]
+[[/pjw.svg]]
 #+end_pjw
