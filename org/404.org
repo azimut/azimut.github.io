@@ -1,2 +1,4 @@
+#+TITLE: 404 NOT FOUND
+#+OPTIONS: title:nil
 #+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="/404.css" />
 #+HTML: <img src="/pjw.svg" alt="Peter J. Weinberger's face" />
