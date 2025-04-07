@@ -230,6 +230,7 @@ made unique when necessary."
     :html-preamble-format
     (("en" ,(unlines
              "<h1>%t</h1>"
+             "<div id=\"progress-bar\"></div>"
              "<div class=\"created\">Created: %d</div>"
              "<div class=\"updated\">Updated: %C</div>")))
     :html-postamble t

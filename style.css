@@ -284,3 +284,16 @@ a[href^="http"] {
     }
   }
 }
+
+#progress-bar {
+  width: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 6px;
+  background: linear-gradient(
+    to right,
+    var(--background-color),
+    var(--text-color)
+  );
+}
