@@ -1,0 +1,197 @@
+#+TITLE: Arduino: How to kill an EEPROM
+#+DATE: <2025-04-14 lun>
+#+OPTIONS: toc:nil
+
+I found on of these on an old motherboard. My initial happiness vanished as soon as I discovered that [[https://www.youtube.com/watch?v=K88pgWhEb1M][Ben Eater's]] EEPROM programmer script won't work right out of the box.
+
+Turns out that it has some sort of write protection. Which complicates the writting (and reading?).
+
+* Spoilers from the future
+
+This is probably just interesting to me. But It kind of helped me keep my sanity in the process. Regardless of the results....
+
+* Background
+** The Hardware
+
+- An arduino UNO: I am a bit limited in the number of digital pins. And i am not sure if i could use the analog ones. So at the very least I need to keep using the bitshifters for the address stuff.
+
+*** The EEPROM
+
+#+CAPTION: is a PDIP-32
+[[./sst29.jpg]]
+
+#+CAPTION: eeprom pinout
+#+ATTR_HTML: :width 300
+#+ATTR_ORG: :width 250
+[[./sst29-pinout.jpg]]
+
+****  Read Protocol
+
+- Controlled by CE# and OE# (# means active low)
+  - both have to be low/active
+
+- Seems pretty normal, at least compared to *28c256* which Ben Eater used.
+
+|------+---------------+-----+-----|
+|      |      <c>      | <c> | <c> |
+| T_RC |  read cycle   | 90  |  ∞  |
+| T_AA |  addr access  |  -  | 90  |
+| T_CE |  chip enable  |  -  | 90  |
+| T_OE | output enable |  -  | 40  |
+|------+---------------+-----+-----|
+
+#+CAPTION: reading timings
+#+ATTR_HTML: :width 600
+#+ATTR_ORG: :width 800
+[[./sst29-read.png]]
+
+**** Write Protocol
+
+- JEDEC standard Sofware Data Protection (SDP)
+  1) 3-byte load sequence for SDP
+    #+begin_src c
+      eeprom[0x5555] = 0xAA;
+      eeprom[0x2AAA] = 0x55;
+      eeprom[0x5555] = 0xA0;
+    #+end_src
+  2) 1-byte load cycle to a page buffer
+  3) internally controlled write cycle
+
+#+CAPTION: write timings
+#+ATTR_HTML: :width 600
+#+ATTR_ORG: :width 800
+[[./sst29-write.png]]
+
+*** The bitshifter (x2)
+
+#+CAPTION: bitshifter - 4094 pinout
+#+ATTR_ORG: :width 200
+[[./sst29-4094pinout.png]]
+
+* Journal
+** Stab #0
+
+Luckly I found some [[https://github.com/slu4coder/SST39SF010-FLASH-Programmer][code]] on the internet that someone with seemly the same EEPROM. Using the arduino ide to write on it. Unfortunely it used a different board. Not the arduino UNO that I own. One with more IO pins that not needed the bit shifters.
+
+So I adapted the code to work with.
+
+Problem is that the handshake seems to require CE. So I am going to have to use one of those analogue pins.
+
+#+begin_src
+000:  2c 2c 6b d9 08 7f d2 f5   1d 33 9c 5f 08 20 77 8b
+010:  b0 71 0e e7 0c 29 16 3e   71 52 57 08 e5 9c e2 ec
+020:  88 16 5d c6 49 2b 4d 3c   e2 a6 e5 f0 42 09 e8 fc
+030:  2e 71 4a 20 6c d3 8f 78   fb 44 82 ef 21 36 0e ed
+040:  91 54 fc 92 04 b4 6a 2c   34 f1 fc d6 69 91 1f d7
+050:  52 ae d2 f4 5c 19 5d f9   17 1f d4 67 76 3a 9c 43
+060:  fe 41 fa 78 80 d9 d6 da   5f 99 bd d3 62 16 ef 2d
+070:  0d 2c 21 57 2c aa 47 ab   59 4e b0 ff 15 59 f2 63
+#+end_src
+
+** Stab #1 - Mission failure
+
+It didn't work :(
+
+Maybe I am doing something wrong.
+
+Dealing with the frustuations of hardware hits different. Sure my code may be the problem, but the looming ghost that my faulty wiring is the issue.
+
+Redid the wiring. Still no luck.
+
+I need to develop a better workflow. Maybe think in smaller. Use leds or a separate board to constantly check stuff.
+
+** Stab #2
+
++Seems like some of the random 00 reading i was getting may be related to magnetic fields of my monitor...may need to consider purchase a new one.+ ~the problem seems to happen when i run the erasememory() aka mess with CE~
+
+Still, the problem of not being able to write persists.
+
+Decided to browse on the internet for more code. I remembered also the [[https://github.com/slu4coder/SST39SF010-FLASH-Programmer/blob/main/Arduino_SST39SF0x0/Arduino_SST39SF0x0.ino][code]] i saw that works to write flash memories.
+
+- "5555" and "2AAA" seem good enough strings to put on github search
+- seems like the flash writing code also uses this handshake for writing
+
+Since I have already CE on analog, maybe I can put OE there too and unburden the shiftregister of it.
+
+** Stab #3
+
+I think I succeded in erasing it...or I fried it.
+
+I see all 0's. I was checking what was causing those random zeros. And I unplugged the power of the board live and plug it again....
+
+...
+
+nvm, i am back to getting zeroes at random, with some bits I recognize from before, so the data is still there. To illustrate:
+
+#+begin_src
+000:  2c 2c 6b d9 08 7f d2 f5   1d 33 9c 5f 08 20 00 00
+010:  00 00 00 e7 0c 29 16 3e   71 52 57 08 e5 9c e2 ec
+020:  88 16 5d c6 49 2b 4d 3c   e2 a6 00 00 00 00 00 00
+030:  2e 71 4a 20 6c d3 8f 78   fb 44 82 ef 21 36 0e ed
+040:  91 54 fc 92 04 b4 00 00   00 00 00 00 69 91 1f d7
+050:  52 ae d2 f4 5c 19 5d f9   17 1f d4 67 76 3a 9c 43
+060:  fe 41 00 00 00 00 00 00   5f 99 bd d3 62 16 ef 2d
+070:  0d 2c 21 57 2c aa 47 ab   59 4e b0 ff 15 59 f2 00
+#+end_src
+
+This happened after finally using a separate pin for OE. But i dunno...
+
+** Stab #4
+
+I changed the *Serial.begin()* velocity from 57600 to 9600. A noticeable change seems to be that the random zeros now happens in clusters (?. Always in different places.
+
+#+begin_src
+000:  00 00 6b d9 08 7f d2 f5   1d 33 9c 5f 08 20 77 8b
+010:  b0 71 0e e7 0c 29 00 00   00 00 00 00 00 00 00 00
+020:  88 16 5d c6 49 2b 4d 3c   00 00 00 00 00 00 00 00
+030:  2e 71 4a 20 6c d3 8f 78   fb 00 00 00 00 00 00 00
+040:  91 54 fc 92 04 b4 6a 2c   34 f1 00 00 00 00 00 00
+050:  52 ae d2 f4 5c 19 5d f9   17 1f d4 00 00 00 00 00
+060:  fe 41 fa 78 80 d9 d6 da   5f 99 bd d3 00 00 00 00
+070:  0d 2c 21 57 2c aa 47 ab   59 4e b0 ff 15 00 00 00
+#+end_src
+
+Also when I started fresh after being unplugged for hours. It started showing no zeros. Only after trying to write something i saw this.
+
+** Stab #5 - ✡️
+
+I sacrificed a 3d printer to get an Arduino Mega to try without the register shifters.
+
+In the process I learned how to dump the binary flash content of an arduino to a file with *avr-dude*.
+
+I am getting weird inconsistent readings...redoing the wiring...
+
+** Stab #6 - 💀
+
+I think I fried the chip...all returns 0...
+
+#+begin_src
+000:  00 00 00 00 00 00 00 00   00 00 00 00 00 00 00 00
+010:  00 00 00 00 00 00 00 00   00 00 00 00 00 00 00 00
+020:  00 00 00 00 00 00 00 00   00 00 00 00 00 00 00 00
+030:  00 00 00 00 00 00 00 00   00 00 00 00 00 00 00 00
+040:  00 00 00 00 00 00 00 00   00 00 00 00 00 00 00 00
+050:  00 00 00 00 00 00 00 00   00 00 00 00 00 00 00 00
+060:  00 00 00 00 00 00 00 00   00 00 00 00 00 00 00 00
+070:  00 00 00 00 00 00 00 00   00 00 00 00 00 00 00 00
+#+end_src
+
+Now that a board with enough pins, I tried directly with the script the used the teensy to program this memory.
+
+Seems like it also sees the same. So my code is not the issue in this case.
+
+Wiring?
+
+** Stab #7 - Adios
+
+Alright, rewired but using the Arduino UNO again with the bitshifters.
+
+I would like to say that I know the pins by hearth now, but I also fried the chip so...
+
+...
+
+Nope, also zeroes, chip is gonezo, caput, se fini, au revoir, adios.
+
+* Conclusion?
+
+Either was wiring or the 2.2uf capacitors that I added at some point for decoupling fried it.
