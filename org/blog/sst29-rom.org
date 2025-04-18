@@ -157,9 +157,14 @@ Also when I started fresh after being unplugged for hours. It started showing no
 
 I sacrificed a 3d printer to get an Arduino Mega to try without the register shifters.
 
-In the process I learned how to dump the binary flash content of an arduino to a file with *avr-dude*.
+In the process I learned how to dump the binary flash content of an arduino to a file with *avrdude*.
 
-I am getting weird inconsistent readings...redoing the wiring...
+#+CAPTION: writes its output to flashdump.bin
+#+begin_src sh
+  $ avrdude -D -p atmega2560 -c wiring -P /dev/ttyACM0 -U flash:r:flashdump.bin:r -v
+#+end_src
+
+Now, I am getting weird inconsistent readings...redoing the wiring...
 
 ** Stab #6 - 💀
 
@@ -176,9 +181,9 @@ I think I fried the chip...all returns 0...
 070:  00 00 00 00 00 00 00 00   00 00 00 00 00 00 00 00
 #+end_src
 
-Now that a board with enough pins, I tried directly with the script the used the teensy to program this memory.
+Now that I have a board with enough pins, I tried directly with the script the used the teensy to program this memory.
 
-Seems like it also sees the same. So my code is not the issue in this case.
+Same reading. So my code is NOT the issue in this case.
 
 Wiring?
 
@@ -191,6 +196,50 @@ I would like to say that I know the pins by hearth now, but I also fried the chi
 ...
 
 Nope, also zeroes, chip is gonezo, caput, se fini, au revoir, adios.
+
+** Stab #8 - 🧟‍♂️
+
+I wanted to see if my reading make sense so I intended to tie the reading of D2 to V+. But...
+
+Another misswiring.
+
+I wired A16 to D2 on the EEPROM and the reading of D2 to V+.
+
+Resulted into this reading.
+
+#+begin_src
+000:  2c 2c 04 04 04 7f 04 f5   1d 04 9c 5f 04 04 77 04
+010:  04 04 0e e7 0c 04 16 3e   04 04 57 04 e5 9c 04 ec
+020:  04 16 5d c6 04 04 4d 3c   04 a6 e5 04 04 04 04 fc
+030:  2e 04 04 04 6c 04 8f 04   04 44 04 ef 04 36 0e ed
+040:  04 54 fc 04 04 b4 04 2c   34 04 fc d6 04 04 1f d7
+050:  04 ae 04 f4 5c 04 5d 04   17 1f d4 67 76 04 9c 04
+060:  fe 04 04 04 04 04 d6 04   5f 04 bd 04 04 16 ef 2d
+070:  0d 2c 04 57 2c 04 47 04   04 4e 04 ff 15 04 04 04
+#+end_src
+
+Notice that, the "2c 2c" are back. And zeroes are filled with "04".
+
+So...I fixed the wiring and...
+
+#+begin_src
+000:  2c 2c 6b d9 08 7f d2 f5   1d 33 9c 5f 08 20 77 8b
+010:  b0 71 0e e7 0c 29 16 3e   71 52 57 08 e5 9c e2 ec
+020:  88 16 5d c6 49 2b 4d 3c   e2 a6 e5 f0 42 09 e8 fc
+030:  2e 71 4a 20 6c d3 8f 78   fb 44 82 ef 21 36 0e ed
+040:  91 54 fc 92 04 b4 6a 2c   34 f1 fc d6 69 91 1f d7
+050:  52 ae d2 f4 5c 19 5d f9   17 1f d4 67 76 3a 9c 43
+060:  fe 41 fa 78 80 d9 d6 da   5f 99 bd d3 62 16 ef 2d
+070:  0d 2c 21 57 2c aa 47 ab   59 4e b0 ff 15 59 f2 63
+#+end_src
+
+No random "00" anymore.
+
+This is annoying.
+
+I guess the most problematic part is that this chip has *memory*. So the old turn it off and turning it on might not work all the time.
+
+In this case maybe it remembered some bad command I sent until I shook ⚡ it off...
 
 * Conclusion?
 
