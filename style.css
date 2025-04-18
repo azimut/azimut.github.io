@@ -34,6 +34,7 @@ h2 {
 }
 h3,
 h4 {
+  text-align: center;
   text-transform: lowercase;
 }
 h2,
@@ -190,7 +191,7 @@ figure {
 
 pre.src,
 pre.example {
-  max-width: fit-content;
+  max-width: 100vh;
   padding: 0.5em;
   font-size: 1.1em;
   background: #111;
@@ -199,11 +200,27 @@ pre.example {
   overflow: auto;
 }
 
+div.org-src-container > pre.src {
+  margin: 0.5em 0;
+}
+
+div#content,
+div.outline-text-1,
+div.outline-text-2,
+div.outline-text-3,
+div.outline-text-4 {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
 li > table {
   margin: 0.4em 0;
 }
 
 table {
+  margin: 1em 0;
   border-collapse: collapse;
   caption {
     color: #ccc;
