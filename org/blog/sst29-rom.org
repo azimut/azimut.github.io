@@ -1,4 +1,4 @@
-#+TITLE: Arduino: How to kill an EEPROM
+#+TITLE: Arduino: How (NOT) to kill an EEPROM (Part 1)
 #+DATE: <2025-04-14 lun>
 #+OPTIONS: toc:nil
 
@@ -47,6 +47,10 @@ This is probably just interesting to me. But It kind of helped me keep my sanity
 
 **** Write Protocol
 
+- A0-A6 are used for page writes
+- A15-A16 do not matter at all on SDP commands
+- Any byte not loaded with user data will be written to FF
+
 - JEDEC standard Sofware Data Protection (SDP)
   1) 3-byte load sequence for SDP
     #+begin_src c
@@ -61,6 +65,9 @@ This is probably just interesting to me. But It kind of helped me keep my sanity
 #+ATTR_HTML: :width 600
 #+ATTR_ORG: :width 800
 [[./sst29-write.png]]
+
+- address is latched at falling edge of #WE
+- data is lateched at raising edge of #WE
 
 *** The bitshifter (x2)
 
@@ -240,7 +247,3 @@ This is annoying.
 I guess the most problematic part is that this chip has *memory*. So the old turn it off and turning it on might not work all the time.
 
 In this case maybe it remembered some bad command I sent until I shook ⚡ it off...
-
-* Conclusion?
-
-Either was wiring or the 2.2uf capacitors that I added at some point for decoupling fried it.
