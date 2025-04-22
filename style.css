@@ -192,7 +192,7 @@ figure {
 
 pre.src,
 pre.example {
-  max-width: 40vh; /* NOTE: magic value*/
+  max-width: 100vh;
   padding: 0.5em;
   font-size: 1.1em;
   background: #111;
@@ -201,11 +201,18 @@ pre.example {
   overflow: scroll;
 }
 
+@media (max-width: 600px) {
+  pre.src,
+  pre.example {
+    max-width: 40vh; /* NOTE: magic value*/
+  }
+}
+
 div.org-src-container > pre.src {
   margin: 0.5em 0;
 }
 
-/* div#content, */
+div#content,
 div.outline-text-1,
 div.outline-text-2,
 div.outline-text-3,
