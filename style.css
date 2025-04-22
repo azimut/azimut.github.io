@@ -192,20 +192,20 @@ figure {
 
 pre.src,
 pre.example {
-  max-width: 100vh;
+  max-width: 40vh; /* NOTE: magic value*/
   padding: 0.5em;
   font-size: 1.1em;
   background: #111;
   border: 1px solid #333;
   border-radius: 5px;
-  overflow: auto;
+  overflow: scroll;
 }
 
 div.org-src-container > pre.src {
   margin: 0.5em 0;
 }
 
-div#content,
+/* div#content, */
 div.outline-text-1,
 div.outline-text-2,
 div.outline-text-3,
