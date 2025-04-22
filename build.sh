@@ -37,7 +37,7 @@ notes=(
 for note in "${notes[@]}"; do
     restore_timestamp "${note}"
     cp -vp "${note}" "org/notes/$(realname "${note}")"
-    cp -vp "$(dirname "${note}")/"*.@(jpg|png|jpeg|gif|ps) org/notes/ || true
+    cp -vp "$(dirname "${note}")/"*.@(jpg|png|jpeg|gif|ps|svg) org/notes/ || true
 done
 
 emacs -Q --script build.el
