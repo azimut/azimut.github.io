@@ -27,7 +27,7 @@ void writeEEPROM(int addr, byte data) {
   PORTA = data;
   delayMicroseconds(1);
   digitalWrite(WE, HIGH);
-  delay(10);
+  /* delay(10); */ // FIX: Sometimes needed?
 }
 
 byte readEEPROM(int addr) {

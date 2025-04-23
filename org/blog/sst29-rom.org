@@ -351,7 +351,7 @@ Which is exactly the test pattern given by TommyPROM.
   };
 #+end_src
 
-Only that I am using an Arduino Mega for this. While their code seems to only been able to unlock the writes. Whatever the case. It is done!. Now to try that 8042.
+Only that I am using an Arduino Mega for this. While their code, for me, it seems to only been able to unlock the writes. Whatever the case. It is done!. Now to try that [[https://en.wikipedia.org/wiki/Intel_MCS-48][8048]].
 
 * Source
 
