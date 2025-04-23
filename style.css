@@ -100,6 +100,7 @@ figure {
   align-items: center;
   gap: 0.2em;
   img {
+    background: white;
     max-width: 100%;
   }
   figcaption {
