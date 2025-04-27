@@ -1,5 +1,7 @@
 #+TITLE: Lisp: It's parens all the way down!
 #+DATE: <2018-09-07 vie>
+#+DESCRIPTION: An attempt at doing livecoding of both music and visuals in Common Lisp.
+#+KEYWORDS: common lisp, programming, livecoding
 
 * Introduction
 

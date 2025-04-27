@@ -1,5 +1,7 @@
 #+TITLE: Arduino: Using a SDA2131 and a DHT11
 #+DATE: <2024-07-16 Thu>
+#+DESCRIPTION: A brief explaination of how to use a 2 digit segment display found in an old computer using Arduino.
+#+KEYWORDS: arduino, sda2131, dht11, digital electronics
 #+OPTIONS: toc:nil
 
 [[./20240716_185524.small.jpg]]

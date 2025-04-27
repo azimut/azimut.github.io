@@ -155,7 +155,6 @@ made unique when necessary."
 
 (defvar html-head-extra-article ; needs dynamic for og:title and og:url og:description
   (unlines
-   (meta-name    "author"       "azimut")
    (meta-og      "type"         "article")
    (meta-og      "locale"       "en_US")
    (meta-og      "site_name"    "azimut's webpage")
@@ -205,6 +204,7 @@ made unique when necessary."
 
 (defun make-section (section-name)
   `(,section-name ; unique
+    :author "azimut"
     :html-format-headline-function my-org-html-format-headline-function
     :auto-sitemap t
     :headline-levels 4 ; aka h5 - default = 3
@@ -249,6 +249,7 @@ made unique when necessary."
 
 (defun make-base (name &optional navigation-p)
   `(,name
+    :author "azimut"
     :with-toc nil
     :with-sub-superscript nil
     :section-numbers nil
