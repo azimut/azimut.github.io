@@ -19,10 +19,10 @@
 
 #+BEGIN_blog
 #+HTML: <h2><a href="blog/">blog</a></h2>
-#+INCLUDE: "./blog/index.org" :lines "3-"
+#+INCLUDE: "./blog/index.org" :lines "4-"
 #+END_blog
 
 #+BEGIN_notes
 #+HTML: <h2><a href="notes/">notes</a></h2>
-#+INCLUDE: "./notes/index.org" :lines "3-"
+#+INCLUDE: "./notes/index.org" :lines "4-"
 #+END_notes
