@@ -202,6 +202,38 @@ made unique when necessary."
    "<li><a href=\"#\" onclick=\"window.scrollTo(0,0)\">⬆ Top</a></li>"
    "</ul>"))
 
+;; Modified to add new headers
+(defun org-html-meta-tags-default (info)
+  "A default value for `org-html-meta-tags'.
+
+Generate a list items, each of which is a list of arguments that can
+be passed to `org-html--build-meta-entry', to generate meta tags to be
+included in the HTML head.
+
+Use document's plist INFO to derive relevant information for the tags."
+  (let ((author (and (plist-get info :with-author)
+                     (let ((auth (plist-get info :author)))
+                       ;; Return raw Org syntax.
+                       (and auth (org-element-interpret-data auth))))))
+    (list
+     (when (org-string-nw-p author)
+       (list "name" "author" author))
+     (when (org-string-nw-p (plist-get info :description))
+       (list "name" "description"
+             (plist-get info :description)))
+     (when (org-string-nw-p (plist-get info :keywords))
+       (list "name" "keywords" (plist-get info :keywords)))
+     (when (plist-get info :date) ;; <-
+       (list "property" "article:published_time"
+             (org-export-get-date info "%FT%T%z")))
+     (when (plist-get info :date) ;; <-
+       (list "property" "article:modified_time"
+             (format-time-string
+              "%FT%T%z"
+              (file-attribute-modification-time
+               (file-attributes buffer-file-name)))))
+     '("name" "generator" "Org Mode"))))
+
 (defun make-section (section-name)
   `(,section-name ; unique
     :author "azimut"
