@@ -1,6 +1,4 @@
-#+TITLE: azimut's web page
-
-* About me
+#+TITLE: About me
 
 #+begin_portrait
 #+ATTR_HTML: :title glitchart generated with sox :alt glitch art portrait
