@@ -153,7 +153,7 @@ made unique when necessary."
 (defun unlines (&rest rest)
   (string-join rest "\n"))
 
-(defvar html-head-extra-article ; needs dynamic for og:title and og:url og:description
+(defvar html-head-extra-article ; needs dynamic og:url
   (unlines
    (meta-og      "type"         "article")
    (meta-og      "locale"       "en_US")
@@ -169,14 +169,12 @@ made unique when necessary."
    (meta-name    "robots"       "index,follow")
    (meta-name    "description"  "azimut's personal website")
    (meta-og      "description"  "azimut's personal website")
-   (meta-og      "title"        "azimut's webpage")
    (meta-og      "site_name"    "azimut's webpage")
    (meta-og      "type"         "website")
    (meta-og      "url"          "https://azimut.github.io/")
    (meta-og      "image"        "https://azimut.github.io/apple-touch-icon.png")
    (meta-twitter "image"        "https://azimut.github.io/apple-touch-icon.png")
    (meta-twitter "card"         "summary")
-   (meta-twitter "title"        "azimut's webpage")
    (meta-twitter "image:width"  "180")
    (meta-twitter "image:height" "180")))
 
@@ -214,12 +212,22 @@ Use document's plist INFO to derive relevant information for the tags."
   (let ((author (and (plist-get info :with-author)
                      (let ((auth (plist-get info :author)))
                        ;; Return raw Org syntax.
-                       (and auth (org-element-interpret-data auth))))))
+                       (and auth (org-element-interpret-data auth)))))
+        (title (and (plist-get info :title)
+                    (org-element-interpret-data
+                     (plist-get info :title)))))
     (list
+     (when (org-string-nw-p title)
+       (list "property" "og:title" title))
+     (when (org-string-nw-p title)
+       (list "name" "twitter:title" title))
      (when (org-string-nw-p author)
        (list "name" "author" author))
      (when (org-string-nw-p (plist-get info :description))
        (list "name" "description"
+             (plist-get info :description)))
+     (when (org-string-nw-p (plist-get info :description)) ;; <-
+       (list "property" "og:description"
              (plist-get info :description)))
      (when (org-string-nw-p (plist-get info :keywords))
        (list "name" "keywords" (plist-get info :keywords)))
