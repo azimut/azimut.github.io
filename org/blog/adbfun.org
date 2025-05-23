@@ -1,4 +1,4 @@
-#+TITLE: adb fun - installing CA certs
+#+TITLE: Android: installing CA certs
 #+DATE: <2025-05-23 vie>
 #+KEYWORDS: android, adb, ssl
 
