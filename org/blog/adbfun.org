@@ -1,0 +1,58 @@
+#+TITLE: adb fun - installing CA certs
+#+DATE: <2025-05-23 vie>
+#+KEYWORDS: android, adb, ssl
+
+#+CAPTION: Making sense of what they do at botfarms.
+[[./adbfun.png]]
+
+I own a very old cellphone with android. No phoneline. Just as a dumb video player for youtube and some podcasts.
+
+Is so old, that it is currently (in 2025) the oldest Android version supported by the Play Store.
+
+* Problem
+
+Anyway, one of the things that tend to happen with old hardware, that runs on old software is that *their root certificates get outdated*. And with them your ability to see some webpages. This is somewhat sidestepped if you use Chrome and just press "ignore invalid cert". (Or maybe if you install Firefox since they seem to come with their own CA's). But all that leaves you with some apps not working.
+
+* Solution
+
+When i first looked all seem to require root permissions. But I took another look today and I found a really fun way to achieve it. That is by "manually" importing them from an SDcard. Problem is we are talking about +120 certs with no easy way to bulk import.
+
+** Unpacking
+
+We download the certs from a official source. We unpack them. And rename them to .pem, this was needed for the manual installation to see the certificates.
+
+#+begin_src sh
+  $ wget -O android-ca.tar.gz https://android.googlesource.com/platform/system/ca-certificates/+archive/refs/heads/main/files.tar.gz
+  $ mkdir temp-certs/
+  $ mv android-ca.tar.gz temp-certs
+  $ cd temp-certs/
+  $ tar xvzf android-ca.tar.gz
+  $ for i in *.0; do mv "$i" "${i%.0}.pem"; done
+  $ for i in *.pem; do adb push "$i" /sdcard/SDC4-N4M3/; done
+#+end_src
+
+** Manual Installation
+
+We need to:
+1) go to Settings > Security > Install from SD Storage
+2) select the cert we want to install
+3) *write* a name for it
+4) *tap* on "Accept"
+
+Those last 3 steps for each of the +120 certs...
+
+** Automating
+
+The other solution is using "adb" (aka android debugger) to tell it to install and to interact with the dialog to name the new cert and to accept the dialog. All hands-off!!
+
+#+begin_src sh
+  for i in *.pem; do
+      echo "$i"
+      adb shell "am start -n com.android.certinstaller/.CertInstallerMain -a android.intent.action.VIEW -t application/x-x509-ca-cert -d file:///storage/SDC4-N4M3/$i"
+      adb shell input text "$i"
+      adb shell input tap 420 692 # I got this XY value with the help from Developer Tools and importing it once manually
+      sleep 5 # Could be less...
+  done
+#+end_src
+
+Et voila! No more sketchy certs. And no more apps partially working or not at all.
