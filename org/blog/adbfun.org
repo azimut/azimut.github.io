@@ -1,7 +1,10 @@
 #+TITLE: Android: installing CA certs
 #+DATE: <2025-05-23 vie>
 #+KEYWORDS: android, adb, ssl
+#+OPTIONS: num:nil toc:nil
+#+DESCRIPTION: Automating the installation of CA certificates on an old Android phone through ADB.
 
+#+ATTR_HTML: :width 450
 #+CAPTION: Making sense of what they do at botfarms.
 [[./adbfun.png]]
 
