@@ -63,3 +63,17 @@ The other solution is using "adb" (aka android debugger) to tell it to install a
 #+end_src
 
 Et voila! No more sketchy certs. And no more apps partially working or not at all.
+
+* Addenum
+
+Well, apparently Android does not like you adding new CA root certs. So a warning message is displayed on each reboot.
+
+#+CAPTION: warning now showed, once per reboot
+#+ATTR_HTML: :width 200
+[[https://i.sstatic.net/Ul8nZm.png]]
+
+So as long as your new root certificates are at */data/misc/keychain/cacerts-added* and not in a =root= protected place like */system/etc/security/cacerts* it keep warning you about it. There is no way to tell it to stop.
+
+See:
+- https://security.stackexchange.com/questions/61750/android-kitkat-reports-network-may-be-monitored-by-an-unknown-third-party-whe
+- https://issuetracker.google.com/issues/36983241
