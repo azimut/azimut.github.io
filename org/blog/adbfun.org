@@ -70,7 +70,7 @@ Well, apparently Android does not like you adding new CA root certs. So a warnin
 
 #+CAPTION: warning now showed, once per reboot
 #+ATTR_HTML: :width 200
-[[https://i.sstatic.net/Ul8nZm.png]]
+[[./adbfun3.jpeg]]
 
 So as long as your new root certificates are at */data/misc/keychain/cacerts-added* and not in a =root= protected place like */system/etc/security/cacerts* it keep warning you about it. There is no way to tell it to stop.
 
