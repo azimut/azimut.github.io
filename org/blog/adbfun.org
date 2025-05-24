@@ -1,4 +1,4 @@
-#+TITLE: Android: installing CA certs
+#+TITLE: Android: Installing CA certs
 #+DATE: <2025-05-23 vie>
 #+KEYWORDS: android, adb, ssl
 #+OPTIONS: num:nil toc:nil
@@ -14,21 +14,20 @@ Is so old, that it is currently (in 2025) the oldest Android version supported b
 
 * Problem
 
-Anyway, one of the things that tend to happen with old hardware, that runs on old software is that *their root certificates get outdated*. And with them your ability to see some webpages. This is somewhat sidestepped if you use Chrome and just press "ignore invalid cert". (Or maybe if you install Firefox since they seem to come with their own CA's). But all that leaves you with some apps not working.
+Anyway, one of the things that tend to happen with old hardware, that runs old software, is that *their root certificates get outdated*. And with them your ability to see some webpages. This is somewhat sidestepped if you use Chrome and just press "ignore invalid cert". (Or maybe if you install Firefox since they seem to come with their own CA's). But all that leaves you with some apps not working.
 
 * Solution
 
-When i first looked all seem to require root permissions. But I took another look today and I found a really fun way to achieve it. That is by "manually" importing them from an SDcard. Problem is we are talking about +120 certs with no easy way to bulk import.
+When I first looked at solutions, it seemed that it will require a rooted phone. However I took another look today and I found a really fun way to achieve it. That is by "manually" importing them from an SDcard. Problem is we are talking about +120 certs with no easy way to bulk import.
 
 ** Unpacking
 
 We download the certs from a official source. We unpack them. And rename them to .pem, this was needed for the manual installation to see the certificates.
 
 #+begin_src sh
-  $ wget -O android-ca.tar.gz https://android.googlesource.com/platform/system/ca-certificates/+archive/refs/heads/main/files.tar.gz
   $ mkdir temp-certs/
-  $ mv android-ca.tar.gz temp-certs
   $ cd temp-certs/
+  $ wget -O android-ca.tar.gz https://android.googlesource.com/platform/system/ca-certificates/+archive/refs/heads/main/files.tar.gz
   $ tar xvzf android-ca.tar.gz
   $ for i in *.0; do mv "$i" "${i%.0}.pem"; done
   $ for i in *.pem; do adb push "$i" /sdcard/SDC4-N4M3/; done
@@ -36,7 +35,12 @@ We download the certs from a official source. We unpack them. And rename them to
 
 ** Manual Installation
 
-We need to:
+#+CAPTION: menu steps needed to reach the ui to install ca certs
+#+ATTR_ORG: :width 400
+[[https://comodosslstore.com/blog/wp-content/uploads/2018/01/advance-setting.jpg]]
+
+[[https://comodosslstore.com/blog/how-to-install-ssl-certificate-on-android.html][We need to]]:
+
 1) go to Settings > Security > Install from SD Storage
 2) select the cert we want to install
 3) *write* a name for it
