@@ -30,6 +30,7 @@ jobs:
         with:
           lfs: true
           submodules: true
+          fetch-depth: 0 # for mtime restore
 
       - uses: chetan/git-restore-mtime-action@v2
 
