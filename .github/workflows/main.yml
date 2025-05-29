@@ -30,6 +30,9 @@ jobs:
         with:
           lfs: true
           submodules: true
+
+      - uses: chetan/git-restore-mtime-action@v2
+
       - uses: purcell/setup-emacs@master
         with:
           version: 29.3
