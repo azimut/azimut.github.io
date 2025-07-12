@@ -11,7 +11,7 @@
 #+HTML: <h2>projects</h2>
 |----------+-----------------------------------------------------------------------------|
 |      <r> |                                                                             |
-|  [[https://azimut.github.io/newspod/][newspod]] | Elm webapp for full text search over +23.000 podcast episodes               |
+|  [[https://azimut.github.io/newspod/][newspod]] | Elm webapp for full text search over +30.000 podcast episodes               |
 | [[https://github.com/azimut/cli-view][cli-view]] | a TUI for a tree view of comment sections of different sites, written in Go |
 |  [[https://github.com/azimut/scripts][scripts]] | collection QoL scripts, written in different scripting languages            |
 |----------+-----------------------------------------------------------------------------|
