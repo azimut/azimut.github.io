@@ -13,5 +13,7 @@ $(ICONS):
 		\( -clone 0 -define icon:auto-resize=64,48,32,16 -write org/favicon.ico \) \
 		null:
 
-.PHONY: dev
-dev:; npm run dev
+.PHONY: dev dev/postcss dev/server
+dev:; $(MAKE) -j2 dev/postcss dev/server
+dev/postcss: ; npx postcss *.css -w --dir public/
+dev/server:  ; npx live-server public/
