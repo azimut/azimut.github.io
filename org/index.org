@@ -17,6 +17,7 @@
 |----------+-----------------------------------------------------------------------------|
 #+END_projects
 
+#+BEGIN_blognotes
 #+BEGIN_blog
 #+HTML: <h2><a href="blog/">blog</a></h2>
 #+INCLUDE: "./blog/index.org" :lines "4-"
@@ -24,5 +25,8 @@
 
 #+BEGIN_notes
 #+HTML: <h2><a href="notes/">notes</a></h2>
+#+BEGIN_notes-container
 #+INCLUDE: "./notes/index.org" :lines "4-"
+#+end_notes-container
 #+END_notes
+#+END_blognotes

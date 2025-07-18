@@ -137,57 +137,75 @@ figure {
   }
 }
 
-.blog {
-  text-align: center;
-  h2 {
-    text-transform: none;
+.blognotes {
+  display: flex;
+  flex-direction: row;
+  .blog {
+    flex: 1 0 60%;
+    text-align: center;
+    h2 {
+      text-transform: none;
+    }
+    ul {
+      display: inline-block;
+      text-align: left;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      li {
+        b {
+          color: #555;
+          font-size: 0.8em;
+          display: inline;
+          margin: 0 1em 0 0;
+        }
+      }
+    }
   }
-  ul {
-    display: inline-block;
-    text-align: left;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    li {
-      b {
-        color: #555;
-        font-size: 0.8em;
-        display: inline;
-        margin: 0 1em 0 0;
+
+  .notes {
+    display: flex;
+    flex-direction: column;
+    h2 {
+      text-align: center;
+      text-transform: none;
+    }
+    .notes-container {
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      ul {
+        display: flex;
+        gap: 0.9em;
+        flex-flow: row wrap;
+        justify-content: center;
+        li {
+          display: inline;
+          b {
+            display: none;
+          }
+          a {
+            padding: 0.2em;
+            background: var(--text-color);
+            border-radius: 5px;
+            color: var(--background-color);
+            text-decoration: none;
+          }
+          a:hover {
+            background: rgba(255, 255, 255, 0);
+            color: var(--text-color);
+            text-decoration: underline;
+          }
+        }
       }
     }
   }
 }
 
-.notes {
-  h2 {
-    text-align: center;
-    text-transform: none;
-  }
-  ul {
+@media (max-width: 800px) {
+  .blognotes {
     display: flex;
-    gap: 0.9em;
-    flex-flow: row wrap;
-    justify-content: center;
-    padding: 0;
-    li {
-      display: inline;
-      b {
-        display: none;
-      }
-      a {
-        padding: 0.2em;
-        background: var(--text-color);
-        border-radius: 5px;
-        color: var(--background-color);
-        text-decoration: none;
-      }
-      a:hover {
-        background: rgba(255, 255, 255, 0);
-        color: var(--text-color);
-        text-decoration: underline;
-      }
-    }
+    flex-direction: column;
   }
 }
 
