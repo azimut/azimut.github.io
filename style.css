@@ -132,8 +132,79 @@ figure {
     text-align: center;
     text-transform: none;
   }
-  table {
-    margin: 0 auto;
+  .projects-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1em;
+    .project {
+      background: rgba(100, 100, 100, 0.05);
+      padding: 1em 0.5em;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      max-width: 30%;
+      gap: 1em;
+      h3 {
+        margin: 0;
+        padding: 0;
+      }
+      p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        font-size: 0.8em;
+        font-family: monospace;
+      }
+      a:hover {
+        background: none;
+      }
+      a {
+        display: flex;
+        justify-content: center;
+        img {
+          width: 70%;
+          height: auto;
+        }
+      }
+      ul {
+        display: none;
+      }
+      .menu {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-around;
+        a:nth-child(1) {
+          transform: rotate(5deg);
+        }
+        a:nth-child(2) {
+          transform: rotate(-5deg);
+        }
+        a.button {
+          text-decoration: none;
+          font-size: 0.9em;
+          font-family: monospace;
+        }
+        a.button:hover {
+          transform: rotate(0deg);
+          background: var(--text-color);
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+  @media (max-width: 700px) {
+    .projects-container {
+      flex-direction: column;
+      .project {
+        max-width: 90%;
+      }
+    }
   }
 }
 

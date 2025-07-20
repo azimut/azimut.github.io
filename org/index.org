@@ -7,20 +7,40 @@
 [[./about.org][About Me]]
 #+end_nav
 
-#+BEGIN_projects
-#+HTML: <h2>projects</h2>
-|----------+-----------------------------------------------------------------------------|
-|      <r> |                                                                             |
-|  [[https://azimut.github.io/newspod/][newspod]] | Elm webapp for full text search over +30.000 podcast episodes               |
-| [[https://github.com/azimut/cli-view][cli-view]] | a TUI for a tree view of comment sections of different sites, written in Go |
-|  [[https://github.com/azimut/scripts][scripts]] | collection QoL scripts, written in different scripting languages            |
-|----------+-----------------------------------------------------------------------------|
-#+END_projects
+#+BEGIN_EXPORT html
+<div class="projects">
+  <h2>projects</h2>
+  <div class="projects-container">
+    <article class="project">
+      <h3>newspod</h3>
+      <a target="_blank" href="/images/Screenshot_2025-07-17_at_02-52-38_newspod.png">
+        <img src="/images/Screenshot_2025-07-17_at_02-52-38_newspod.png" alt="newspod"/>
+      </a>
+      <p>podcasts search engine</p>
+      <div class="menu">
+        <a href="https://github.com/azimut/newspod" target="_blank" class="button">source</a>
+        <a href="https://azimut.github.io/newspod/" target="_blank" class="button">demo</a>
+      </div>
+    </article>
+    <article class="project">
+      <h3>scenic</h3>
+      <a target="_blank" href="/images/paladin-scene3-bloom-scaled.mp4-00.00.05.967-1.png">
+        <img src="/images/paladin-scene3-bloom-scaled.mp4-00.00.05.967-1.png" alt="scenic"/>
+      </a>
+      <p>opengl graphics engine</p>
+      <div class="menu">
+        <a href="https://github.com/azimut/scenic" target="_blank" class="button">source</a>
+        <a href="https://github.com/azimut/scenic/releases/tag/latest-linux" target="_blank" class="button">demo</a>
+      </div>
+    </article>
+  </div>
+</div>
+#+END_EXPORT
 
 #+BEGIN_blognotes
 #+BEGIN_blog
 #+HTML: <h2><a href="blog/">blog</a></h2>
-#+INCLUDE: "./blog/index.org" :lines "4-"
+#+INCLUDE: "./blog/index.org" :lines "4-10"
 #+END_blog
 
 #+BEGIN_notes
