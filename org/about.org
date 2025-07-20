@@ -2,7 +2,7 @@
 
 #+begin_portrait
 #+ATTR_HTML: :title glitchart generated with sox :alt glitch art portrait
-[[./profile.jpg]]
+[[./images/profile.jpg]]
 #+end_portrait
 
 #+begin_bio
