@@ -150,6 +150,7 @@ figure {
       max-width: 30%;
       gap: 1em;
       h3 {
+        color: var(--text-color);
         margin: 0;
         padding: 0;
       }
