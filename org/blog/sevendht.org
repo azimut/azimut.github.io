@@ -4,7 +4,7 @@
 #+KEYWORDS: arduino, sda2131, dht11, digital electronics
 #+OPTIONS: toc:nil
 
-[[./20240716_185524.small.jpg]]
+[[./images/20240716_185524.small.jpg]]
 
 Digging through old projects I took a stab to try to make 2 different things work together.
 
@@ -18,7 +18,7 @@ Thanks to its [[https://arwill.hu/forras/termek/felvezetok/ic-k/analog/sda2131-i
 For 1) basically you just send *16 bits* of DATA representing if a segment should be on or off at a given CLOCK time.
 
 #+ATTR_ORG: :width 600
-[[./SDA2131proto.jpg]]
+[[./images/SDA2131proto.jpg]]
 
 For 2) is simpler from the Arduino point of view since there is a library already for it. But it's a similar protocol (albeit more a synchronous and time based protocol) thanks to an embedded microcontroller *inside* the sensor.
 

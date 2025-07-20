@@ -17,12 +17,12 @@ This is probably just interesting to me. But It kind of helped me keep my sanity
 *** The EEPROM
 
 #+CAPTION: is a PDIP-32
-[[./sst29.jpg]]
+[[./images/sst29.jpg]]
 
 #+CAPTION: eeprom pinout
 #+ATTR_HTML: :width 300
 #+ATTR_ORG: :width 250
-[[./sst29-pinout.jpg]]
+[[./images/sst29-pinout.jpg]]
 
 ****  Read Protocol
 
@@ -42,7 +42,7 @@ This is probably just interesting to me. But It kind of helped me keep my sanity
 #+CAPTION: reading timings
 #+ATTR_HTML: :width 600
 #+ATTR_ORG: :width 800
-[[./sst29-read.png]]
+[[./images/sst29-read.png]]
 
 **** Write Protocol
 
@@ -63,7 +63,7 @@ This is probably just interesting to me. But It kind of helped me keep my sanity
 #+CAPTION: write timings
 #+ATTR_HTML: :width 600
 #+ATTR_ORG: :width 800
-[[./sst29-write.png]]
+[[./images/sst29-write.png]]
 
 - address is latched at falling edge of #WE
 - data is lateched at raising edge of #WE
@@ -72,7 +72,7 @@ This is probably just interesting to me. But It kind of helped me keep my sanity
 
 #+CAPTION: bitshifter - 4094 pinout
 #+ATTR_ORG: :width 200
-[[./sst29-4094pinout.png]]
+[[./images/sst29-4094pinout.png]]
 
 * Journal
 ** Take #0

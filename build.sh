@@ -23,7 +23,7 @@ restore_timestamp() {
 rm -vrf ./public/* ./org/notes
 mkdir -p public org/notes
 
-# org/notes/ - Copy .org files and media
+# org/notes/ - copy .org + media
 notes=(
     ./programming-notes/terminal/languages/awk/awk.org
     ./programming-notes/terminal/languages/sed/self.org
@@ -46,7 +46,8 @@ emacs -Q --script build.el
 # public/ - Copy media from org/
 find org/ -type f -not -name '*.org' |
     while read -r file; do
-        cp "${file}" "public/${file:4}"
+        mkdir -p "$(dirname "public/${file#*/}")"
+        cp "${file}" "public/${file#*/}"
     done
 
 touch ./*.css # force .css regeneration after nuking everything
