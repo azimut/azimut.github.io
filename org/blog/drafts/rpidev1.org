@@ -1,0 +1,138 @@
+#+TITLE: RPI: headless setup
+#+DATE: <2025-05-12 lun>
+#+KEYWORDS: raspberry pi, dnsmasq, iptables, uart, dhcp
+
+* Background
+* Wiring
+** Common Setup
+
+Typical Raspberry Pi setups involve an extra monitor or a KVM setup.
+
+Of course, this soon stops being a hassle since you usually burn a distro on a SD, configure it for your network and run it headless through SSH.
+
+But, *what if* that is not enough for you.
+- What if you want to distro hop?. Do you own enough SD cards?
+- What if you want to cook your own distro?.
+- What if you want to properly shutdown your pi before powering off?. Will you count the led blinks?.
+
+For this, shorter iteration cycles with less space for human errors is a must.
+
+** Using UART
+
+UART is present in most electronic devices that have a MCU/SoC. Putting it simple, by connecting a couple of pins on your device you gain shell access to your device.
+
+It reminds me when I was starting on all this, reading zines about "How to get a shell". Because, "if you want to learn to hack you need a shell".
+
+For the RPI 2B+ this means connecting it GPIO pins 8 and 10, for TX and RX respectively. And using a UART-to-USB adapter.
+
+[[https://www.electronicwings.com/storage/PlatformSection/TopicContent/305/description/Raspberry%20pi%203%20UART%20pins.png]]
+
+** The rest
+
+- USB⚡ -> USB⚡
+- UART  -> adaptor -> USB
+- eth   -> adaptor -> eth
+
+* The PI
+** Writing the SD
+
+Download .img for your PI model from the [[https://www.raspberrypi.com/software/operating-systems/#raspberry-pi-os-32-bit][official site]]
+
+#+begin_src sh
+  $ sudo dd if=2025-05-06-raspios-bullseye-armhf-lite.img of=/dev/sdb bs=4M conv=fsync status=progress
+#+end_src
+
+** setting up a password for the "pi" user
+
+Since 2022 "Raspberry Pi OS" doesn't come with a default password for the user "pi".
+
+It used to be "raspberry". But now it has "*" on shadow. Aka "pi" is [[https://linux.die.net/man/5/shadow][unable to login]].
+
+Since we are running 100% headless, we need to fix that manually.
+
+#+begin_src sh
+  $ echo 'MYSECRETPASSWORD' | openssl passwd -6 -stdin
+  $ sudo mount /dev/sdb2 /mnt/sdcard
+  $ nano /mnt/sdcard/etc/shadow # update user "pi" with openssl hashed password above
+#+end_src
+
+** connect to the UART port
+
+From this point forward on you can login from your host to your pi using the password set above.
+
+#+begin_src sh
+  user@host $ picom -b 115200 /dev/ttyUSBO
+    ...
+    username: pi
+    password: *******
+    ...
+  pi@raspberry $
+#+end_src
+
+* The Host
+
+I am going to call to USB-to-Ethernet adapter "eth1".
+
+** static udev "eth1" device name
+
+But it's no fun if we don't have internet on the PI. Let's start by setting up the network from the host side.
+
+We avoid strange random names given to the interface.
+
+#+NAME: /etc/udev/rules.d/99-persistent-net.rules
+#+begin_src conf
+  SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="00:09:72:83:62:58", ATTR{type}=="1", NAME="eth1"
+#+end_src
+
+** static ip address for "eth1"
+
+And since I am already using NetworkManager for my wi-fi connection (mainly due nm-applet icon).
+
+I decided to configure the static address through it.
+
+#+begin_src sh
+  $ nmcli con add type ethernet ifname eth1 ip4 192.168.100.1/24
+#+end_src
+
+** dynamic ip address for pi using dnsmasq's DHCP
+
+While we could have a static ip address too for our raspberry pi.
+
+- Help to keep track of what dns traffic is being sent.
+- This would become less redundant if we setup TFTP later.
+
+#+NAME: dhcp.conf
+#+CAPTION: host dnsmasq config
+#+begin_src conf
+  interface=eth1
+  port=5353
+
+  log-queries=extra # dns logging
+
+  dhcp-option=3,0.0.0.0 # 3 = gateway
+  dhcp-option=6,0.0.0.0 # 6 = dns
+  dhcp-range=192.168.100.100,192.168.100.120,12h
+  dhcp-host=b8:27:eb:b5:c7:b4,192.168.100.108
+#+end_src
+
+#+begin_src sh
+  $ sudo dnsmasq -C dhcp.conf -d
+#+end_src
+
+** Networking
+
+The following setup will work for you if you:
+
+- Have a direct ethernet connection to your "host" computer.
+- Only want to have a local ip, dns resolution, and internet access.
+
+For example, if you burned a distro to a microSD and want to use it like that.
+
+You are basically taking the job of your Router.
+
+#+CAPTION: host setup
+#+begin_src sh
+  $ sudo iptables -t nat -A PREROUTING -p udp --dport 53 -d 192.168.100.1 -j REDIRECT --to-ports 5353
+  $ sudo iptables -t nat -A POSTROUTING -m iprange --src-range=192.168.100.100-192.168.100.120 -j MASQUERADE
+  $ sudo sysctl -w net.ipv4.ip_forward=1
+#+end_src

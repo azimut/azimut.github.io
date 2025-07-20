@@ -259,7 +259,9 @@ Use document's plist INFO to derive relevant information for the tags."
        (unlines (concat "#+TITLE: " title)
                 "#+OPTIONS: title:t html-preamble:nil html-postamble:t"
                 "#+HTML_HEAD_EXTRA: <link rel=\"stylesheet\" type=\"text/css\" href=\"/sitemap.css\" />"
-                (org-list-to-org list)))
+                (org-list-to-org (if (string= title "Blog") ; FIXME: skip drafts/
+                                     (print (butlast list))
+                                   list))))
     :sitemap-filename "index.org"
     :sitemap-title ,(capitalize section-name)
     :sitemap-sort-files anti-chronologically

@@ -1,0 +1,119 @@
+#+TITLE: RPI
+#+DATE: <2025-05-12 lun>
+#+KEYWORDS: raspberry pi, dnsmasq, iptables, uart
+
+* Connection
+** Common Setup
+
+Typical Raspberry Pi setups involve an extra monitor or a KVM setup.
+
+Of course, this soon stops being a hassle since you usually burn a distro on a SD, configure it for your network and run it headless through SSH.
+
+But, *what if* that is not enough for you. What if you want to distro hop?. What if you want to cook your own distro?.
+
+For this, shorter iteration cycles with less space for human errors is a must.
+
+** Using UART
+
+UART is present in most electronic components with a MCU/SoC. Putting it simple, by connecting a couple of pins on your device you gain shell access to your device.
+
+I still remember when I was starting on this reading zines about "How to get a shell". Because "if you want to learn to hack you need a shell".
+
+For the RPI 2B+ this means connecting it GPIO pins 8 and 10, for TX and RX respectively. And using a UART-to-USB adapter.
+
+[[https://www.electronicwings.com/storage/PlatformSection/TopicContent/305/description/Raspberry%20pi%203%20UART%20pins.png]]
+
+** The rest
+
+- USB⚡ -> USB⚡
+- UART  -> adaptor -> USB
+- eth   -> adaptor -> eth
+
+* DHCP + DNS config
+
+The following setup will work for you if you:
+
+- Have a direct ethernet connection to your "host" computer.
+- Only want to have a local ip, dns resolution, and internet access.
+
+For example, if you burned a distro to a microSD and want to use it like that.
+
+You are basically taking the job of your Router.
+
+#+CAPTION: host setup
+#+begin_src sh
+  $ sudo ip addr add 192.168.100.1/24 dev eth1
+  $ sudo ip link set dev eth1 up
+  $ sudo dnsmasq -C foo.conf -d
+  $ sudo iptables -t nat -A PREROUTING -p udp --dport 53 -d 192.168.100.1 -j REDIRECT --to-ports 5353
+  $ sudo iptables -t nat -A POSTROUTING -m iprange --src-range=192.168.100.100-192.168.100.120 -j MASQUERADE
+  $ sudo sysctl -w net.ipv4.ip_forward=1
+#+end_src
+
+#+NAME: foo.conf
+#+CAPTION: host dnsmasq config
+#+begin_src conf
+  interface=eth1
+  port=5353
+
+  # 3=gateway 6=dns
+  dhcp-option=3,0.0.0.0
+  dhcp-option=6,0.0.0.0
+
+  dhcp-range=192.168.100.100,192.168.100.120,12h
+#+end_src
+
+* TFTP
+
+https://gist.github.com/G-UK/779b344d534296ad26db32adcafff781
+
+This is optional, if you want to boot into a rootfs hosted remotely. Not on your microSD.
+
+#+CAPTION: run on "host"
+#+begin_src sh
+  $ sudo apt install nfs-kernel-server
+
+  $ mkdir /tftp
+  $ cd /tftp
+  $ scp pi@192.168.100.108:/boot/bootcode.bin .
+
+  $ mkdir 51b5c7b4
+  $ cd 51b5c7b4
+  $ scp 'pi@192.168.100.108:/boot/*' .
+
+  $ nano /etc/exports               # see file below
+  $ nano /opt/rpi/rpios32/etc/fstab # comment out original "/" and "/boot"
+
+  $ echo 'MYSECRETPASSWORD' | openssl passwd -6 -stdin
+  $ nano /opt/rpi/rpios32/etc/shadow # update pi username password with above
+#+end_src
+
+#+NAME: dhcp-tftp.conf
+#+CAPTION: dnmasq config for dhcp+tftp
+#+begin_src conf
+  interface=eth1
+  port=5353
+
+  # 3=gateway 6=dns
+  dhcp-option=3,0.0.0.0
+  dhcp-option=6,0.0.0.0
+
+  dhcp-range=192.168.100.100,192.168.100.120,12h
+  dhcp-host=b8:27:eb:b5:c7:b4,192.168.100.108
+
+  enable-tftp
+  tftp-no-blocksize
+  tftp-root=/home/sendai/nfs/pxe
+  pxe-service=0,"Raspberry Pi Boot"
+#+end_src
+
+#+NAME: /etc/exports
+#+begin_src conf
+  /opt/rpi/rpios32 192.168.100.108(rw,sync,no_subtree_check,no_root_squash)
+#+end_src
+
+* Conclusion
+
+I think this TFTP is a good idea if you want to exploit the distro-hopping and/or have a good ammount of free disk space. Given a current "Raspberry OS Lite" occupies 2gb.
+
+So given I don't have a lot of that space. I might ditch it :). But is nice to know *THIS* is here in case I want to revive it.

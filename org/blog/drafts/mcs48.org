@@ -1,0 +1,23 @@
+* The Hardware
+** MCU
+Is an 80C42, a mcs-48 chip made by NEC. As with anyone of the family it has the peculiarity that it uses the same physical pins for r/w data and for addressing (D0-D7).
+
+Some Extra notes to not forget:
+- SS# should be tied to V+ when not used.
+- different RD#(8) and WR#(10) are inputs from the _master chip_ to enable either, not probes like in 8048
+- new A_0(9) input from the _master chip_ to indicate if it is tranfering data or a command
+- new SYNC(11) output clock signal which occurs once per cycle
+-
+#+ATTR_ORG: :width 200
+[[./images/mcs48-80c42-pinout.png]] [[./images/mcs48-74373.png]] [[./images/sst29-pinout.jpg]]
+- INT# -> CS#
+- PSEN# -> A_0
+- ALE -> SYNC
+** Address Latch
+A 74373. We need this to mediate between the EEPROM and the MCU to toggle depending on wether we are giving an address or fetching some data from it.
+#+ATTR_ORG: :width 120
+[[./images/mcs48-74373.png]]
+** EEPROM
+A SSTEE010-150.
+#+ATTR_ORG: :width 200
+[[./images/sst29-pinout.jpg]]

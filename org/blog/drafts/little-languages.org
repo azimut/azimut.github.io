@@ -1,0 +1,106 @@
+#+TITLE: Little Languages
+#+DATE: <2025-04-13 dom>
+
+Many of the languages mentioned were born ~1970 in Bell labs.
+
+* 71 sh
+* 71 roff
+
+ossana 43, ken thompson 28
+
+text formatting
+
+* 71 dc
+
+- Bell Labs
+- Robert H. Morris (39)
+- Lorinda Cherry (27)
+- arbitrary precision arithmetic calculator
+- stack based
+
+#+CAPTION: hexa to binary
+#+begin_src sh
+  $ dc
+  2o 16i 80 p
+  10000000
+#+end_src
+
+* 74 sed
+
+Bell Labs
+"Stream EDitor"
+Lee E. McMahon (43)
+
+ADDRESS? COMMAND
+
+- text line editing
+- line addressing
+
+* 76 Make
+
+Bell Labs
+Stuart Feldman
+
+incremental rebuilds
+
+TARGET: DEPENDENCIES
+    COMMAND
+
+* 75 bc
+
+- arithmethic
+- frontend for dc
+
+* 77 m4
+
+- Brian Kernighan, Dennis Ritchie
+
+* 77 AWK
+
+aho (36), pjw (35), bwk (35)
+
+PATTERN? { ACTION }
+
+- validation
+- exploratory data analysis
+- networking?
+
+* 82 PostScript
+
+- Adobe
+- John Warnock(42), Chuck Geschke(43), Doug Brotz, Ed Taft, Bill Paxton
+
+* 84 pic
+
+bwk (42)
+
+* 12 jq
+* Other
+
+- lex 75, yacc 75, sh, latex 84, regex, cpp, find, vim(script)
+- ffmpeg filters
+- imagemagick draw api
+- LaTeX
+- ixilang https://en.wikipedia.org/wiki/Ixi_lang
+- bitcoin script
+
+* References
+
+- 86 [[https://www.cs.toronto.edu/~chechik/courses18/csc2125/paper13.pdf][Programming Pearls]] by Jon Bentley
+- 99 The Practice of Programming by Kernighan & Pike
+  Little languages are specialized notations for narrow domains. They not only provide a good interface but also help organize the program that implements them. The printf control sequences are a good example...
+- 11 COSC345 pdf https://www.cs.otago.ac.nz/cosc345/Lectures2011/L2-Little-Languages-and-Assignment.pdf
+- 19 https://comp590-19s.github.io/
+  https://comp590-19s.github.io/docs/lectures
+  https://comp590-19s.github.io/docs/lec/00-welcome.pdf
+  - by Kris Jordan
+  - trial course
+- 19 COS333 pdf https://www.cs.princeton.edu/courses/archive/spring19/cos333/18litlang.pdf
+- 19 https://www.youtube.com/watch?v=xnCgoEyz31M
+  - https://lobste.rs/s/mdmcdi/little_languages_by_jon_bentley_1986
+  - https://news.ycombinator.com/item?id=40989069
+- https://wiki.c2.com/?LittleLanguage
+  What Bell Labs did was to make separate languages for the tasks they found, and optimized them for those tasks.
+- ?? ANON
+  "I view it in the same light as Microsoft Excel: good at what it does, but too powerful for its own good.
+   If your not careful, it will grow until you wish you had been using a proper programming language from the begging."

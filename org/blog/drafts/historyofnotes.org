@@ -1,0 +1,36 @@
+#+TITLE: My Note Taking Journey
+#+DATE: <2025-01-15 mié>
+#+OPTIONS: toc:nil
+
+It all started in my second job. I was given the advice to use [[https://keepnote.org/][KeepNote]]. By that time I was already impressed by how often that person would take a look on it. I didn't think it twice.
+
+At some point I moved to a different computer and either I lost the backup or I wanted to move on so I left that habit.
+
+Some years later I got into the habit of writting [[https://www.atlassian.com/software/confluence][Confluence]] articles for my company about things that I was given to look into. I was told to do so. But, I enjoy it regardless.
+
+Then, I was out of that company, so no more notes for me.
+
+During that off-time I learned a couple of things deeply. But, there is no record of it beside the code I wrote (when there was one).
+
+- Can I really know the depth of what learned?
+- How much of the fog was cleared?
+- How much it remains?
+- How long would I be able to hold onto them with such a feeble grasp?
+
+* Mind shift
+
+Then a livestreamer that I watch often, started taking notes with [[https://obsidian.md/][Obsidian]]. I intuitively scoffed at the idea of myself using an "inferior" program based on [[https://www.electronjs.org/][electron]] for note taking. But, some ideas broke through my cynicism.
+
+- It could easily include pdf files. Is text the only way to take notes?.
+- It allowed for web publishing of the whole notes. Both as a reference and as some sort of proof of work.
+
+Around that time I got curious about electronics. So I took notes about it, but words could only do so much to describe physical phenoms. So I added images.
+
+* What is note taking about?
+
+At least for me, and for now is about:
+
+- Studying.
+- Digesting information.
+- Appreciating other's people work, passion and journey.
+- A way to cope with my own mortality.
