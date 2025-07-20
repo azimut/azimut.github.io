@@ -144,7 +144,6 @@ figure {
       flex-direction: column;
       justify-content: space-between;
       align-items: center;
-      gap: 1em;
       h3 {
         color: var(--text-color);
         margin: 0;

@@ -17,7 +17,7 @@
         <a target="_blank" href="/images/Screenshot_2025-07-17_at_02-52-38_newspod.png">
           <img src="/images/Screenshot_2025-07-17_at_02-52-38_newspod.png" alt="newspod"/>
         </a>
-        <figcaption>podcasts search engine</figcaption>
+        <figcaption>web search of podcasts</figcaption>
       </figure>
       <div class="menu">
         <a href="https://github.com/azimut/newspod" target="_blank" class="button">source</a>
@@ -30,7 +30,7 @@
         <a target="_blank" href="/images/paladin-scene3-bloom-scaled.mp4-00.00.05.967-1.png">
           <img src="/images/paladin-scene3-bloom-scaled.mp4-00.00.05.967-1.png" alt="scenic"/>
         </a>
-        <figcaption>opengl graphics engine</figcaption>
+        <figcaption>opengl based graphics engine</figcaption>
       </figure>
       <div class="menu">
         <a href="https://github.com/azimut/scenic" target="_blank" class="button">source</a>
