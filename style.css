@@ -133,21 +133,17 @@ figure {
     text-transform: none;
   }
   .projects-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 1em;
+    display: grid;
+    grid-template-columns: repeat(2, 240px); /* FIMXE: hardcoded */
+    grid-gap: 1em;
     .project {
       background: rgba(100, 100, 100, 0.05);
       padding: 1em 0.5em;
       border-radius: 8px;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
-      max-width: 30%;
       gap: 1em;
       h3 {
         color: var(--text-color);
@@ -201,7 +197,7 @@ figure {
   }
   @media (max-width: 700px) {
     .projects-container {
-      flex-direction: column;
+      grid-template-columns: 1fr;
       .project {
         max-width: 90%;
       }
