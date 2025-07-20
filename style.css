@@ -150,26 +150,24 @@ figure {
         margin: 0;
         padding: 0;
       }
-      p {
-        margin: 0;
-        padding: 0;
-        text-align: center;
-        font-size: 0.8em;
-        font-family: monospace;
-      }
-      a:hover {
-        background: none;
-      }
-      a {
-        display: flex;
-        justify-content: center;
-        img {
-          width: 70%;
-          height: auto;
+      figure {
+        a:hover {
+          background: none;
         }
-      }
-      ul {
-        display: none;
+        a {
+          display: flex;
+          justify-content: center;
+          img {
+            width: 70%;
+            height: auto;
+          }
+        }
+        figcaption {
+          margin-top: 1em;
+          text-align: center;
+          font-size: 0.8em;
+          font-family: monospace;
+        }
       }
       .menu {
         display: flex;
