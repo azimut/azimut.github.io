@@ -161,7 +161,7 @@ figure {
   }
   .projects-container {
     display: grid;
-    grid-template-columns: repeat(2, 240px); /* FIMXE: hardcoded */
+    grid-template-columns: repeat(3, 240px); /* FIMXE: hardcoded */
     grid-gap: 1em;
     .project {
       background: rgba(100, 100, 100, 0.05);
