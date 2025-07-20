@@ -131,11 +131,33 @@ figure {
   display: block;
 }
 
+.main-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  h1 {
+    border-bottom: 1px solid white;
+    border-top: 1px solid white;
+    font-size: 2.4em;
+    padding: 0.3em;
+  }
+  nav {
+    ul {
+      display: flex;
+      gap: 1.5em;
+      flex-wrap: wrap;
+      list-style: none;
+    }
+  }
+}
+
 .projects {
   h2 {
     text-align: center;
     text-transform: none;
     text-decoration: none;
+    margin-top: 0;
   }
   .projects-container {
     display: grid;

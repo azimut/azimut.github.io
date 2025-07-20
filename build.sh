@@ -44,7 +44,7 @@ done
 emacs -Q --script build.el
 
 # public/ - Copy media from org/
-find org/ -type f -not -name '*.org' |
+find org/ -type f \( -not -name '*.org' -and -not -name '*.html' \) |
     while read -r file; do
         mkdir -p "$(dirname "public/${file#*/}")"
         cp "${file}" "public/${file#*/}"
