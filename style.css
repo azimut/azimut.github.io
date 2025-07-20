@@ -131,6 +131,7 @@ figure {
   h2 {
     text-align: center;
     text-transform: none;
+    text-decoration: none;
   }
   .projects-container {
     display: grid;
@@ -145,6 +146,7 @@ figure {
       justify-content: space-between;
       align-items: center;
       h3 {
+        text-shadow: 1px 2px 1px gray;
         color: var(--text-color);
         margin: 0;
         padding: 0;
@@ -183,10 +185,15 @@ figure {
           text-decoration: none;
           font-size: 0.9em;
           font-family: monospace;
+          color: var(--background-color);
+          background: var(--text-color);
+          border-radius: 3px;
+          padding: 0.2em;
         }
         a.button:hover {
           transform: rotate(0deg);
-          background: var(--text-color);
+          color: var(--text-color);
+          background: none;
           text-decoration: underline;
         }
       }
@@ -208,6 +215,9 @@ figure {
   .blog {
     flex: 1 0 60%;
     text-align: center;
+    a {
+      text-decoration: none;
+    }
     h2 {
       text-transform: none;
     }
