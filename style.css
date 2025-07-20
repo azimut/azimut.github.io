@@ -146,8 +146,8 @@ figure {
       justify-content: space-between;
       align-items: center;
       h3 {
-        text-shadow: 1px 2px 1px gray;
         color: var(--text-color);
+        font-size: 1.3em;
         margin: 0;
         padding: 0;
       }
