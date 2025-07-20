@@ -182,8 +182,23 @@ made unique when necessary."
   (unlines
    "<script type=\"text/javascript\" src=\"/script.js\"></script>"
    "<link rel=\"stylesheet\" type=\"text/css\" href=\"/style.css\"/>"
+   "<link rel=\"stylesheet\" type=\"text/css\" href=\"/photoswipe.min.css\"/>"
    "<link rel=\"icon\" href=\"/favicon.ico\" type=\"image/x-icon\" />"
-   "<link rel=\"apple-touch-icon\" href=\"/apple-touch-icon.png\" />")  )
+   "<link rel=\"apple-touch-icon\" href=\"/apple-touch-icon.png\" />"
+   "<script type=\"module\">"
+   "import PhotoSwipeLightbox from \'/photoswipe-lightbox.esm.min.js\';
+    const lightbox = new PhotoSwipeLightbox({
+      // may select multiple galleries
+      gallery: \'#mygallery\',
+
+      // Elements within gallery (slides)
+      children: \'a\',
+
+      // setup PhotoSwipe Core dynamic import
+      pswpModule: () => import(\'/photoswipe.esm.min.js\')
+    });
+    lightbox.init();"
+   "</script>"))
 
 (defvar cloudflare-script
   (unlines

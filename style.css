@@ -67,6 +67,10 @@ div {
   }
 }
 
+.hidden {
+  display: none;
+}
+
 /* article nav aka TOC */
 nav#table-of-contents {
   border-bottom: 1px solid grey;

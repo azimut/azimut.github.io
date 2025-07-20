@@ -13,10 +13,13 @@
   <div class="projects-container">
     <article class="project">
       <h3>newspod</h3>
-      <figure>
-        <a target="_blank" href="/images/Screenshot_2025-07-17_at_02-52-38_newspod.png">
-          <img src="/images/Screenshot_2025-07-17_at_02-52-38_newspod.png" alt="newspod"/>
-        </a>
+      <figure id="mygallery">
+        <div>
+          <a data-pswp-width="1199" data-pswp-height="595" target="_blank" href="/images/newspod/75-Screenshot_2025-07-17_at_02-52-38_newspod.png">
+            <img src="/images/newspod/75-Screenshot_2025-07-17_at_02-52-38_newspod.png" alt="newspod"/>
+          </a>
+        </div>
+        <div class="hidden"><a data-pswp-width="1199" data-pswp-height="595" href="images/newspod/75-Screenshot_2025-07-17_at_02-50-55_newspod.png"></a></div>
         <figcaption>web search of podcasts</figcaption>
       </figure>
       <div class="menu">
@@ -26,10 +29,17 @@
     </article>
     <article class="project">
       <h3>scenic</h3>
-      <figure>
-        <a target="_blank" href="/images/paladin-scene3-bloom-scaled.mp4-00.00.05.967-1.png">
-          <img src="/images/paladin-scene3-bloom-scaled.mp4-00.00.05.967-1.png" alt="scenic"/>
-        </a>
+      <figure id="mygallery">
+        <div>
+          <a target="_blank" data-pswp-width="720" data-pswp-height="720" href="/images/engine/paladin-scene3-bloom-scaled.mp4-00.00.05.967-1.png">
+            <img src="/images/engine/paladin-scene3-bloom-scaled.mp4-00.00.05.967-1.png" alt="scenic"/>
+          </a>
+        </div>
+        <div class="hidden"><a data-pswp-width="1600" data-pswp-height="900" href="images/engine/2023_jun5_testdefered.jpg">     </a></div>
+        <div class="hidden"><a data-pswp-width="1600" data-pswp-height="900" href="images/engine/2023_jun4_testshadow.jpg">      </a></div>
+        <div class="hidden"><a data-pswp-width="1600" data-pswp-height="900" href="images/engine/2023_jun17_vxgidebug.jpg">      </a></div>
+        <div class="hidden"><a data-pswp-width="1120" data-pswp-height="630" href="images/engine/2022_dec18_2aoc.jpg">           </a></div>
+        <div class="hidden"><a data-pswp-width="505" data-pswp-height="568" href="images/engine/2021_oct22_methodoverloads.png"></a></div>
         <figcaption>opengl based graphics engine</figcaption>
       </figure>
       <div class="menu">
