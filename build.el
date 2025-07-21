@@ -153,6 +153,13 @@ made unique when necessary."
 (defun unlines (&rest rest)
   (string-join rest "\n"))
 
+(defun slurp (file)
+  (with-temp-buffer
+    (insert-file-contents file)
+    (buffer-substring-no-properties
+     (point-min)
+     (point-max))))
+
 (defvar html-head-extra-article ; needs dynamic og:url
   (unlines
    (meta-og      "type"         "article")
@@ -178,27 +185,7 @@ made unique when necessary."
    (meta-twitter "image:width"  "180")
    (meta-twitter "image:height" "180")))
 
-(defvar html-head
-  (unlines
-   "<script type=\"text/javascript\" src=\"/script.js\"></script>"
-   "<link rel=\"stylesheet\" type=\"text/css\" href=\"/style.css\"/>"
-   "<link rel=\"stylesheet\" type=\"text/css\" href=\"/photoswipe.min.css\"/>"
-   "<link rel=\"icon\" href=\"/favicon.ico\" type=\"image/x-icon\" />"
-   "<link rel=\"apple-touch-icon\" href=\"/apple-touch-icon.png\" />"
-   "<script type=\"module\">"
-   "import PhotoSwipeLightbox from \'/photoswipe-lightbox.esm.min.js\';
-    const lightbox = new PhotoSwipeLightbox({
-      // may select multiple galleries
-      gallery: \'#mygallery\',
-
-      // Elements within gallery (slides)
-      children: \'a\',
-
-      // setup PhotoSwipe Core dynamic import
-      pswpModule: () => import(\'/photoswipe.esm.min.js\')
-    });
-    lightbox.init();"
-   "</script>"))
+(defvar html-head (slurp "./org/html-head.html"))
 
 (defvar cloudflare-script
   (unlines

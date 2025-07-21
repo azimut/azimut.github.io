@@ -1,0 +1,42 @@
+<link rel="icon" href="/favicon.ico" type="image/x-icon" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<link rel="stylesheet" type="text/css" href="/photoswipe.min.css" />
+<script type="text/javascript" src="/script.js"></script>
+<script type="module">
+  import PhotoSwipeLightbox from "/photoswipe-lightbox.esm.min.js";
+  const lightbox = new PhotoSwipeLightbox({
+    gallery: "#mygallery",
+    children: "a",
+    pswpModule: () => import("/photoswipe.esm.min.js"),
+  });
+  lightbox.on("uiRegister", () => {
+    lightbox.pswp.ui.registerElement({
+      name: "custom-caption",
+      order: 9,
+      isButton: false,
+      appendTo: "root",
+      html: "Caption text",
+      onInit: (el, pswp) => {
+        lightbox.pswp.on("change", () => {
+          const currSlideElement = lightbox.pswp.currSlide.data.element;
+          let captionHTML = "";
+          if (currSlideElement) {
+            const hiddenCaption = currSlideElement.querySelector(
+              ".hidden-caption-content" // <------------>
+            );
+            if (hiddenCaption) {
+              captionHTML = hiddenCaption.innerHTML;
+            } else {
+              captionHTML = currSlideElement
+                .querySelector("img")
+                .getAttribute("alt");
+            }
+          }
+          el.innerHTML = captionHTML || "";
+        });
+      },
+    });
+  });
+  lightbox.init();
+</script>
