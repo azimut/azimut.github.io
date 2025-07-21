@@ -1,3 +1,5 @@
+#+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="/index.css" />
+
 #+INCLUDE: "./index_header.html" export html
 #+INCLUDE: "./index_body.html" export html
 
