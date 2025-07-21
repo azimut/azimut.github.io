@@ -1,3 +1,24 @@
+.notes .notes-container ul li a,
+a.button {
+  text-decoration: none;
+  font-size: 0.9em;
+  font-family: monospace;
+  color: var(--text-color);
+  /* background: var(--background-color); */
+  background: none;
+  border-radius: 3px;
+  border: 1px solid gray;
+  padding: 0.2em;
+}
+.notes .notes-container ul li a:hover,
+a.button:hover {
+  transform: rotate(0deg);
+  color: var(--text-color);
+  border-color: transparent;
+  background: none;
+  text-decoration: underline;
+}
+
 .main-title {
   display: flex;
   align-items: center;
@@ -15,6 +36,20 @@
       gap: 1.5em;
       flex-wrap: wrap;
       list-style: none;
+      a {
+        font-size: 1.2em;
+        padding: 0.5em;
+      }
+    }
+  }
+}
+@media (max-width: 900px) {
+  .main-title {
+    nav ul {
+      gap: 0.2em;
+    }
+    a.button {
+      border: none;
     }
   }
 }
@@ -43,6 +78,7 @@
         font-size: 1.3em;
         margin: 0;
         padding: 0;
+        font-weight: lighter;
       }
       figure {
         a:hover {
@@ -74,21 +110,8 @@
         a:nth-child(2) {
           transform: rotate(-5deg);
         }
-        a.button {
-          text-decoration: none;
-          font-size: 0.9em;
-          font-family: monospace;
-          color: var(--text-color);
-          background: var(--background-color);
-          border-radius: 3px;
-          border: 1px solid gray;
-          padding: 0.2em;
-        }
-        a.button:hover {
-          transform: rotate(0deg);
-          color: var(--text-color);
-          background: none;
-          text-decoration: underline;
+        a:hover {
+          transform: rotate(0);
         }
       }
     }
@@ -154,17 +177,7 @@
             display: none;
           }
           a {
-            padding: 0.2em;
-            background: var(--background-color);
-            border-radius: 5px;
-            color: var(--text-color);
-            border: 0.15em solid DimGray;
-            text-decoration: none;
-          }
-          a:hover {
-            background: rgba(255, 255, 255, 0);
-            color: var(--text-color);
-            text-decoration: underline;
+            font-size: 1.1em;
           }
         }
       }
