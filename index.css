@@ -151,6 +151,11 @@ a.button:hover {
           display: inline;
           margin: 0 1em 0 0;
         }
+        @media (max-width: 600px) {
+          b {
+            display: none;
+          }
+        }
       }
     }
   }
