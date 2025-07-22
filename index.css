@@ -45,11 +45,13 @@ a.button:hover {
 }
 @media (max-width: 900px) {
   .main-title {
+    flex-direction: column;
+    margin-bottom: 2em;
     nav ul {
       gap: 0.2em;
-    }
-    a.button {
-      border: none;
+      a {
+        padding: 0.2em;
+      }
     }
   }
 }
