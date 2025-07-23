@@ -127,7 +127,7 @@ Here the testing framework of choice would provide a *--watch*. The alternative 
 #+begin_src makefile
 .PHONY: dev
 dev: ; ls *.js src/*/*.js Makefile \
-        | entr -rcs '(npm run swagger; npm start &; sleep 1 && time make test || notify-send -u critical -t 2000 "woops")'
+        | entr -rcs '(npm start &; sleep 1 && time make test || notify-send -u critical -t 2000 "woops")'
 #+end_src
 
 * Conclusion
