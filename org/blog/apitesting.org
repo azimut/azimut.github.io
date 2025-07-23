@@ -1,0 +1,139 @@
+#+TITLE: CLI: Testing a REST API
+#+DATE: <2025-07-23 mié>
+#+DESCRIPTION: A guide to test a REST API using cli tools.
+#+KEYWORDS: linux, httpie, curl, curlie, api, rest, json, makefile, jq
+#+OPTIONS: toc:nil
+
+#+ATTR_HTML: :width 450
+[[./images/apitesting.png]]
+
+Recently I had to write my very fist REST API for a node.js course that I took. Once I got my firsts endpoints running, I realized that even for a toy API the number of endpoints grows by the minute.
+
+Learning or using a testing framework wasn't part of the course topics. So an idea occur to me.
+
+* The HTTP Client
+** Why not CURL?
+
+Curl is a venerable cli tool present on most Linux installations.
+
+Given and URL:
+- Returns in stdout the HTTP body response.
+- Allow you to send different type of HTTP methods.
+- Has a flag to fail on non 2xx HTTP code responses.
+- Can show you the HTTP response headers
+
+#+begin_src sh
+  $ curl https://fakestoreapi.com/products/1
+  {"id":1,"title":"Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops","price":109.95,"description":"Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday","category":"men's clothing","image":"https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg","rating":{"rate":3.9,"count":120}}%
+#+end_src
+
+But, is not very user friendly. Most of the features above add output noise that needs to be further filtered out. And the response json needs to be prettified.
+
+** Why not HTTPie
+
+It's a python cli tool to test REST APIs. Seems ideal for this.
+
+#+CAPTION: Example output.
+#+begin_src sh
+  $ http GET https://fakestoreapi.com/products/1
+  HTTP/1.1 200 OK
+  Access-Control-Allow-Origin: *
+  ...
+  Server: cloudflare
+  X-Powered-By: Express
+
+  {
+      "category": "men's clothing",
+      "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+      "id": 1,
+      "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+      "price": 109.95,
+      "rating": {
+          "count": 120,
+          "rate": 3.9
+      },
+      "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops"
+  }
+#+end_src
+
+But, it's Python and it's startup time is no good. It takes half a minute for each request of which at most 20% is of server waitime. This adds up when you have to test more endpoints.
+
+** Why Curlie?
+
+I was about to give up (or write my own http client...) but I found curlie. An HTTPie-like tool (same tui api) with the startup time of a compiled program.
+
+#+begin_src sh
+$ curlie GET https://fakestoreapi.com/products/1
+HTTP/2 200
+access-control-allow-origin: *
+x-powered-by: Express
+server: cloudflare
+
+{
+    "id": 1,
+    "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
+    "price": 109.95,
+    "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+    "category": "mens clothing",
+    "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+    "rating": {
+        "rate": 3.9,
+        "count": 120
+    }
+}
+#+end_src
+
+* The Assertion Library
+
+Normally one would use a library like *expect.js* or *chai*.
+
+It's final goal of this is ensuring that the response has the shape that I want. For this I would use *jq*. It has a useful flag that will fail (return a non 0 exit code) on null/undefined.
+
+#+CAPTION: will ensure a proper json has a the field "name" with value "6502"
+#+begin_src sh
+  $ jq -e '.name == "6502"'
+#+end_src
+
+* The Framework Runner
+
+Here is the place where a more traditional tool like: Mocha or Jest will be used.
+
+But for this I will use Make. With a few tweaks:
+
+- I ensure tasks fail on pipe executions
+  #+begin_src makefile
+    SHELL := /bin/bash -o pipefail
+  #+end_src
+- I allow for overrides, with the future idea of testing external (non-local) APIs.
+  #+begin_src makefile
+    URL   ?= :3030
+    EMAIL ?= user@email.com
+    PASS  ?= stronPass123
+  #+end_src
+- To make my intention more clear I created macros for the http client runs, that is runs that I am expecting to fail and those that don't.
+  #+begin_src makefile
+    OK     = curlie -fs --oauth2-bearer $(TOKEN)
+    FAIL   = curlie  -s --oauth2-bearer $(TOKEN)
+  #+end_src
+- Finally API requests look like this.
+  #+begin_src makefile
+    $(OK)   GET   $(URL)/api/products   |   jq -e 'length == 3'
+  #+end_src
+
+* Testing on code changes
+
+Here the testing framework of choice would provide a *--watch*. The alternative for me was to use an external too *entr* to handle the spawn of the API and the run of tests on code changes.
+
+#+begin_src makefile
+.PHONY: dev
+dev: ; ls *.js src/*/*.js Makefile \
+        | entr -rcs '(npm run swagger; npm start &; sleep 1 && time make test || notify-send -u critical -t 2000 "woops")'
+#+end_src
+
+* Conclusion
+
+It works!
+
+One thing I especially liked is how high is the ratio between text and information. At least in comparison with more traditional Javascript testing libraries. One really long line of the makefile could make for several javascript method calls. Also I like that is harder to "cheat" and just import a function and workaround a test. It's more "real".
+
+But yes, complex testing logic is bound to fail.
