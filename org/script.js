@@ -1,5 +1,6 @@
 window.onload = function () {
   sortNotes();
+  sortProjects();
   hookProgressBar();
 };
 
@@ -9,6 +10,13 @@ function sortNotes() {
   if (!notes) return;
   for (let i = notes.children.length; i > 0; i--) {
     notes.appendChild(notes.children[(Math.random() * i) | 0]);
+  }
+}
+function sortProjects() {
+  const projects = document.querySelector(".projects-container");
+  if (!projects) return;
+  for (let i = projects.children.length; i > 0; i--) {
+    projects.appendChild(projects.children[(Math.random() * i) | 0]);
   }
 }
 
