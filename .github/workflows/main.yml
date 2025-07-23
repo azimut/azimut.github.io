@@ -62,4 +62,4 @@ jobs:
             -H "Authorization: Bearer ${{ secrets.TRIGGERHAPPY }}" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             https://api.github.com/repos/azimut/azimut/actions/workflows/blogs.yml/dispatches \
-            --data '{"ref": "master"}'
+            --data '{"ref": "main"}'
