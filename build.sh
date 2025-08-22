@@ -29,8 +29,8 @@ notes=(
     ./programming-notes/terminal/languages/sed/self.org
     ./programming-notes/terminal/languages/jq/jq.org
     ./programming-notes/terminal/languages/m4/self.org
-    ./programming-notes/terminal/languages/dc.org
-    ./programming-notes/terminal/languages/bc.org
+    ./programming-notes/terminal/languages/dc/self.org
+    ./programming-notes/terminal/languages/bc/self.org
     ./programming-notes/terminal/tools/roff/pic/self.org
     ./programming-notes/languages/stack/postscript/self.org
     # ./programming-notes/languages/sql/sqlite/self.org
