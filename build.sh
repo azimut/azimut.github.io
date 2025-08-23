@@ -34,7 +34,7 @@ notes=(
     ./programming-notes/terminal/tools/roff/pic/self.org
     ./programming-notes/languages/stack/postscript/self.org
     # ./programming-notes/languages/sql/sqlite/self.org
-    ./programming-notes/languages/compiled/c/makefile/self.org
+    ./programming-notes/languages/compiled/makefile/self.org
 )
 for note in "${notes[@]}"; do
     restore_timestamp "${note}"
