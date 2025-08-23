@@ -54,6 +54,10 @@ TARGET: DEPENDENCIES
 * 77 m4
 
 - Brian Kernighan, Dennis Ritchie
+- Macro preprocessor
+- Can be used to:
+  - extend other languages.
+  - template html
 
 * 77 AWK
 
@@ -74,6 +78,15 @@ PATTERN? { ACTION }
 
 bwk (42)
 
+* 87 imagemagick
+
+- https://codegolf.meta.stackexchange.com/questions/8828/is-imagemagick-a-programming-language
+  - fx()
+    - hypot(x,y) == glsl length() on vec2
+    - distance(x,y) in glsl is length(x-y)
+  - stack based operations
+  - () is like shell command substitution
+
 * 12 jq
 * Other
 
@@ -85,6 +98,9 @@ bwk (42)
 - bitcoin script
 
 * References
+
+- https://en.wikipedia.org/wiki/Turing_tarpit
+  - PL that allows for flexibility in function but is difficult to learn and use because it offers little or no support for common tasks.
 
 - 86 [[https://www.cs.toronto.edu/~chechik/courses18/csc2125/paper13.pdf][Programming Pearls]] by Jon Bentley
 - 99 The Practice of Programming by Kernighan & Pike
