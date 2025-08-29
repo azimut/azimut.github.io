@@ -1,4 +1,6 @@
-ICONS := org/favicon.ico org/apple-touch-icon.png
+ICONS  := org/favicon.ico org/apple-touch-icon.png
+IMGS   := $(wildcard org/images/*/*.jpg)
+THUMBS := $(subst .jpg,.thumb.jpg,$(IMGS))
 
 .PHONY: all
 all: $(ICONS)
@@ -17,3 +19,9 @@ $(ICONS):
 dev:; $(MAKE) -j2 dev/postcss dev/server
 dev/postcss: ; npx postcss *.css -w --dir public/
 dev/server:  ; npx live-server public/
+
+.PHONY: thumbs
+thumbs: $(THUMBS)
+
+$(THUMBS): %.thumb.jpg: %.jpg
+	convert $< -resize 240x $@
