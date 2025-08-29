@@ -4,7 +4,6 @@ THUMBS := $(subst .jpg,.thumb.jpg,$(IMGS))
 
 .PHONY: all
 all: $(ICONS)
-
 $(ICONS):
 	convert -size 1024x1024 \
 		-undercolor none xc:'hsl(24,10%,5%)' \
@@ -22,6 +21,5 @@ dev/server:  ; npx live-server public/
 
 .PHONY: thumbs
 thumbs: $(THUMBS)
-
 $(THUMBS): %.thumb.jpg: %.jpg
 	convert $< -resize 240x $@
