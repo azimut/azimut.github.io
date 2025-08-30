@@ -51,4 +51,4 @@ find org/ -type f \( -not -name '*.org' -and -not -name '*.html' \) |
         cp "${file}" "public/${file#*/}"
     done
 
-touch ./*.css # force .css regeneration after nuking everything
+touch ./styles/index.css # force .css regeneration after nuking everything
