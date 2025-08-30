@@ -304,7 +304,10 @@ Use document's plist INFO to derive relevant information for the tags."
               cloudflare-script)))
     :html-doctype "html5"
     :html-html5-fancy t
-    :html-head ,html-head
+    :html-head ,(concat
+                 html-head
+                 (format "<link rel=\"stylesheet\" type=\"text/css\" href=\"/%s.css\" />"
+                         name))
     :html-head-extra ,html-head-extra-index
     :recursive nil
     :base-extension "xyz"  ; non existent extension, then whitelist

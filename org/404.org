@@ -1,3 +1,2 @@
 #+TITLE: Page Not Found
-#+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="/404.css" />
 #+HTML: <img src="/images/pjw.svg" alt="Peter J. Weinberger's face" />

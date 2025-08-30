@@ -16,7 +16,7 @@ $(ICONS):
 
 .PHONY: dev dev/postcss dev/server
 dev:; $(MAKE) -j2 dev/postcss dev/server
-dev/postcss: ; npx postcss *.css -w --dir public/
+dev/postcss: ; npx postcss styles/*.css -w --dir public/
 dev/server:  ; npx live-server public/
 
 .PHONY: thumbs
