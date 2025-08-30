@@ -1,9 +1,13 @@
 @media (min-width: 1200px) {
   body {
+    --nav-width: 400px;
+    h1 {
+      margin-left: var(--nav-width);
+    }
     max-width: 100%;
     div#content {
       display: grid;
-      grid-template-columns: 400px 1fr;
+      grid-template-columns: var(--nav-width) 1fr;
       grid-template-rows: auto 1fr;
       align-items: start;
       > ul,
