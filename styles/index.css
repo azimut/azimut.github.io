@@ -48,6 +48,7 @@ a.button:hover {
     flex-direction: column;
     margin-bottom: 2em;
     nav ul {
+      padding: 0;
       gap: 0.2em;
       a {
         padding: 0.2em;
