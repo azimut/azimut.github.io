@@ -80,10 +80,8 @@ nav#table-of-contents {
     text-align: left;
   }
   ul {
-    text-transform: none;
-  }
-  > div > ul {
-    text-transform: capitalize;
+    text-transform: lowercase;
+    font-family: monospace;
   }
   a {
     text-decoration: none;
