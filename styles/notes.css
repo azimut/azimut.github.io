@@ -15,11 +15,12 @@
         margin: 1em auto;
       }
       nav {
-        font-size: 0.8em;
+        font-size: 0.9em;
         position: sticky;
-        top: 1%;
         margin: 0 auto;
         margin-top: -100px;
+        transform: translate(0, -50%);
+        top: 50vh;
         padding: 0 1em;
         grid-column-start: 1;
         grid-column-end: 1;
