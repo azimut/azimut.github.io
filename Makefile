@@ -1,6 +1,6 @@
 ICONS  := org/favicon.ico org/apple-touch-icon.png
-IMGS   := $(wildcard org/images/*/*.jpg)
-THUMBS := $(subst .jpg,.thumb.jpg,$(IMGS))
+IMGS   := $(filter *thumb.jpg,$(wildcard org/images/*/*.jpg))
+THUMBS := $(subst :,\:,$(subst .jpg,.thumb.jpg,$(IMGS)))
 
 .PHONY: all
 all: $(ICONS)
