@@ -1,4 +1,4 @@
-#+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="/index.css" />
+#+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="/photoswipe.min.css" />
 
 #+INCLUDE: "./index_body.html" export html
 
