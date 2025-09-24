@@ -33,6 +33,7 @@ notes=(
     ./programming-notes/terminal/languages/bc/self.org
     ./programming-notes/terminal/tools/roff/pic/self.org
     ./programming-notes/languages/stack/postscript/self.org
+    ./programming-notes/terminal/tools/visualization/gnuplot/self.org
     # ./programming-notes/languages/sql/sqlite/self.org
     ./programming-notes/languages/compiled/makefile/self.org
 )
