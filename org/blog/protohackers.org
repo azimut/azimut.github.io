@@ -1,0 +1,125 @@
+#+TITLE: Factor: solving protohackers.com
+#+DATE: <2025-11-16 dom>
+
+I have been gawking at the networking programming challenges of [[https://protohackers.com/][protohackers]] for a while. At first I wanted to solve them using [[https://www.gnu.org/software/gawk/manual/gawkinet/html_node/Gawk-Special-Files.html][AWK]] but I never go around to it, and moved on to learn other programming languages.
+
+Last week I have been learning a bit of [[https://factorcode.org/][Factor]]. First programming language of the [[https://en.wikipedia.org/wiki/Concatenative_programming_language][concatenative]] family of programming languages that I try.
+
+Among other things I wanted to try it because it seemed to have a very rich [[https://docs.factorcode.org/content/article-vocab-index.html][stdlib]].
+
+You can find my solutions [[https://github.com/azimut/challenges/tree/master/protohackers][here]].
+
+* Challenges
+
+** 00 Smoke Test
+
+An TCP based [[https://www.rfc-editor.org/rfc/rfc862.html][echo server]].
+
+One it's extra requirements
+- with no data, it should immediately close connection.
+- it should handle half-duplex shutdowns, terminating it, instead of passing on the half-duplex shutdown
+
+** 01 Prime Time
+
+A server that talks JSON, accepting multiple requests in json format per connection.
+
+#+begin_src sh
+  $ { jo method=isPrime number=3; jo method=isP; jo method=isPrime number=10; } | nc 127.0.0.1 1234
+  {"method":"isPrime","prime":true}
+  {"error":"r2r failed!"}
+  {"method":"isPrime","prime":false}
+#+end_src
+
+** 02 Means to an End
+
+A per connection, in-memory db, controlled by a custom network binary protocol.
+
+#+begin_src
+Byte:  |   0   |  1     2     3     4  |  5     6     7     8  |
+Type:  |  char |         int32 (BE)    |         int32 (BE)    |
+Value: |  'I'  |       timestamp       |         price         |
+Value: |  'Q'  |        mintime        |        maxtime        |
+#+end_src
+
+Lessons learned
+- You can only ~print~ byte-arrays on a binary encoded ~threaded-server~. Nothing else or it will silently fail.
+- Read the [[https://docs.factorcode.org/content/article-stream-binary.html][docs]] about binary streams.
+- You can capture tcp traffic data with [[https://www.wireshark.org/][Wireshark]] to later replay it for a way to test your code offline.
+
+** 03 Budget Chat
+
+A TCP based ascii chatroom. With nicks and message status on join/leave.
+
+Unlike the other ones I did this one offline. No second tries.
+
+Luckly Factor has the necessary primitives for this. I choose [[https://docs.factorcode.org/content/vocab-concurrency.mailboxes.html][mailboxes]] and [[https://docs.factorcode.org/content/vocab-threads.html][threads]]. There are also channels available but, inlike mailboxes they are 2sides blocking.
+
+** 04 Unusual DB
+
+A UDP based key/value store.
+
+Can't use ~<threaded-server>~ with UDP. But found an [[https://re.factorcode.org/2010/04/what-time-is-it-part-2.html][article]] implementing a simple udp server.
+
+Unfortunately Factor seems unable to ~receive~ empty UDP packets/datagrams. Which are a requirement for this challenge.
+
+** 05 Mob in the middle
+
+An evil tcp proxy for the chat protocol made on exercise #3. It rewrites some very specific text content.
+
+Hit a couple of "fun" challenges.
+
+- Ensuring both sides of the connection get closed correctly. For that I learned about Factor's [[https://docs.factorcode.org/content/article-destructors-using.html][destructors]].
+- **TODO** Ensuring messages are separated by a newline. This is a more strict requirement than on exercise #3. Seems like is not possible by ~readln~.
+  - Golang's ~bufio~ [[https://pkg.go.dev/bufio#Reader.ReadString][ReadString('\n')]] handles this a bit more correctly as it threats EOF without ~\n~ as an error.
+  - See ~$ echo -n foobarbaz | socat  - TCP:127.0.0.1:4321~.
+- My code still pollutes process stdout with exceptions for closed sockets exceptions not handled...but YOLO.
+
+* Dev
+
+** Tunnel
+
+External access setup using [[https://pinggy.io/][pinggy.io]].
+
+- For TCP: ~ssh -p 443 -R0:127.0.0.1:1234 qr+tcp@free.pinggy.io~
+- For UDP:
+  - Tried [[https://pinggy.io/blog/ngrok_udp_alternative/][pinggy]]: ~pinggy -p 443 -R0:127.0.0.1:1234 udp@free.pinggy.io~
+  - But doesn't seem to work for the edge-case of empty UDP packets. I get an ICMP port unreachable for it.
+
+** Testing
+
+- For TCP/UDP: ~nc~ or ~socat~. I prefer ~socat~ due being non-interactive.
+  #+begin_src sh
+    $ echo -n "" | nc 127.0.0.1 1234
+    $ echo -n "" | socat - TCP:127.0.0.1:1234
+    $ echo -n "" | socat - UDP:127.0.0.1:1234
+  #+end_src
+
+- For UDP: I found ~nmap~ or ~nping~ useful to craft custom packets and see it's output.
+  - nping: in particular, can show the data sent and received back in one command.
+  #+begin_src
+  $ sudo nping -v3 --bpf-filter='udp and dst port 53' -c 1 --data-string="foo" --udp -p 1234 127.0.0.1
+
+  Starting Nping 0.7.80 ( https://nmap.org/nping ) at 2025-11-13 14:12 -03
+  SENT (0.0107s) UDP [127.0.0.1:53 > 127.0.0.1:1234 len=11 csum=0x275F] IP [ver=4 ihl=5 tos=0x00 iplen=31 id=21414 foff=0 ttl=64 proto=17 csum=0x2926]
+  0000   45 00 00 1f 53 a6 00 00  40 11 29 26 7f 00 00 01  E...S...@.)&....
+  0010   7f 00 00 01 00 35 04 d2  00 0b 27 5f 66 6f 6f     .....5....'_foo
+  RCVD (0.0111s) UDP [127.0.0.1:1234 > 127.0.0.1:53 len=15 csum=0xFE22] IP [ver=4 ihl=5 tos=0x00 iplen=35 id=48370 flg=D foff=0 ttl=64 proto=17 csum=0x7fd5]
+  0000   45 00 00 23 bc f2 40 00  40 11 7f d5 7f 00 00 01  E..#..@.@.......
+  0010   7f 00 00 01 04 d2 00 35  00 0f fe 22 66 6f 6f 3d  .......5..."foo=
+  0020   62 61 72                                          bar
+
+  Max rtt: N/A | Min rtt: N/A | Avg rtt: N/A
+  Raw packets sent: 1 (31B) | Rcvd: 1 (35B) | Lost: 0 (0.00%)
+  Tx time: 0.00115s | Tx bytes/s: 26979.98 | Tx pkts/s: 870.32
+  Rx time: 1.00159s | Rx bytes/s: 34.94 | Rx pkts/s: 1.00
+  Nping done: 1 IP address pinged in 1.02 seconds
+  #+end_src
+
+* Conclusion
+
+I solved as much as I think I would enjoy of the problems with Factor. Next on the docket involves juggling a lot more logic. Which I feel I would enjoy more with a more structured language.
+
+It definitely proved that you can solve non-trivial problem with Factor.
+
+So I might fit it to solve things where a stateless bash script won't be enough (I need to talk about this at another time). But where my planned scope won't get too big to handle multiple tuples.
+

@@ -1,7 +1,18 @@
 #+TITLE: Little Languages
 #+DATE: <2025-04-13 dom>
 
-Many of the languages mentioned were born ~1970 in Bell labs.
+Many of the languages mentioned were born around 1970 at Bell labs.
+
+* Why?
+
+- Why learn new programming languages as an already profesional software developer on X language?
+  - We often hear the phrase once you learn C every other language is a variation of the same.
+    - I only partially agree with it.
+    - What C brings is a [model of computation](https://en.wikipedia.org/wiki/Model_of_computation) that one should follow to solve problems.
+    - That said, it's far from being the only one.
+  - Why learn a new way to solve the same problem?
+    - It help us apply concepts and axioms we blindly believed to be true into new contexts. Allowing use to gain new enlightment on their *raison d'etre*.
+      - For example, we might have learned to keep function arity low. But we might truly understand it after trying to juggle function parameters in a *concatenative* programming language or by trying to *compose* functions in a *functional* programming language.
 
 * 71 sh
 * 71 roff
@@ -90,10 +101,9 @@ bwk (42)
 * 12 jq
 * Other
 
-- lex 75, yacc 75, sh, latex 84, regex, cpp, find, vim(script)
+- lex 75, yacc 75, latex 84, regex, cpp, find, vim(script)
 - ffmpeg filters
 - imagemagick draw api
-- LaTeX
 - ixilang https://en.wikipedia.org/wiki/Ixi_lang
 - bitcoin script
 
