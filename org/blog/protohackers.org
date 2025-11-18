@@ -1,5 +1,8 @@
-#+TITLE: Factor: solving protohackers.com
+#+TITLE: Factor: server programming challenges
 #+DATE: <2025-11-16 dom>
+#+DESCRIPTION: My first take trying to solve server programming challenges in Factor.
+#+KEYWORDS: protohackers, nping, protohackers.com, factor, factorlang, network programming, netcat, socat
+
 
 I have been gawking at the networking programming challenges of [[https://protohackers.com/][protohackers]] for a while. At first I wanted to solve them using [[https://www.gnu.org/software/gawk/manual/gawkinet/html_node/Gawk-Special-Files.html][AWK]] but I never go around to it, and moved on to learn other programming languages.
 
@@ -56,7 +59,7 @@ Luckly Factor has the necessary primitives for this. I choose [[https://docs.fac
 
 ** 04 Unusual DB
 
-A UDP based key/value store.
+An UDP based key/value store.
 
 Can't use ~<threaded-server>~ with UDP. But found an [[https://re.factorcode.org/2010/04/what-time-is-it-part-2.html][article]] implementing a simple udp server.
 
