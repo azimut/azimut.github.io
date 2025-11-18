@@ -1,0 +1,18 @@
+div#content,
+div.outline-text-1,
+div.outline-text-2,
+div.outline-text-3,
+div.outline-text-4,
+div.outline-text-5 {
+  align-items: start;
+  nav {
+    align-self: center;
+  }
+}
+
+h3,
+h4,
+h5 {
+  text-align: left;
+  text-transform: lowercase;
+}
