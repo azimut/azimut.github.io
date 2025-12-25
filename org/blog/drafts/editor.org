@@ -1,0 +1,41 @@
+#+NAME: Text Editors
+#+DATE: <2025-12-16 mar>
+
+This week I have been grinding a series of [[https://www.skills.google/][Google Cloud courses]]. In order to get myself up to date with cloud shenanigans. Every so often you have to solve a Laboratory, on an actual Google Cloud account instance.
+
+Some of these involved opening a web shell and typing commands on it. A really painful experience for those with [[https://www.gnu.org/software/emacs/][emacs]] tendencies that tend to type ~C-n~.
+
+Sometimes editing files with [[https://www.nano-editor.org/][nano]]. Again painful if you want to search some string with ~C-w~.
+
+They even had a couple where they forced some task to be done with their fancy web text editor with [[https://codeassist.google/][Gemini AI]] integration. Basically a very wordy description in the form of a prompt, just to do some text editing.
+
+#+CAPTION: example of one of the Gemini prompts
+#+begin_src
+Update the main.tf configuration file with the following changes:
+- In the Google provider block, set the project to PROJECT_ID.
+- In the "test-bucket-for-state" resource block, update the name of the bucket to BUCKET_NAME.
+
+Update the google_storage_bucket resource named "test-bucket-for-state" in the main.tf file. Add the force_destroy = true argument to its configuration.
+#+end_src
+
+So by the end of it (I am slow). I began to wonder, why I don't just use [[https://en.wikipedia.org/wiki/Vi_(text_editor)][vi]]?. Then I realized another pattern that comes often in these Labs. "Replace this block of code for this other". Or "Replace all occurrences of X for Y".
+
+I looked how to replace something in vi.
+
+#+begin_src
+:%s/foo/bar/g
+#+end_src
+
+Delete from line to EOF
+
+#+begin_src
+dG
+#+end_src
+
+Or in ED. Replace a whole block of text with new given text.
+#+begin_src
+2,10c
+new text
+here
+.
+#+end_src
