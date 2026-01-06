@@ -2,7 +2,7 @@
 #define OE 15
 
 // Port Registers:
-// <- A = data
+// ←→ A = data
 // -> C = addr lower
 // -> L = addr higher
 

@@ -25,6 +25,7 @@ mkdir -p public org/notes
 
 # org/notes/ - copy .org + media
 notes=(
+    ./programming-notes/editor/ed/self.org
     ./programming-notes/terminal/languages/awk/awk.org
     ./programming-notes/terminal/languages/sed/self.org
     ./programming-notes/terminal/languages/jq/jq.org
