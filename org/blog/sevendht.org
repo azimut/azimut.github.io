@@ -6,9 +6,16 @@
 
 [[./images/20240716_185524.small.jpg]]
 
+* Components
+
 Digging through old projects I took a stab to try to make 2 different things work together.
 
 1) A two digit seven-segment display controled by an =SDA2131= display driver. Found in an old pc.
+
+#+CAPTION: SDA2131 pinout
+#+ATTR_ORG: :width 200
+[[./images/sevendht-sda2131-pinout.png]]
+
 2) A =DHT11= temperature and humidity sensor. That I bought a while back, when I was turning on and off leds with an arduino.
 
 * Implementation
@@ -17,12 +24,15 @@ Thanks to its [[https://arwill.hu/forras/termek/felvezetok/ic-k/analog/sda2131-i
 
 For 1) basically you just send *16 bits* of DATA representing if a segment should be on or off at a given CLOCK time.
 
+#+CAPTION: SDA2131 pulse diagram
 #+ATTR_ORG: :width 600
 [[./images/SDA2131proto.jpg]]
 
 For 2) is simpler from the Arduino point of view since there is a library already for it. But it's a similar protocol (albeit more a synchronous and time based protocol) thanks to an embedded microcontroller *inside* the sensor.
 
-[[https://i0.wp.com/tomalmy.com/wp-content/uploads/2021/04/DHTCommand.png?resize=512%2C244&ssl=1]]
+#+CAPTION: DHT pulse diagram
+#+ATTR_ORG: :width 500
+[[./images/sevendht-DHTCommand.png]]
 
 ** Gotchas
 
