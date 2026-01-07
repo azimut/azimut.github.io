@@ -5,6 +5,7 @@ div.outline-text-3,
 div.outline-text-4,
 div.outline-text-5 {
   align-items: start;
+  figure,
   nav {
     align-self: center;
   }

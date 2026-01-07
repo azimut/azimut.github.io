@@ -3,6 +3,11 @@
 
 Many of the languages mentioned were born around 1970 at Bell labs.
 
+regex https://xkcd.com/208/
+
+https://blog.cloudflare.com/details-of-the-cloudflare-outage-on-july-2-2019/
+
+
 * Why?
 
 - Why learn new programming languages as an already profesional software developer on X language?

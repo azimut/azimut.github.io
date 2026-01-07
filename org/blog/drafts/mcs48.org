@@ -1,4 +1,5 @@
-#+TITLE: MCS-48
+#+TITLE: Retrocomputing: MCS-48
+#+KEYWORDS: assembly, mcs-48, intel 8042, nec 80c42, eeprom, arduino
 
 * Background
 
@@ -8,39 +9,59 @@ That is until some years back when I watched Ben Eater's video series on "8-bit 
 
 Well, I don't own a 6502. But ... I managed to scavange a 8042 from an old motherboard!
 
+#+CAPTION: NEC's UPD80C42
+[[./images/mcs48-80c42-photo.jpg]]
+
 "A 8042?" I hear you say. YES!. It's a MCU (Microcontroller) (aka a CPU+ROM+RAM) with the peculiarity that it can also act as a CPU too, by reading a program from an external ROM.
 
-* The Hardware
+* Hardware
 ** MCU
 
-Is an 80C42, a mcs-48 chip made by NEC. As with any of the family, it has the peculiarity that it uses the same physical pins for r/w data and for addressing (D0-D7).
+A 80C42, from the MCS-48 family of chips was made by NEC. As with any of the family, it has the peculiarity that it uses the same physical pins for r/w data and for addressing (D0-D7).
 
-Some Extra notes to not forget:
-- SS# should be tied to V+ when not used.
-- different RD#(8) and WR#(10) are inputs from the _master chip_ to enable either, not probes like in 8048
-- new A_0(9) input from the _master chip_ to indicate if it is tranfering data or a command
-- new SYNC(11) output clock signal which occurs once per cycle
+In particular is a variant of the 8048, that is more suited to work as a slave MCU, so many of it's pins are supposed to receive orders from it's master. But it works for our needs.
 
+#+CAPTION: 8042 pinout
 #+ATTR_ORG: :width 200
-[[./images/mcs48-80c42-pinout.png]] [[./images/mcs48-74373.png]] [[./images/sst29-pinout.jpg]]
+[[./images/mcs48-80c42-pinout.png]]
 
-- INT# -> CS#
-- PSEN# -> A_0
-- ALE -> SYNC
-
-** Address Latch
-A 74373. We need this to mediate between the EEPROM and the MCU to toggle depending on wether we are giving an address or fetching some data from it.
-#+ATTR_ORG: :width 120
-[[./images/mcs48-74373.png]]
 ** EEPROM
+
+Now we need a place to put our program. Since the MCU internal ROM is programable ONLY by using a special programer, that uses a different voltage. We are going to opt to use an external EEPROM.
+
 A SSTEE010-150.
+
 #+ATTR_ORG: :width 200
 [[./images/sst29-pinout.jpg]]
 
-* Blink
+* Wiring
+
+Among the few resources online, there is [[https://devster.monkeeh.com/z80/upi42/][this one]], where it describes 2 different ways to setup this chip for externall EEPROM access.
+1) Connect directly the CPU and the EEPROM
+2) Connect indirectly the CPU through a 74374, a positive edge flip-flop. This gives you access to IO ports on downward SYNC cycles.
+
+I'm starting with 1)
+
+#+CAPTION: external access direct wiring
+[[./images/mcs48-wiring.jpeg]]
+
+* Programming: Blink LED
+** Background
+
+Programming, in this chip means: writting bytecode into the EEPROM. That the 8042 can read an interpret as instructions.
+
+#+CAPTION: example opcodes with their hexadecimal bytecode
+[[./images/mcs48-opcodes.png]]
+
+These are some examples of opcodes with their correspont bytecodes that i took from "MCS-48 Assembly Language Reference Card".
+
+This means if I put 0xF8 on a EEPROM memory address, the CPU will run "MOV A,R0", (aka moving the accumulator to register 0).
+
+Now we don't want to write this bytecodes in hexa, for that we will use the [[https://shop-pdp.net/ashtml/asxxxx.php][asxxxx]] assembler.
+
 ** ASM
 
-We start with some book keeping.
+We start with some boilerplate for the assembler.
 
 #+begin_src asm
         .ifdef  .__.CPU. ; if we are using as8048 this is defined
@@ -57,7 +78,7 @@ reset:
         jmp entry
 #+end_src
 
-Our Program.
+Our main program startes here.
 
 #+begin_src asm
         .org 0x10
@@ -88,9 +109,26 @@ delay1:
         ret             ; return to caller
 #+end_src
 
+That's it!
+
 ** The ROM output
 
-04 = JMP <address>
+Ok, long story short, I copied this makefile [[https://github.com/retiredfeline/8042-clock/blob/master/Makefile][elsewhere]] to build the .bin image I want.
+
+#+begin_src makefile
+default: blink.bin
+
+# assemble with as8048
+%.hex: %.asm
+	as8048 -l -o $<
+	aslink -i -o $(<:.asm=.rel)
+
+# convert to bin
+%.bin: %.hex
+	hex2bin -p 00 -e bin $<
+#+end_src
+
+This outputs something like this
 
 #+CAPTION: output of *hd* on blink.rom
 #+begin_src
@@ -103,7 +141,11 @@ delay1:
   00000400
 #+end_src
 
-* Confirming the CPU is doing what is supposed to do
+04 = JMP <address>
+
+* Testing
+
+aka Confirming the CPU is doing what is supposed to do
 
 So here is the image.
 
@@ -211,6 +253,8 @@ Ok we are looping.
 #+end_src
 
 Ok much better. But, this is looping too much.
+* Programming: Blink LED - Step by Step
+* Testing
 ** Try 3
 
 #+begin_src sh
