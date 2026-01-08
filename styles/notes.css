@@ -40,3 +40,15 @@
     }
   }
 }
+
+@media (max-width: 800px) {
+  table {
+    a {
+      display: inline-block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: calc(100vw / 2);
+      white-space: nowrap;
+    }
+  }
+}
