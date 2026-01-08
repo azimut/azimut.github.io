@@ -1,5 +1,6 @@
+#+TITLE: azimut's home page
 #+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="/photoswipe.min.css" />
-
+#+OPTIONS: title:nil
 #+INCLUDE: "./index_body.html" export html
 
 #+BEGIN_blognotes
