@@ -1,6 +1,6 @@
 #+TITLE: Arduino: Using a SDA2131 and a DHT11
 #+DATE: <2024-07-16 Thu>
-#+DESCRIPTION: A brief explaination of how to use a 2 digit segment display found in an old computer using Arduino.
+#+DESCRIPTION: A brief explaination of how to use a 2 digit 7-segment display found in an old computer using Arduino.
 #+KEYWORDS: arduino, sda2131, dht11, digital electronics
 #+OPTIONS: toc:nil
 
@@ -10,11 +10,16 @@
 
 Digging through old projects I took a stab to try to make 2 different things work together.
 
-1) A two digit seven-segment display controled by an =SDA2131= display driver. Found in an old pc.
+1) A two digit 7-segment display controled by an =SDA2131= display driver. Found already wired together on a pcb board  in an old pc.
 
 #+CAPTION: SDA2131 pinout
 #+ATTR_ORG: :width 200
 [[./images/sevendht-sda2131-pinout.png]]
+
+#+CAPTION: pinout of the cable that comes out of the board
+|----+-----+------+-----+-----+---+---|
+| EN | CLK | DATA | Vss | GND | x | x |
+|----+-----+------+-----+-----+---+---|
 
 2) A =DHT11= temperature and humidity sensor. That I bought a while back, when I was turning on and off leds with an arduino.
 
@@ -34,9 +39,9 @@ For 2) is simpler from the Arduino point of view since there is a library alread
 #+ATTR_ORG: :width 500
 [[./images/sevendht-DHTCommand.png]]
 
-** Gotchas
+** Challenge
 
-There was one, and that was converting from a binary representation of a number from DHT11 to a list of bits of segments. Decomposing the number in his digits and then mapping with an array of predefined bits was enough for this (see WriteNum()).
+I wasn't obvious how to convert from a binary representation of a number from DHT11 to a list of bits of segments. I ended up decomposing the number in his digits and then mapping with an array of predefined bits was enough for this (see ~WriteNum()~).
 
 ** Code
 
