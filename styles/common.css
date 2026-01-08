@@ -107,6 +107,7 @@ figure {
     height: auto;
   }
   figcaption {
+    color: #ccc;
     font-size: 0.7em;
     font-style: italic;
   }
@@ -174,7 +175,8 @@ table {
   caption {
     color: #ccc;
     margin: 0.2em auto;
-    font-size: 0.8em;
+    font-size: 0.7em;
+    font-style: italic;
   }
   tbody:nth-last-child(n + 2) {
     border-bottom: 4px double #222;
