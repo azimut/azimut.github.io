@@ -353,6 +353,12 @@ Which is exactly the test pattern given by TommyPROM.
 
 Only that I am using an Arduino Mega for this. While their code, for me, it seems to only been able to unlock the writes. Whatever the case. It is done!. Now to try that [[https://en.wikipedia.org/wiki/Intel_MCS-48][8048]].
 
+* Journal (?)
+
+Today trying to write data to a ROM. Ended up hitting a bug that I missed. That is that it didn't support writting to multiple pages. Since each page is of 128 bytes. I added a pause (TBCLO) after each page write.
+
+Seems to work :)
+
 * Source
 
 This is the final code that I use to write the EEPROM using an arduino Mega heavily based on TommyPROM version of Ben Eater's code.
