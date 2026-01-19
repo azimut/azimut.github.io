@@ -155,7 +155,7 @@ My testing setup consists on 2 additional parts.
 - I use the *SS* (Single Step) input pin on the 8042. That allows me to use a momentary button to advance one instruction at the time. Instead of going at the speed of the clock. This button needs to be debounced, I used a 555 for that.
 - I use the trick Ben Eater used for his 6502 series. And that is use an Arduino as some sort of digital analyzer. I use it to monitor what is on the DATA and ADDRESS bus as I Single Step.
 
-** Failure
+** Failure and ...
 
 So here is the image.
 
@@ -167,8 +167,6 @@ $ xxd blink.rom
 00000030: 0000 0000 0000 0000 0000 0000 0000 0000  ................
 ...
 #+end_src
-
-*** Try 1
 
 And here is some ~Serial~ debug output with the address, data in hexadecimal, and data in hexadecimal and binary.
 
@@ -214,7 +212,7 @@ For example the first reading, was:
 
 But it should have been:
 
-#+begin_src
+#+begin_src sh
 0000: 15
 #+end_src
 
@@ -235,76 +233,11 @@ But before that let's see a bit more.
 
 Ok, we are looping.
 
-*** Try 2
+Some wiring fixes and it +worked+ blinked!.
 
-#+begin_src haskell
-0000 15
-0001 35
-0002 04
-0003 10
-0010 23
-0011 5f
-0012 3a
-07ff 00  -- ???
-0013 14
-0014 1c
-001c b9
-001d 55
-001e b8
-001f 63
-
-0020 00
-0021 00
-0022 e8
-0023 20
-
-0020 00
-#+end_src
-
-Ok much better. But, this is looping too much.
-
-** Testing: Success
-*** Try 3
-
-#+begin_src sh
-$ hd blink.rom
-00000000: 1535 0410 0000 0000 0000 0000 0000 0000  .5..............
-00000010: 235f 3a14 1c23 af3a 141c 0410 0000 0000  #_:..#.:........
-00000020: 8300 0000 0000 0000 0000 0000 0000 0000  ................
-00000030: 0000 0000 0000 0000 0000 0000 0000 0000  ................
-00000040: 0000 0000 0000 0000 0000 0000 0000 0000  ................
-#+end_src
-
-#+begin_src haskell
-00: 15
-01: 35
-02: 04
-03: 10
-
-10: 23
-11: 5f
-12: 3a
-ff: 00 -- ?
-13: 14
-14: 1c
-
-1c: 00
-1d: 00
-1e: 00
-1f: 00
-20: 83
-ff: 00 -- ?
-
-15: 23
-16: af
-17: 3a
-ff: 00 -- ?
-#+end_src
 * Future
 
-It +works+ blinks!.
-
-But, I want do more with this. I was asked: *"What is the difference between the 8042 and the Z80?"*. And honestly all I can talk is about specs.
+I want do more with this. I was asked: *"What is the difference between the 8042 and the Z80?"*. And honestly all I can talk is about specs.
 
 - No RAM expansion.
 - Poor instruction set.
