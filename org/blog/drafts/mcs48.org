@@ -1,25 +1,25 @@
-#+TITLE: Retrocomputing: MCS-48
+#+TITLE: Retrocomputing: MCS-48 Intro
 #+KEYWORDS: assembly, mcs-48, intel 8042, nec 80c42, eeprom, arduino
 
 * Background
 
-I always wanted to learn [[https://en.wikipedia.org/wiki/Assembly_language][Assembly]] language. But, having looked at some of the niches (reversing/performance optimization) of current or past applications didn't look too attractive.
+I've always wanted to learn to program in [[https://en.wikipedia.org/wiki/Assembly_language][Assembly]]. But, having looked at some of it's niches (reversing, performance programming) they didn't look too attractive to me.
 
-That is until some years back when I watched Ben Eater's video series on "8-bit breadboard computers" and more precisely [[https://www.youtube.com/watch?v=LnzuMJLZRdU&list=PLowKtXNTBypFbtuVMUVXNR0z1mu7dp7eH][his 6502 series]]. Where he builds a computer, the old-school way, starting from a 6502 CPU DIP chip, with no code or Operative System to begin with. Adding periphericals one at the time. Without sparing implementation details.
+That is until some years back when I watched Ben Eater's video series on [[https://www.youtube.com/playlist?list=PLowKtXNTBypGqImE405J2565dvjafglHU]["8-bit breadboard computers"]] and the more close to the topic of this post his [[https://www.youtube.com/watch?v=LnzuMJLZRdU&list=PLowKtXNTBypFbtuVMUVXNR0z1mu7dp7eH]["Build a 65c02-based computer from scratch"]]. Where he builds a computer the old-school way, starting from a 6502 CPU DIP chip, with no code or Operative System to begin with. Adding software support for periphericals one at the time.
 
 Well, I don't own a 6502. But ... I managed to scavange a 8042 from an old motherboard!
 
 #+CAPTION: NEC's UPD80C42
 [[./images/mcs48-80c42-photo.jpg]]
 
-"A 8042?" I hear you say. YES!. It's a MCU (Microcontroller) (aka a CPU+ROM+RAM) with the peculiarity that it can also act as a CPU too, by reading a program from an external ROM.
+"A 8042?" I hear you say. YES!. It's a MCU (Microcontroller) (aka a CPU+ROM+RAM) with the peculiarity that it can also act as a CPU, by reading a program from an external ROM.
 
 * Hardware
 ** MCU
 
-A 80C42, from the MCS-48 family of chips was made by NEC. As with any of the family, it has the peculiarity that it uses the same physical pins for r/w data and for addressing (D0-D7).
+The 80C42, from the Intel's MCS-48 family of chips, was made by NEC.
 
-In particular is a variant of the 8048, that is more suited to work as a slave MCU, so many of it's pins are supposed to receive orders from it's master. But it works for our needs.
+This variant was intended to work as a slave MCU, so many of it's pins are supposed to receive orders from it's master. But can work for our needs.
 
 #+CAPTION: 8042 pinout
 #+ATTR_ORG: :width 200
@@ -27,39 +27,39 @@ In particular is a variant of the 8048, that is more suited to work as a slave M
 
 ** EEPROM
 
-Now we need a place to put our program. Since the MCU internal ROM is programable ONLY by using a special programer, that uses a different voltage. We are going to opt to use an external EEPROM.
+Now we need a place to put our program. Since the MCU internal ROM is programable ONLY by using a special programer, that uses a different supply voltages. We are going to use an external EEPROM.
 
 A SSTEE010-150.
 
 #+ATTR_ORG: :width 200
 [[./images/sst29-pinout.jpg]]
 
-* Wiring
+** Wiring
 
-Among the few resources online, there is [[https://devster.monkeeh.com/z80/upi42/][this one]], where it describes 2 different ways to setup this chip for externall EEPROM access.
+Among the few resources online, there is [[https://devster.monkeeh.com/z80/upi42/][this one]], where it describes 2 different ways to setup this chip for external EEPROM access.
 1) Connect directly the CPU and the EEPROM
 2) Connect indirectly the CPU through a 74374, a positive edge flip-flop. This gives you access to IO ports on downward SYNC cycles.
 
-I'm starting with 1)
+For this blog entry I will use 1)
 
-#+CAPTION: external access direct wiring
+#+CAPTION: wiring for external ROM access
 [[./images/mcs48-wiring.jpeg]]
 
 * Programming: Blink LED
 ** Background
 
-Programming, in this chip means: writting bytecode into the EEPROM. That the 8042 can read an interpret as instructions.
+Programming, in this chip means: Writting bytecode into the EEPROM. That then the 8042 can read an interpret as instructions.
 
-#+CAPTION: example opcodes with their hexadecimal bytecode
+#+CAPTION: example opcodes, with their HEX bytecode
 [[./images/mcs48-opcodes.png]]
 
 These are some examples of opcodes with their correspont bytecodes that i took from "MCS-48 Assembly Language Reference Card".
 
-This means if I put 0xF8 on a EEPROM memory address, the CPU will run "MOV A,R0", (aka moving the accumulator to register 0).
-
-Now we don't want to write this bytecodes in hexa, for that we will use the [[https://shop-pdp.net/ashtml/asxxxx.php][asxxxx]] assembler.
+This means if I put ~0xF8~ on a EEPROM memory address, the CPU will run ~MOV A,R0~, (aka it will "move" the accumulator value to "Register 0").
 
 ** ASM
+
+Now, we don't want to write bytecode by hand in hexadecimal, for that we will use the [[https://shop-pdp.net/ashtml/asxxxx.php][asxxxx]] assembler.
 
 We start with some boilerplate for the assembler.
 
@@ -141,11 +141,21 @@ This outputs something like this
   00000400
 #+end_src
 
-04 = JMP <address>
+
+Now we could write this .rom to our EEPROM with a programmer.
 
 * Testing
 
 aka Confirming the CPU is doing what is supposed to do
+
+** The Setup
+
+My testing setup consists on 2 additional parts.
+
+- I use the *SS* (Single Step) input pin on the 8042. That allows me to use a momentary button to advance one instruction at the time. Instead of going at the speed of the clock. This button needs to be debounced, I used a 555 for that.
+- I use the trick Ben Eater used for his 6502 series. And that is use an Arduino as some sort of digital analyzer. I use it to monitor what is on the DATA and ADDRESS bus as I Single Step.
+
+** Failure
 
 So here is the image.
 
@@ -158,75 +168,74 @@ $ xxd blink.rom
 ...
 #+end_src
 
-** Try 1
+*** Try 1
 
-And here is some ~Serial~ debug output with the address, data in hexadecimal, and data in bits.
+And here is some ~Serial~ debug output with the address, data in hexadecimal, and data in hexadecimal and binary.
 
-#+begin_src haskell
-0000 1a 0001 1010
-0001 3a 0011 1010
-0002 08 0000 1000
-0003 10 0001 0000
+#+begin_src sh
+0000: 1a 0001 1010
+0001: 3a 0011 1010
+0002: 08 0000 1000
+0003: 10 0001 0000
 #+end_src
 
 We start at address 0x00, and we advance one byte at the time. That seems good.
 
-#+begin_src haskell
-0010 23 0010 0011
-0011 5f 0101 1111
-0012 35 0011 0101
+#+begin_src sh
+0010: 23 0010 0011
+0011: 5f 0101 1111
+0012: 35 0011 0101
 #+end_src
 
 Woah there, we jumped to address 10 (?). Oh right, the ~jmp entry~.
 
-#+begin_src haskell
-07ff 00            -- ???
+#+begin_src sh
+07ff: 00 0000 0000
 #+end_src
 
 Ok, some random (?) reading.
 
-#+begin_src haskell
-0013 18 0001 1000
-0014 1c 0001 1100
-001c b6 1011 0110
-001d 5a 0101 1010
-001e b4 1011 0100
-001f 63 0110 0011
+#+begin_src sh
+0013: 18 0001 1000
+0014: 1c 0001 1100
+001c: b6 1011 0110
+001d: 5a 0101 1010
+001e: b4 1011 0100
+001f: 63 0110 0011
 #+end_src
 
 Wait something is wrong here. The second nibble of data is not always matching the expected data in memory.
 
 For example the first reading, was:
 
-#+begin_src haskell
-0000 1a
+#+begin_src sh
+0000: 1a
 #+end_src
 
 But it should have been:
 
-#+begin_src haskell
-0000 15
+#+begin_src
+0000: 15
 #+end_src
 
 Let's check the cables....yup..I got the wiring of this improvised sniffer wrong. Fixing...
 
 But before that let's see a bit more.
 
-#+begin_src haskell
-0020 00
-0021 00
-0022 e4 1110 0100
-0023 20 0010 0000
-
-0020 00
-0021 00
-0022 e4
-0023 20
+#+begin_src sh
+0020: 00
+0021: 00
+0022: e4 1110 0100
+0023: 20 0010 0000
+0020: 00
+0021: 00
+0022: e4
+0023: 20
 #+end_src
 
-Ok we are looping.
+Ok, we are looping.
 
-** Try 2
+*** Try 2
 
 #+begin_src haskell
 0000 15
@@ -253,9 +262,9 @@ Ok we are looping.
 #+end_src
 
 Ok much better. But, this is looping too much.
-* Programming: Blink LED - Step by Step
-* Testing
-** Try 3
+
+** Testing: Success
+*** Try 3
 
 #+begin_src sh
 $ hd blink.rom
@@ -291,3 +300,28 @@ ff: 00 -- ?
 17: 3a
 ff: 00 -- ?
 #+end_src
+* Future
+
+It +works+ blinks!.
+
+But, I want do more with this. I was asked: *"What is the difference between the 8042 and the Z80?"*. And honestly all I can talk is about specs.
+
+- No RAM expansion.
+- Poor instruction set.
+
+But what does this REALLY mean?.
+
+Let's try run something more "real" on it!
+
+* References
+
+A special section is dedicated to honour some of the resources I found online. There are a few more (not many). But these resulted the more useful, accurate and "modern". Two of these resources went offline while writting this blog entry ... so before I bitrot myself, here are the waybackmachine links:
+
+- mcs-48 history overview https://www.controller-designs.de/index.php?lang=de&cat=projekte&cont=demon48_128k&sub=documentation_2
+- 8041 clock https://hackaday.io/project/161909-8042-clock
+- 8041 leds http://web.archive.org/web/20250321054243/http://devster.monkeeh.com/z80/upi42/
+  - wirings & code to output for Port1 and Port2 with 74xxx latch
+- 8048 http://web.archive.org/web/20251229173918/https://www.mattmillman.com/projects/an-intel-mcs-48-based-dual-temperature-sensor/
+  - https://github.com/inaxeon/mcs48temp/blob/upimaster/main.asm
+  - https://github.com/inaxeon/mcs48temp/blob/upislave/main.asm
+  - https://github.com/inaxeon/mcs48temp/blob/master/main.asm
