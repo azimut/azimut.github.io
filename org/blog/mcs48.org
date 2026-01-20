@@ -238,7 +238,7 @@ Ok, we are looping.
 
 Some wiring fixes and it +worked+ blinked!.
 
-* Future
+* Future Work
 
 I want do more with this. I was asked: *"What is the difference between the 8042 and the Z80?"*. And honestly all I can talk is about specs.
 
@@ -249,7 +249,7 @@ But what does this REALLY mean?.
 
 Let's try run something more "real" on it!
 
-* References
+* Resources
 
 A special section is dedicated to honour some of the resources I found online. There are a few more (not many). But these resulted the more useful, accurate and "modern". Two of these resources went offline while writting this blog entry ... so before I bitrot myself, here are the waybackmachine links:
 
