@@ -1,4 +1,5 @@
 #+TITLE: Retrocomputing: MCS-48 Intro
+#+DATE: <2025-07-20 dom>
 #+KEYWORDS: assembly, mcs-48, intel 8042, nec 80c42, eeprom, arduino
 
 * Background
@@ -9,6 +10,7 @@ That is until some years back when I watched Ben Eater's video series on [[https
 
 Well, I don't own a 6502. But ... I managed to scavange a 8042 from an old motherboard!
 
+#+ATTR_HTML: :width 400
 #+CAPTION: NEC's UPD80C42
 [[./images/mcs48-80c42-photo.jpg]]
 
@@ -31,6 +33,7 @@ Now we need a place to put our program. Since the MCU internal ROM is programabl
 
 A SSTEE010-150.
 
+#+ATTR_HTML: :width 300
 #+ATTR_ORG: :width 200
 [[./images/sst29-pinout.jpg]]
 
@@ -250,11 +253,11 @@ Let's try run something more "real" on it!
 
 A special section is dedicated to honour some of the resources I found online. There are a few more (not many). But these resulted the more useful, accurate and "modern". Two of these resources went offline while writting this blog entry ... so before I bitrot myself, here are the waybackmachine links:
 
-- mcs-48 history overview https://www.controller-designs.de/index.php?lang=de&cat=projekte&cont=demon48_128k&sub=documentation_2
-- 8041 clock https://hackaday.io/project/161909-8042-clock
-- 8041 leds http://web.archive.org/web/20250321054243/http://devster.monkeeh.com/z80/upi42/
+- [[https://www.controller-designs.de/index.php?lang=de&cat=projekte&cont=demon48_128k&sub=documentation_2][mcs-48 detailed overview]]
+- project: [[ https://hackaday.io/project/161909-8042-clock][8041 clock]]
+- project: [[ http://web.archive.org/web/20250321054243/http://devster.monkeeh.com/z80/upi42/][8041 leds]]
   - wirings & code to output for Port1 and Port2 with 74xxx latch
-- 8048 http://web.archive.org/web/20251229173918/https://www.mattmillman.com/projects/an-intel-mcs-48-based-dual-temperature-sensor/
-  - https://github.com/inaxeon/mcs48temp/blob/upimaster/main.asm
-  - https://github.com/inaxeon/mcs48temp/blob/upislave/main.asm
-  - https://github.com/inaxeon/mcs48temp/blob/master/main.asm
+- project: [[http://web.archive.org/web/20251229173918/https://www.mattmillman.com/projects/an-intel-mcs-48-based-dual-temperature-sensor/][8048 temperature sensor]]
+  - [[https://github.com/inaxeon/mcs48temp/blob/upimaster/main.asm][upimaster/main.asm]]
+  - [[https://github.com/inaxeon/mcs48temp/blob/upislave/main.asm][upislave/main.asm]]
+  - [[https://github.com/inaxeon/mcs48temp/blob/master/main.asm][master/main.asm]]
