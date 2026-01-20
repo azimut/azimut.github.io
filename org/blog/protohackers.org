@@ -3,7 +3,6 @@
 #+DESCRIPTION: My first take trying to solve server programming challenges in Factor.
 #+KEYWORDS: protohackers, nping, protohackers.com, factor, factorlang, network programming, netcat, socat
 
-
 I have been gawking at the networking programming challenges of [[https://protohackers.com/][protohackers]] for a while. At first I wanted to solve them using [[https://www.gnu.org/software/gawk/manual/gawkinet/html_node/Gawk-Special-Files.html][AWK]] but I never go around to it, and moved on to learn other programming languages.
 
 Last week I have been learning a bit of [[https://factorcode.org/][Factor]]. First programming language of the [[https://en.wikipedia.org/wiki/Concatenative_programming_language][concatenative]] family of programming languages that I try.
@@ -18,8 +17,8 @@ You can find my solutions [[https://github.com/azimut/challenges/tree/master/pro
 
 An TCP based [[https://www.rfc-editor.org/rfc/rfc862.html][echo server]].
 
-One it's extra requirements
-- with no data, it should immediately close connection.
+With some extra requirements:
+- with no data received, it should immediately close connection.
 - it should handle half-duplex shutdowns, terminating it, instead of passing on the half-duplex shutdown
 
 ** 01 Prime Time
@@ -44,14 +43,14 @@ Value: |  'I'  |       timestamp       |         price         |
 Value: |  'Q'  |        mintime        |        maxtime        |
 #+end_src
 
-Lessons learned
+Lessons learned:
 - You can only ~print~ byte-arrays on a binary encoded ~threaded-server~. Nothing else or it will silently fail.
 - Read the [[https://docs.factorcode.org/content/article-stream-binary.html][docs]] about binary streams.
 - You can capture tcp traffic data with [[https://www.wireshark.org/][Wireshark]] to later replay it for a way to test your code offline.
 
 ** 03 Budget Chat
 
-A TCP based ascii chatroom. With nicks and message status on join/leave.
+A TCP based chatroom. With nicks, and message status on join/leave.
 
 Unlike the other ones I did this one offline. No second tries.
 
@@ -81,7 +80,7 @@ Hit a couple of "fun" challenges.
 
 ** Tunnel
 
-External access setup using [[https://pinggy.io/][pinggy.io]].
+In order to deploy my server to be checked externally by protohackers I set it up using [[https://pinggy.io/][pinggy.io]].
 
 - For TCP: ~ssh -p 443 -R0:127.0.0.1:1234 qr+tcp@free.pinggy.io~
 - For UDP:
