@@ -1,0 +1,56 @@
+
+Debugging on this has been a painful experience. There might have been hardware of better simulators that would help step through code.
+
+But the quasi-bidirectional ports are making this PAIN.
+
+It reminds me how it felt to work with computer graphics almost with no debugging capabilities, only with colors. There you had to put some value you were calculating into a texture so you could try to guess how off you were.
+
+Better tooling is there ofc.
+
+But here I had to use similar techniques.
+
+I do have a 2 digit segment display. So I made sure to iterate over the values in memory I want to inspect. Error reporting? Just shove something "odd" into those values in memory. Repeating patterns work well.
+
+* Calculator
+I
+#+CAPTION: bc's variables defined
+#+INCLUDE: "./mcs48-dht11.bc" src sh
+
+#+CAPTION: doing some timings math
+#+begin_src haskell
+jb + mov + djnz*5
+29.53923020766078835978
+jb
+4.21989002966582690854
+jb + nop*6
+16.87956011866330763416
+#+end_src
+
+* Budgets
+
+Another thing that hit me hard is that I do have a "budget" when communicating with a serial protocol without clock. Like the one of DHT11. I do have a window of ~100us between bit parsing.
+
+Assuming a clock of 4Mhz, each 8041 instruction takes 3.75us. With some taking twice as long. ( aka the useful ones :P ).
+
+That leaves 26 instruction to handle each bit. Including the cases when I finished processing a byte and I want to immediately store it.
+
+Bumping the crystal to one of ~7Mhz I got more interesting results:
+
+#+begin_src
+59 00 34 00 14
+61 00 30 00 15
+61 00 18 00 15
+32 00 17 00 15
+65 00 18 00 20
+#+end_src
+
+Only one of these pass the checksum. But doesn't seem correct compared to the same lecture on an Arduino.
+
+This is another reminder to myself to not avoid back of the envelope calculations.
+
+* ai?
+
+Tried ChatGPT, but I find it lacking and at times allucinating. Same with a generic gemini google search. Guess I could try prompting. But eh...
+
+Tried Grok and made "more sense".
+
