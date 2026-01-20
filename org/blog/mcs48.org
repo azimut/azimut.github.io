@@ -254,8 +254,8 @@ Let's try run something more "real" on it!
 A special section is dedicated to honour some of the resources I found online. There are a few more (not many). But these resulted the more useful, accurate and "modern". Two of these resources went offline while writting this blog entry ... so before I bitrot myself, here are the waybackmachine links:
 
 - [[https://www.controller-designs.de/index.php?lang=de&cat=projekte&cont=demon48_128k&sub=documentation_2][mcs-48 detailed overview]]
-- project: [[ https://hackaday.io/project/161909-8042-clock][8041 clock]]
-- project: [[ http://web.archive.org/web/20250321054243/http://devster.monkeeh.com/z80/upi42/][8041 leds]]
+- project: [[https://hackaday.io/project/161909-8042-clock][8041 clock]]
+- project: [[http://web.archive.org/web/20250321054243/http://devster.monkeeh.com/z80/upi42/][8041 leds]]
   - wirings & code to output for Port1 and Port2 with 74xxx latch
 - project: [[http://web.archive.org/web/20251229173918/https://www.mattmillman.com/projects/an-intel-mcs-48-based-dual-temperature-sensor/][8048 temperature sensor]]
   - [[https://github.com/inaxeon/mcs48temp/blob/upimaster/main.asm][upimaster/main.asm]]
