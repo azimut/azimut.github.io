@@ -45,6 +45,8 @@ Among the few resources online, there is [[https://devster.monkeeh.com/z80/upi42
 
 For this blog entry I will use 1)
 
+Also, for this first program I am going to drive it step by step, instruction by instruction, by using it's ~SS~ input pin. Instead of connecting it to a crystal oscillator. That will allow me to later monitor it's progress with an Arduino hooked to each BUS and the SYNC pin.
+
 #+CAPTION: wiring for external ROM access
 [[./images/mcs48-wiring-blink.png]]
 
