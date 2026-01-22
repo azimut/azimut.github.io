@@ -46,7 +46,7 @@ Among the few resources online, there is [[https://devster.monkeeh.com/z80/upi42
 For this blog entry I will use 1)
 
 #+CAPTION: wiring for external ROM access
-[[./images/mcs48-wiring.jpeg]]
+[[./images/mcs48-wiring-blink.png]]
 
 * Programming: Blink LED
 ** Background
