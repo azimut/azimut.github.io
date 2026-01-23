@@ -23,6 +23,10 @@ Digging through old projects I took a stab to try to make 2 different things wor
 
 - A =DHT11= temperature and humidity sensor. That I bought a while back, when I was turning on and off leds with an arduino.
 
+* Wiring
+
+[[./images/sevendht-wiring.png]]
+
 * Implementation
 
 Thanks to its [[https://arwill.hu/forras/termek/felvezetok/ic-k/analog/sda2131-integralt-aramkor-604654.pdf][datasheet]] and someones [[https://github.com/fernando-inf/SIEMENS-SDA2131-Display_7_Segments][arduino code]] to control it I was able to understand how make it work.
