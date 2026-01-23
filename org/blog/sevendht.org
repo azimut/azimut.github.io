@@ -25,6 +25,8 @@ Digging through old projects I took a stab to try to make 2 different things wor
 
 * Wiring
 
+#+CAPTION: wiring of all the components
+#+ATTR_HTML: :width 400
 [[./images/sevendht-wiring.png]]
 
 * Implementation
