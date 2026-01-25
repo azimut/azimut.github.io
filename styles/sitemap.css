@@ -1,3 +1,20 @@
+div#content {
+  align-items: center;
+}
+
+@media (min-width: 1200px) {
+  body div#content {
+    display: flex;
+    header {
+      margin: 0 auto;
+      h1 {
+        margin: 1em auto;
+        text-align: left;
+      }
+    }
+  }
+}
+
 ul {
   display: inline-block;
   text-align: left;
