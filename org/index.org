@@ -6,7 +6,7 @@
 #+BEGIN_blognotes
 #+BEGIN_blog
 #+HTML: <h2><a href="blog/">blog</a></h2>
-#+INCLUDE: "./blog/index.org" :lines "4-10"
+#+INCLUDE: "./blog/index.org" :lines "4-11"
 #+END_blog
 
 #+BEGIN_notes
