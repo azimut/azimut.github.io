@@ -1,35 +1,47 @@
-#+TITLE: Arduino: How to write an EEPROM
+#+TITLE: Retrocomputing: EEPROM programming
 #+DATE: <2025-04-14 lun>
+#+KEYWORDS: eeprom, arduino, sst29ee010, w29c020, eeprom programmer, arduino mega
 
-I found on of these on an old motherboard. My initial happiness vanished as soon as I discovered that [[https://www.youtube.com/watch?v=K88pgWhEb1M][Ben Eater's]] EEPROM programmer script won't work right out of the box.
-
-Turns out that it has some sort of write protection. Which complicates the writting (and reading?).
-
-* CAUTION
-
-This is probably just interesting to me. But It kind of helped me keep my sanity in the process. Regardless of the results....
+[[./images/sst29.jpg]]
 
 * Background
-** The Hardware
 
-- An arduino UNO: I am a bit limited in the number of digital pins. And i am not sure if i could use the analog ones. So at the very least I need to keep using the bitshifters for the address stuff.
+I have been wanting to try experiments with digital electronics. In the same vein Ben Eater has been doing with his  [[https://www.youtube.com/playlist?list=PLowKtXNTBypGqImE405J2565dvjafglHU]["8-bit breadboard computers"]] serie. And for that I am going to need some sort of EEPROM where to put my program in machine code.
 
-*** The EEPROM
+* Hardware
+** Arduino MEGA
 
-#+CAPTION: is a PDIP-32
-[[./images/sst29.jpg]]
+An Arduino UNO was first entertained as a possible solution for this. But later timing and pin count requirements (more than 16 pins) made it a bit convoluted. Since I would need to do [[https://docs.arduino.cc/retired/hacking/software/PortManipulation/][Arduino Port]] programming with bitshifters. And hoping that after all that it will still comply with write timings.
+
+So I ended up choosing an Arduino Mega, a board with more than enough GPIO pins for this task.
+
+[[./images/arduino-mega.jpg]]
+
+** The EEPROM
+
+I found a ~SST29EE010~ on an old motherboard.
+
+My initial happiness vanished as soon as I discovered that [[https://www.youtube.com/watch?v=K88pgWhEb1M][Ben Eater's]] EEPROM programmer script won't work right out of the box.
+
+Turns out that it has some sort of software write protection (SDP). Which complicates writting to it.
+
+A ~W29C020~ can also be used in the same way.
 
 #+CAPTION: eeprom pinout
 #+ATTR_HTML: :width 300
 #+ATTR_ORG: :width 250
 [[./images/sst29-pinout.jpg]]
 
-****  Read Protocol
+* Theory
+
+I found this [[https://www.youtube.com/watch?v=2jhTEAkjlpY][video]] useful in explaining what this EEPROM memory protection is. And how to practically disable it with custom software and an Arduino.
+
+** EEPROM Read Protocol
 
 - Controlled by CE# and OE# (# means active low)
   - both have to be low/active
 
-- Seems pretty normal, at least compared to *28c256* which Ben Eater used.
+- Seems pretty normal, at least compared to *28C256* which Ben Eater used.
 
 |------+---------------+-----+-----|
 |      |      <c>      | <c> | <c> |
@@ -44,13 +56,10 @@ This is probably just interesting to me. But It kind of helped me keep my sanity
 #+ATTR_ORG: :width 800
 [[./images/sst29-read.png]]
 
-**** Write Protocol
+** EEPROM Write Protocol
 
-- A0-A6 are used for page writes
-- A15-A16 do not matter at all on SDP commands
-- Any byte not loaded with user data will be written to FF
-
-- JEDEC standard Sofware Data Protection (SDP)
+- Writes have to follow a handshake part of SDP protocol.
+- JEDEC standard Sofware Data Protection (SDP) protocol.
   1) 3-byte load sequence for SDP
     #+begin_src c
       eeprom[0x5555] = 0xAA;
@@ -59,6 +68,9 @@ This is probably just interesting to me. But It kind of helped me keep my sanity
     #+end_src
   2) 1-byte load cycle to a page buffer
   3) internally controlled write cycle
+- A0-A6 are used for page writes
+- A15-A16 do not matter at all on ~SDP~ commands
+- Any byte not loaded with user data will be written to FF
 
 #+CAPTION: write timings
 #+ATTR_HTML: :width 600
@@ -66,102 +78,15 @@ This is probably just interesting to me. But It kind of helped me keep my sanity
 [[./images/sst29-write.png]]
 
 - address is latched at falling edge of #WE
-- data is lateched at raising edge of #WE
+- data is latched at raising edge of #WE
 
-*** The bitshifter (x2)
+- Said protocol can be disabled. Enabled on EEPROMs found.
 
-#+CAPTION: bitshifter - 4094 pinout
-#+ATTR_ORG: :width 200
-[[./images/sst29-4094pinout.png]]
+* Detour: borring an Arduino.
 
-* Journal
-** Take #0
+While I started working on this I did so with an Arduino UNO using bitshifters. After failing miserable. And worst of all not knowing if it was my code or the physical limitations of my setup the cause of failure.
 
-Luckly I found some [[https://github.com/slu4coder/SST39SF010-FLASH-Programmer][code]] on the internet that someone with seemly the same EEPROM. Using the arduino ide to write on it. Unfortunely it used a different board. Not the arduino UNO that I own. One with more IO pins that not needed the bit shifters.
-
-So I adapted the code to work with.
-
-Problem is that the handshake seems to require CE. So I am going to have to use one of those analogue pins.
-
-#+begin_src
-000:  2c 2c 6b d9 08 7f d2 f5   1d 33 9c 5f 08 20 77 8b
-010:  b0 71 0e e7 0c 29 16 3e   71 52 57 08 e5 9c e2 ec
-020:  88 16 5d c6 49 2b 4d 3c   e2 a6 e5 f0 42 09 e8 fc
-030:  2e 71 4a 20 6c d3 8f 78   fb 44 82 ef 21 36 0e ed
-040:  91 54 fc 92 04 b4 6a 2c   34 f1 fc d6 69 91 1f d7
-050:  52 ae d2 f4 5c 19 5d f9   17 1f d4 67 76 3a 9c 43
-060:  fe 41 fa 78 80 d9 d6 da   5f 99 bd d3 62 16 ef 2d
-070:  0d 2c 21 57 2c aa 47 ab   59 4e b0 ff 15 59 f2 63
-#+end_src
-
-** Take #1 - Mission failure
-
-It didn't work :(
-
-Maybe I am doing something wrong.
-
-Dealing with the frustuations of hardware hits different. Sure my code may be the problem, but the looming ghost that my faulty wiring is the issue.
-
-Redid the wiring. Still no luck.
-
-I need to develop a better workflow. Maybe think in smaller. Use leds or a separate board to constantly check stuff.
-
-** Take #2
-
-+Seems like some of the random 00 reading i was getting may be related to magnetic fields of my monitor...may need to consider purchase a new one.+ ~the problem seems to happen when i run the erasememory() aka mess with CE~
-
-Still, the problem of not being able to write persists.
-
-Decided to browse on the internet for more code. I remembered also the [[https://github.com/slu4coder/SST39SF010-FLASH-Programmer/blob/main/Arduino_SST39SF0x0/Arduino_SST39SF0x0.ino][code]] i saw that works to write flash memories.
-
-- "5555" and "2AAA" seem good enough strings to put on github search
-- seems like the flash writing code also uses this handshake for writing
-
-Since I have already CE on analog, maybe I can put OE there too and unburden the shiftregister of it.
-
-** Take #3
-
-I think I succeded in erasing it...or I fried it.
-
-I see all 0's. I was checking what was causing those random zeros. And I unplugged the power of the board live and plug it again....
-
-...
-
-nvm, i am back to getting zeroes at random, with some bits I recognize from before, so the data is still there. To illustrate:
-
-#+begin_src
-000:  2c 2c 6b d9 08 7f d2 f5   1d 33 9c 5f 08 20 00 00
-010:  00 00 00 e7 0c 29 16 3e   71 52 57 08 e5 9c e2 ec
-020:  88 16 5d c6 49 2b 4d 3c   e2 a6 00 00 00 00 00 00
-030:  2e 71 4a 20 6c d3 8f 78   fb 44 82 ef 21 36 0e ed
-040:  91 54 fc 92 04 b4 00 00   00 00 00 00 69 91 1f d7
-050:  52 ae d2 f4 5c 19 5d f9   17 1f d4 67 76 3a 9c 43
-060:  fe 41 00 00 00 00 00 00   5f 99 bd d3 62 16 ef 2d
-070:  0d 2c 21 57 2c aa 47 ab   59 4e b0 ff 15 59 f2 00
-#+end_src
-
-This happened after finally using a separate pin for OE. But i dunno...
-
-** Take #4
-
-I changed the *Serial.begin()* velocity from 57600 to 9600. A noticeable change seems to be that the random zeros now happens in clusters (?. Always in different places.
-
-#+begin_src
-000:  00 00 6b d9 08 7f d2 f5   1d 33 9c 5f 08 20 77 8b
-010:  b0 71 0e e7 0c 29 00 00   00 00 00 00 00 00 00 00
-020:  88 16 5d c6 49 2b 4d 3c   00 00 00 00 00 00 00 00
-030:  2e 71 4a 20 6c d3 8f 78   fb 00 00 00 00 00 00 00
-040:  91 54 fc 92 04 b4 6a 2c   34 f1 00 00 00 00 00 00
-050:  52 ae d2 f4 5c 19 5d f9   17 1f d4 00 00 00 00 00
-060:  fe 41 fa 78 80 d9 d6 da   5f 99 bd d3 00 00 00 00
-070:  0d 2c 21 57 2c aa 47 ab   59 4e b0 ff 15 00 00 00
-#+end_src
-
-Also when I started fresh after being unplugged for hours. It started showing no zeros. Only after trying to write something i saw this.
-
-** Take #5 - ✡️
-
-I sacrificed a 3d printer to get an Arduino Mega to try without the register shifters.
+I opted for sacrifice a 3d printer to get an Arduino Mega from it to try without the register shifters.
 
 In the process I learned how to dump the binary flash content of an arduino to a file with *avrdude*.
 
@@ -170,165 +95,15 @@ In the process I learned how to dump the binary flash content of an arduino to a
   $ avrdude -D -p atmega2560 -c wiring -P /dev/ttyACM0 -U flash:r:flashdump.bin:r -v
 #+end_src
 
-Now, I am getting weird inconsistent readings...redoing the wiring...
+* Real world challenges
 
-** Take #6 - 💀
+- Electronic Interference: turns out that if I cradle in my hand the Breadboard, including the Arduino, in my hand it will create some sort of noise that will affect readings.
+- Bad Wiring: We are going to be using +24 GPIO pins from the Arduino to the EEPROM. Plus some that should be hardcoded to LOW, like CE. Double check wiring positioning and cable health.
+- Ground all INPUTS not being used: As mentioned before, this is particularilly important for address inputs not used.
+- Write code only for testing:
+  - code to read serially (without using port programming) ensure the sanity of my port programmed code
 
-I think I fried the chip...all returns 0...
-
-#+begin_src
-000:  00 00 00 00 00 00 00 00   00 00 00 00 00 00 00 00
-010:  00 00 00 00 00 00 00 00   00 00 00 00 00 00 00 00
-020:  00 00 00 00 00 00 00 00   00 00 00 00 00 00 00 00
-030:  00 00 00 00 00 00 00 00   00 00 00 00 00 00 00 00
-040:  00 00 00 00 00 00 00 00   00 00 00 00 00 00 00 00
-050:  00 00 00 00 00 00 00 00   00 00 00 00 00 00 00 00
-060:  00 00 00 00 00 00 00 00   00 00 00 00 00 00 00 00
-070:  00 00 00 00 00 00 00 00   00 00 00 00 00 00 00 00
-#+end_src
-
-Now that I have a board with enough pins, I tried directly with the script the used the teensy to program this memory.
-
-Same reading. So my code is NOT the issue in this case.
-
-Wiring?
-
-** Take #7 - Adios
-
-Alright, rewired but using the Arduino UNO again with the bitshifters.
-
-I would like to say that I know the pins by hearth now, but I also fried the chip so...
-
-...
-
-Nope, also zeroes, chip is gonezo, caput, se fini, au revoir, adios.
-
-** Take #8 - 🧟‍♂️
-
-I wanted to see if my reading make sense so I intended to tie the reading of D2 to V+. But...
-
-Another misswiring.
-
-I wired A16 to D2 on the EEPROM and the reading of D2 to V+.
-
-Resulted into this reading.
-
-#+begin_src
-000:  2c 2c 04 04 04 7f 04 f5   1d 04 9c 5f 04 04 77 04
-010:  04 04 0e e7 0c 04 16 3e   04 04 57 04 e5 9c 04 ec
-020:  04 16 5d c6 04 04 4d 3c   04 a6 e5 04 04 04 04 fc
-030:  2e 04 04 04 6c 04 8f 04   04 44 04 ef 04 36 0e ed
-040:  04 54 fc 04 04 b4 04 2c   34 04 fc d6 04 04 1f d7
-050:  04 ae 04 f4 5c 04 5d 04   17 1f d4 67 76 04 9c 04
-060:  fe 04 04 04 04 04 d6 04   5f 04 bd 04 04 16 ef 2d
-070:  0d 2c 04 57 2c 04 47 04   04 4e 04 ff 15 04 04 04
-#+end_src
-
-Notice that, the "2c 2c" are back. And zeroes are filled with "04".
-
-So...I fixed the wiring and...
-
-#+begin_src
-000:  2c 2c 6b d9 08 7f d2 f5   1d 33 9c 5f 08 20 77 8b
-010:  b0 71 0e e7 0c 29 16 3e   71 52 57 08 e5 9c e2 ec
-020:  88 16 5d c6 49 2b 4d 3c   e2 a6 e5 f0 42 09 e8 fc
-030:  2e 71 4a 20 6c d3 8f 78   fb 44 82 ef 21 36 0e ed
-040:  91 54 fc 92 04 b4 6a 2c   34 f1 fc d6 69 91 1f d7
-050:  52 ae d2 f4 5c 19 5d f9   17 1f d4 67 76 3a 9c 43
-060:  fe 41 fa 78 80 d9 d6 da   5f 99 bd d3 62 16 ef 2d
-070:  0d 2c 21 57 2c aa 47 ab   59 4e b0 ff 15 59 f2 63
-#+end_src
-
-No random "00" anymore.
-
-This is annoying.
-
-I guess the most problematic part is that this chip has *memory*. So the old turn it off and turning it on might not work all the time.
-
-In this case maybe it remembered some bad command I sent until I shook ⚡ it off...
-
-* Interlude
-
-After repeated failures trying to write to the EEPROM. I am back to square one. But this time armed with better a better sense of what I should avoid (i hope).
-
-* Journal (again)
-** Take #1
-
-So...I looked around and I found a [[https://www.youtube.com/watch?v=2jhTEAkjlpY][video]] that talks about EEPROM memory protection. In particular it mentions problems that might arise with the timings of the SDP commands.
-
-It says that there is a tight window to issue the commands. And Arduino might struggle using DigitalWrite().
-
-Looking back at the [[https://github.com/MustBeArt/29EE010-Programmer][code]] that I mentioned before that disables the SDP. The Teensy 3.5 they used has a clock speed of 120MHz, while my Arduino's have 16MHz.
-
-Video offers 2 solutions. 1) write your arduino code to use [[https://docs.arduino.cc/retired/hacking/software/PortManipulation/][ports]] with some [[https://docs.arduino.cc/learn/programming/bit-math/][bit-math]] 2) or use a [[https://github.com/TomNisbet/TommyPROM][project]] that already uses it
-
-Uploader didn't try either and used a commercial EEPROM programmer.
-
-** Take #2
-
-Even better, project author has some [[https://github.com/TomNisbet/TommyPROM/tree/master/unlock-ben-eater-hardware][alternative code]] that uses Ben Eater's code as base.
-
-...
-
-And it doesn't work, i get reads of all "0xFF" but memory looks like usual when using regular code.
-
-** Take #3
-
-Let's try understanding what it is doing.
-
-Looking at some other [[https://github.com/slu4coder/SST39SF010-FLASH-Programmer/blob/main/Arduino_SST39SF0x0/Arduino_SST39SF0x0.ino][code]] mentioned before, the one that is used on FLASH memories. It seems it uses Arduino ports too. So, even if want to give up on this EEPROM due timings, looks like I would need port's speed to work with FLASH memories.
-
-** Take #4 - about port registers
-
-- Someone wrote an abstraction [[https://github.com/ArminJo/digitalWriteFast][library]] for them using macros.
-
-*** Port registers
-
-- [[https://docs.arduino.cc/retired/hacking/software/PortManipulation/][Arduino docs]]
-- 8 bit wide, each one
-- 3 ports, some bits/pins are not usable
-  |---+--------+------|
-  |   |  <c>   |      |
-  | D | D0-D7  | 0,1* |
-  | B | D8-D13 | 6,7  |
-  | C |  A0-5  | 6,7  |
-  |---+--------+------|
-  - D0: aka RX set as 0=input
-  - D1: aka TX set as 1=output
-- 3 registers for each port
-  |------+----+--------------------------------------|
-  | DDR  | rw | configure direction 0=INPUT 1=OUTPUT |
-  | PORT | rw | controls LOW/HIGH                    |
-  | PIN  | r  | reads INPUT ins                      |
-  |------+----+--------------------------------------|
-
-** Take #5 - 🎉 Success! (kinda)
-
-After fixing more wiring and realizing that in order to make code that handles port work correctly i need to respect the original pin position (duh!). I got to write somethin.
-
-#+begin_src
-000:  ff ff ee ff ff ff ff ff   ff ff ff ff ff ff ff ff
-010:  ff ff ff ff ff ff ff ff   ff ff ff ff ff ff ff ff
-...
-0e0:  ff ff ff ff ff ff ff ff   ff ff ff ff ff ff ff ff
-0f0:  ff ff ff ff ff ff ff ff   ff ff ff ff ff ff ff bb
-#+end_src
-
-Those *ff* were written (i think but i am not 100% sure, such is my mess with wiring) by the script i found, but only once. Then It stopped working.
-
-It did however:
-- disabled the software protection.
-- still works to write a byte, *bb* in this case. It is suppose to write a lot more but I can only get it to write one
-
-Similarly, that *ee* is written by my dumb slow digitalWrite() code. But also with this code I can only write 1 byte per run.
-
-Timings timings timings....
-
-** Take #5.5
-
-Just some thoughts. Moving outside the IDE helped. In particular I like the current setup switching between uploading my dumb code and the fast port based code for the same pinouts. That way I blame of why something is not working is less abstract.
-
-** Take #6 - The Good Ending
+* It works!
 
 So, after some weird lectures and even weirder succesful-ish writes. I fixed some wirings and...it works!
 
@@ -340,27 +115,35 @@ So, after some weird lectures and even weirder succesful-ish writes. I fixed som
 040:  ea ea ea ea ea ea ea ea   ea ea ea ea ea ea ea ea
 #+end_src
 
-Which is exactly the test pattern given by TommyPROM.
+Which is exactly the test pattern given by TommyPROM. Meant to be a non random pattern easily discerned from noise.
 
 #+begin_src c
   byte data[] = {
-      'A',  'B',  'C',  'D',  'E',  'F',  'G',  'H',
-      0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80,
-      0x7f, 0xbf, 0xdf, 0xef, 0xf7, 0xfb, 0xfd, 0xfe,
-      0x00, 0xff, 0x55, 0xaa, '0',  '1',  '2',  '3'
+      'A',  'B',  'C',  'D',  'E',  'F',  'G',  'H',  0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80,
+      0x7f, 0xbf, 0xdf, 0xef, 0xf7, 0xfb, 0xfd, 0xfe, 0x00, 0xff, 0x55, 0xaa, '0',  '1',  '2',  '3'
   };
 #+end_src
 
-Only that I am using an Arduino Mega for this. While their code, for me, it seems to only been able to unlock the writes. Whatever the case. It is done!. Now to try that [[https://en.wikipedia.org/wiki/Intel_MCS-48][8048]].
+* Source
 
-* Journal (?)
+This is the final code (for now) that I use to write the EEPROM using an arduino Mega heavily based on TommyPROM version of Ben Eater's code. You might find a more recent recent version [[https://github.com/azimut/arduino-sketches/tree/master/eeprom-mega][here]].
+
+#+INCLUDE: "./sst29-mega.ino" src arduino
+* Resources
+
+- Arduino UNO https://github.com/TomNisbet/TommyPROM
+  - uses bitshifters
+  - alternative [[https://github.com/TomNisbet/TommyPROM/tree/master/unlock-ben-eater-hardware][code]] for Ben Eater setup
+
+- Teensy 3.5 https://github.com/slu4coder/SST39SF010-FLASH-Programmer
+  - teensy is waaaay faster than UNO/MEGA
+  - uses has a clock of 120MHz, while my Arduino's have 16MHz.
+  - has enough GPIO ports to NOT use bitshifters
+  - does NOT use port programming
+
+* New Feature: Multi page writting.
 
 Today trying to write data to a ROM. Ended up hitting a bug that I missed. That is that it didn't support writting to multiple pages. Since each page is of 128 bytes. I added a pause (TBCLO) after each page write.
 
 Seems to work :)
 
-* Source
-
-This is the final code that I use to write the EEPROM using an arduino Mega heavily based on TommyPROM version of Ben Eater's code.
-
-#+INCLUDE: "./sst29-mega.ino" src arduino
