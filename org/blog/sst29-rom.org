@@ -6,7 +6,7 @@
 
 * Background
 
-I have been wanting to try experiments with digital electronics. In the same vein Ben Eater has been doing with his  [[https://www.youtube.com/playlist?list=PLowKtXNTBypGqImE405J2565dvjafglHU]["8-bit breadboard computers"]] serie. And for that I am going to need some sort of EEPROM where to put my program in machine code.
+I've been wanting experiment with digital electronics, in the same vein of Ben Eater's [[https://www.youtube.com/playlist?list=PLowKtXNTBypGqImE405J2565dvjafglHU]["8-bit breadboard computers"]] video serie. And for that, I am going to need some sort of EEPROM where to store machine code.
 
 * Hardware
 ** Arduino MEGA
@@ -15,6 +15,7 @@ An Arduino UNO was first entertained as a possible solution for this. But later 
 
 So I ended up choosing an Arduino Mega, a board with more than enough GPIO pins for this task.
 
+#+ATTR_HTML: :width 400
 [[./images/arduino-mega.jpg]]
 
 ** The EEPROM
