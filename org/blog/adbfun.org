@@ -68,6 +68,8 @@ The other solution is using "adb" (aka android debugger) to tell it to install a
 
 Et voila! No more sketchy certs. And no more apps partially working or not at all.
 
+You can find the script I used for doing all the above [[./certs.sh][HERE]].
+
 * Addenum
 
 Well, apparently Android does not like you adding new CA root certs. So a warning message is displayed on each reboot.
